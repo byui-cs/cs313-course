@@ -1,6 +1,38 @@
 @import url("reset.css");
-@import url("./js/highlight/styles/monokai_sublime.css");
+@import url("../js/highlight/styles/monokai_sublime.css");
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,700);
+
+@font-face {
+  font-family: 'icomoon';
+  src: url('./fonts/icomoon.eot');
+  src: url('./fonts/icomoon.eot#iefix-8k8p81') format('embedded-opentype'), url('./fonts/icomoon.ttf') format('truetype'), url('./fonts/icomoon.woff') format('woff'), url('./fonts/icomoon.svg#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.icon-byui-logo:before {
+  content: "\e000";
+  box-sizing: border-box;
+}
+
+.icon-byui-logo {
+  font-size:75px;
+  color:#fff;
+  float:left;
+  margin-top:-20px;
+  padding-top:0px;
+
+  font-family: 'icomoon';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
 body {
 	font-family: "Open Sans", helvetica, arial, sans-serif;
@@ -10,13 +42,13 @@ body {
 }
 
 /* Title Bar */
-#courseTitle {
-	background: #006AB9;
+header {
+	background: #326BA9;
 	width: 100%;
 	padding: 20px;
 }
 
-#courseTitle h1 {
+header h1 {
 	color: #FFFFFF;
 	font-size: 30px;
 	display: inline-block;
@@ -24,7 +56,7 @@ body {
 	margin-left: 20px;
 }
 
-#courseTitle .logo {
+header .logo {
 	width: 64px;
 	display: inline-block;
 	vertical-align: middle;
@@ -39,6 +71,14 @@ pre code {
 	line-height: 1.4em;
 	margin: 20px auto;
 	border: 1px solid #CCC;
+}
+
+pre code.hljs {
+	padding-bottom: 25px;
+}
+
+code .user-input {
+	text-decoration: underline;
 }
 
 img.screenshot {
@@ -193,3 +233,88 @@ article ul li p:before {
 	}
 
 }
+
+
+.table-small {
+	font-size:small;
+	margin-bottom: 20px;
+}
+
+.table-small p {
+	font-size:small;
+}
+
+.table-small td {
+	border: 1px solid rgb(200,200,200);
+	padding: 3px;
+}
+
+.table-small thead {
+	text-align:center;
+	font-weight:bold;
+}
+
+.table-small ul {
+	list-style-position: inside;
+	margin-left: 10px;
+	padding-left: 0px;
+	text-indent: -10px;
+}
+
+.table-small li {
+
+	padding-left: 10px;
+}
+
+
+/*******************************
+ * Class Diagrams
+ *******************************/
+.class-diagrams {
+text-align: center;
+}
+
+.class-diagram-spacer{
+background: #EFEFEF;
+padding: 0;
+}
+
+.table-class-diagram tr.class-diagram-spacer td{
+padding: 0;
+border: 1px solid #EFEFEF;
+}
+
+.table-class-diagram{
+border: 1px solid #CCC;
+border-collapse: collapse;
+margin-left: 20px;
+margin-bottom: 10px;
+display: inline-block;
+vertical-align: top;
+text-align: left;
+font-family: Menlo, Monaco, Consolas, fixed;
+}
+
+.table-class-diagram th{
+background: #3981B2;
+color: #EFEFEF;
+text-align: center;
+padding: 5px;
+padding-top: 5px!important;
+}
+
+.table-class-diagram tr td{
+padding: 5px;
+padding-top: 5px!important;
+border-right: 1px dashed #CCC;
+}
+
+.table-class-diagram tr{
+border-bottom: 1px solid #EEE;
+}
+
+.table-class-diagram tr:last-child, .table-class-diagram tr:first-child{
+border-bottom: none;
+}
+
+
