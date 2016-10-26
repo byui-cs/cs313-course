@@ -1,1 +1,1 @@
-# cs313-course-dev
+# CS 313 Course Materials
