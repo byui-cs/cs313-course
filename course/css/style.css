@@ -197,6 +197,12 @@ article ol li {
 	border-left: 2px solid #CCC;
 }
 
+
+article ol li heading {
+	font-weight: bold;
+}
+
+
 article h3:before {
 	content: counter(h3, upper-roman) ".";
     counter-increment: h3 1;
@@ -317,4 +323,15 @@ border-bottom: 1px solid #EEE;
 border-bottom: none;
 }
 
+/*div.online-notes:before {
+	content: "Online Students -- Special Instructions: ";
+}
+*/
+div.online-notes {
+  background-color: rgb(230, 230, 230);
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  padding: 10px;	
+}
 
