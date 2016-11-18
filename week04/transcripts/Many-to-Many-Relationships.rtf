@@ -1,0 +1,54 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1265\cocoasubrtf200
+{\fonttbl\f0\froman\fcharset0 Garamond;\f1\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red51\green51\blue51;}
+{\info
+{\author BYU Idaho}
+{\*\company Brigham Young University Idaho}}\margl1440\margr1440\vieww20820\viewh16520\viewkind1\viewscale140
+\deftab720
+\pard\tqc\tx4680\tqr\tx9360\pardeftab720\ri720\qr
+
+\f0\fs24 \cf0 \
+\pard\pardeftab720\ri0\sa200\qr
+\cf0 BYU-Idaho Online Learning\
+CS 313
+\fs40 \
+\pard\pardeftab720\ri0\sa200
+\cf0 \'93Database Basics Lesson 6 - Many to Many Relationship\'94 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural
+
+\f1\fs24 \cf0 {{\NeXTGraphic Pasted Graphic.pdf \width15640 \height40
+}¬}\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardeftab720\pardirnatural
+
+\f0\fs40 \cf0 \
+\pard\pardeftab720\ri0\qr
+
+\fs24 \cf0 \
+Transcript\
+\pard\pardeftab720\ri0
+\cf0 \
+\pard\pardeftab720\fi720\ri0
+\cf0 Hello everyone. In this video tutorial I\'92m going to talk about many-to-many relationships. As you know, the most common relationship type is one-to-many, but sometimes we need many-to-many-relationships, but there are two problems to describe many-to-many relationships. The first problem is a small problem. One-to-many relationships are easy to describe. They\'92re everywhere in the world
+\b \cf2 , 
+\b0 but when you \cf0 think about many-to many-scenarios it is a little bit tricky, so it is not easy to spot, but it is not a big problem. And the second problem is in most of the database management systems you cannot describe in many-to many-relationship directly, but we are going to do it indirectly. So it\'92s actually not a very big problem.\
+\
+Okay let\'92s give an example. We have two tables: author table and book table. Usually there is one author for a book. Okay, if this is the scenario, then what we do is we are going to add an author ID into the book table and it will be a foreign key to the author table, so there will be a one-to-many relationship. So far so good, but here is the issue: if one of the books is written by several authors in different dates maybe or at the same time\'96it is possible, for example, for some books have more than one author\'96so in this case this will not work. So what we need is a described many-to-many relationship. Then, probably we do that.\
+\
+First of all, some of the people think to add another column for the other authors. For example, for the second author add AuthorID 2. But after some time they have seen this will not work. Maybe if there are three, five, or ten authors then it will not work. So you\'92re repeating the same information. So it is really a bad idea that is discouraged in database design so we are going to get rid of that technique. And some other people think to cheat a little bit and they try to add a second value or a third value to the AuthorID column. But you already described a rule, you setup some rules in AuthorID, so it is going to, for example\'85so these kinds of things would cause a problem. This is also a cheat so it is also discouraged. So we are going to get rid of that technique too.\
+So how do we solve this problem? First of all, let\'92s get back to our old tables\'96author table and book table. Then, we are going to add another table to link these two tables and that table is called junctional linking table. From author table to author book table we setup the one-to-many relationship as well as again we setup a one-to-many relationship from book table to author table. So this linking table exists because of just joining two tables and we setup two one-to-many relationships in here and here; and by using this we can go from author to author book. For example, here, \'93Find a book ID,\'94 and we connect to the book table.\
+\
+Let\'92s look at that here. For example, I want to know which books are written by Tucker Morrison. Okay, get his ID, 445, and find 445 is here. 445 shows or points to 1145. So, 11\'96go to book table and find 1145. It is 
+\i Designing Databases
+\i0 . So, 
+\i Designing Databases
+\i0  is written by Tucker Morrison.\
+\
+So we can do the other way. We can get, for example, the book ID of 
+\i SQLite Made Simple
+\i0 , 1146, and get that ID and look at this ID in the author book table so it is pointing 446. If we get 1145, as you see, there are two different 1145 rows in here, so it is pointing to 447 and 445. So, this 
+\i Designing Databases
+\i0  is written by two different authors: Tucker Morrison and Jordan Winters. So, this works perfectly.\
+ \
+Officially there is another relationship, one-to-one, but it is not common. Here you can see some examples to the relationship types. An example of one-to-one is an employee is assigned a parking space. One-to-many is the most common one: an order contains many orderlines, and a student\'96this one is a very common one\'96and the student takes some courses or a course is taken by several students. So this is occasionally required. So these are the relationship types in a relation database management system. Sometimes in large databases you may find some tables without any relationship. Some of them just don\'92t need them, but most of the time you will need to describe even one relationship to another table.\
+\pard\pardeftab720\ri0
+\cf0 \
+}
