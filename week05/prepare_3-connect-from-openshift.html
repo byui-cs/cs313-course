@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Web Engineering II - Preparation</title>
+    <link rel="stylesheet" type="text/css" href="../course/style.css" />
+</head>
+
+<body>
+    <div id="frame"><img src="../course/cs313.png" border="0" alt="Web Engineering II CS 313" title="Web Engineering II CS 313" width="100%" />
+        <div id="content">
+
+
+        <h1>Part Three <br /> Connecting To Mysql At Openshift</h1>
+        <p><b>Connecting to MySQL at OpenShift</b></p>
+        <p>You can create new users in your MySQL database at OpenShift, and add those credentials to your PHP files, but then as you commit that code to GitHub or other public repositories, you are displaying that sensitive information.</p>
+        <p>Another approach is to keep the username and password in an environment variable. In this regard, OpenShift automatically creates environment variables for the admin MySQL user and its password, along with the hostname and port of the database instance (it is likely not found at localhost in their environment).</p>
+        <p>You can access these environment variables in PHP as follows:
+            <br />
+            <br /> <span style="font-family: 'courier new', courier;">$dbHost = getenv('OPENSHIFT_MYSQL_DB_HOST');</span>
+            <br /><span style="font-family: 'courier new', courier;"> $dbPort = getenv('OPENSHIFT_MYSQL_DB_PORT');</span>
+            <br /><span style="font-family: 'courier new', courier;"> $dbUser = getenv('OPENSHIFT_MYSQL_DB_USERNAME');</span>
+            <br /><span style="font-family: 'courier new', courier;"> $dbPassword = getenv('OPENSHIFT_MYSQL_DB_PASSWORD');</span></p>
+        <p>"$dbName" could also be set to whatever database you have created at OpenShift. Then you could test to see that you have obtained the correct values with something like the following:
+            <br />
+            <br /> <span style="font-family: 'courier new', courier;">echo "host:$dbHost:$dbPort dbName:$dbName user:$dbUser password:$dbPassword&lt;br /&gt;\n";</span>
+            <br />
+            <br /> And could then connect to the DB as follows:
+            <br />
+            <br /> <span style="font-family: 'courier new', courier;">$db = new PDO("mysql:host=$dbHost:$dbPort;dbname=$dbName", $dbUser, $dbPassword);</span>
+            <br />
+            <br />
+        </p>
+        <p>(Note: Some students have reported that they could not connect when specifying the port, but leaving out ":$dbPort" from the above connection seemed to work better for them.)</p>
+        <p><b>Connecting from your local machine OR OpenShift</b></p>
+        <p>The code shown above works great to connect to MySQL in the OpenShift environment, but it will then NOT work for your local configuration. One way to set up your code to connect in either location, is to test for the OpenShift environment variables first. If they exist, then you know you are in the OpenShift context, if not, you know you are in your local context and can set up the variables accordingly. For example:
+            <br />
+            <br /> <span style="font-family: 'courier new', courier;">$openShiftVar = getenv('OPENSHIFT_MYSQL_DB_HOST');</span>
+            <br />
+            <br /><span style="font-family: 'courier new', courier;"> if ($openShiftVar === null || $openShiftVar == "")<br /><span style="font-size: 12pt;">{<br /></span><span style="font-size: 12pt;">&nbsp; &nbsp; &nbsp;// Not in the openshift environment<br /></span><span style="font-size: 12pt;">&nbsp; &nbsp; &nbsp;$dbHost = "localhost";<br /></span><span style="font-size: 12pt;">&nbsp; &nbsp; &nbsp;// &hellip;<br /></span><span style="font-size: 12pt;">}<br /></span><span style="font-size: 12pt;">else <br />{<br /></span><span style="font-size: 12pt;">&nbsp; &nbsp; &nbsp;// In the openshift environment <br />&nbsp; &nbsp; &nbsp;$dbHost = getenv('OPENSHIFT_MYSQL_DB_HOST');<br /></span><span style="font-size: 12pt;">&nbsp; &nbsp; &nbsp;// &hellip;<br /></span><span style="font-size: 12pt;">} </span></span>
+        </p>
+        <p><span style="font-family: 'courier new', courier; font-size: 12pt;">$db = new PDO("mysql:host=$dbHost:$dbPort;dbname=$dbName", $dbUser, $dbPassword);</span></p>
+        <p>The downside to this code is that you are still putting your local credentials into your source code files that will be committed to GitHub. A way around this is to create a separate PHP file (e.g. "setLocalDatabaseCredentials.php"), that simply sets the variables, $dbHost, $dbUser, etc. for your local machine. Then, in the body of the if statement, you can then require it like this:
+            <br />
+            <br /> <span style="font-family: 'courier new', courier;">require("setLocalDatabaseCredentials.php");</span>
+            <br />
+            <br /> Then, make sure to add the file, "setLocalDatabaseCredentials.php" to your .gitignore list so that it is not committed it to your repository.</p>
+        <p><b>Create a PHP file to handle the database connection</b></p>
+        <p>Because the code to set up a DB connection is likely to be repeated on many of your PHP pages, you could put it in its own function in a separate PHP file. Then on any page that requries DB access, require that page, then then call the function. For example:
+            <br />
+            <br /> <span style="font-family: 'courier new', courier;">require("dbConnector.php");</span>
+            <br />
+            <br /><span style="font-family: 'courier new', courier;"> $db = loadDatabase();</span>
+            <br />
+            <br /><span style="font-family: verdana, geneva; font-size: 12pt;"> Putting all of the above code together, the dbConnector.php page might look something like the following:</span>
+            <br />
+            <br /><span style="font-family: 'courier new', courier;"> &lt;?php</span></p>
+        <p><span style="font-family: 'courier new', courier;">function loadDatabase()</span>
+            <br /><span style="font-size: 12pt; font-family: 'courier new', courier;">{ </span></p>
+        <p style="padding-left: 30px;"><span style="font-family: 'courier new', courier;"><span style="font-size: 12pt;">&nbsp; $dbHost = "";<br /></span><span style="font-size: 12pt;">&nbsp; $dbPort = "";<br /></span><span style="font-size: 12pt;">&nbsp; $dbUser = "";<br /></span><span style="font-size: 12pt;">&nbsp; $dbPassword = "";</span></span>
+        </p>
+        <p><span style="font-size: 12pt; font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp;$dbName = "testdb"; </span></p>
+        <p><span style="font-size: 12pt; font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp;$openShiftVar = getenv('OPENSHIFT_MYSQL_DB_HOST'); </span></p>
+        <p><span style="font-size: 12pt; font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp;if ($openShiftVar === null || $openShiftVar == "")<br />&nbsp; &nbsp; &nbsp;{<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; // Not in the openshift environment<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; //echo "Using local credentials: "; <br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; require("setLocalDatabaseCredentials.php");<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; &nbsp;}<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; &nbsp;else <br />&nbsp; &nbsp; &nbsp;{ <br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; // In the openshift environment<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; //echo "Using openshift credentials: "; </span></p>
+        <p><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; $dbHost = getenv('OPENSHIFT_MYSQL_DB_HOST');<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; $dbPort = getenv('OPENSHIFT_MYSQL_DB_PORT'); <br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; $dbUser = getenv('OPENSHIFT_MYSQL_DB_USERNAME');<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; $dbPassword = getenv('OPENSHIFT_MYSQL_DB_PASSWORD');<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; &nbsp;} <br />&nbsp; &nbsp; &nbsp;//echo "host:$dbHost:$dbPort dbName:$dbName user:$dbUser password:$dbPassword&lt;br &gt;</span><span style="font-size: 12pt; font-family: 'courier new', courier;">\n"; </span></p>
+        <p><span style="font-size: 12pt; font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp;$db = new PDO("mysql:host=$dbHost:$dbPort;dbname=$dbName", $dbUser, $dbPassword); </span></p>
+        <p><span style="font-size: 12pt; font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp;return $db; </span></p>
+        <p><span style="font-size: 12pt; font-family: 'courier new', courier;">} </span></p>
+        <p><span style="font-size: 12pt; font-family: 'courier new', courier;">?&gt;</span><span style="font-size: 12pt;"> </span></p>
+        <p><b><span style="font-size: 12pt;">Using the Admin User </span></b></p>
+        <p><span style="font-size: 12pt;">As a final note, using the OpenShift variables will have you using the Admin user for your database, which is not the best thing to do from a security standpoint. It is the simplest thing to get working, and I would recommend starting there. At this point, you likely have enough other things to worry about with your projects. But if you want to do it "the right way", see if you can create your own DB user and create the environment variables you need for it. This can be a little bit complicated, but can be done either by using the "rhc" RedHat Client tools, or by adding a hook to your commit process. For those that decide to dive into this, please post your findings to the course website.</span></p>
+
+
+
+
+
+        </div>
+    </div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Web Engineering II - Preparation</title>
+    <link rel="stylesheet" type="text/css" href="../course/style.css" />
+</head>
+
+<body>
+    <div id="frame"><img src="../course/cs313.png" border="0" alt="Web Engineering II CS 313" title="Web Engineering II CS 313" width="100%" />
+        <div id="content">
+
+        <h1>Part Two<br />Querying From PHP</h1>
+        <h2>Objective</h2>
+        <p dir="ltr"><span>This document covers the very basics of querying data contained in our MySQL database from PHP. It is not intended to be exhaustive, but rather to help you get started so you can then turn to tutorials and examples on the Internet with more context.</span></p>
+        <h2>Guidelines</h2>
+        <p><b>1. Creating a MySQL account for PHP</b></p>
+        <p>To this point, we have been using the root MySQL user to access the database and run queries. While we could use this account from a PHP script, it would open the door for someone to compromise our complete server if our PHP page were to be exploited.</p>
+        <p>The standard syntax for creating a user is:&nbsp;</p>
+        <p>CREATE USER 'username'@'hostname' IDENTIFIED BY 'password'</p>
+        <p>Thus, to create a user for our PHP user, we could run the following:</p>
+        <p class="cd">mysql&gt; CREATE USER 'php'@'localhost' IDENTIFIED BY 'php-pass';
+            <br />Query OK, 0 rows affected (0.00 sec)</p>
+        <p>Then to grant certain privileges to that account we use the following syntax:</p>
+        <p>GRANT permission1, permission2 ON databaseName.tableName TO 'username'@'hostname';</p>
+        <p>Note that a * can be used for either the database or table names. So, to grant privileges to our PHP user for only the database we want it to access, and only to be able to select and change the data (not create or drop tables, or give permissions to others), we can run the following:</p>
+        <p class="cd">mysql&gt; GRANT INSERT, SELECT, UPDATE, DELETE ON myTestDB.* TO 'php'@'localhost';
+            <br />Query OK, 0 rows affected (0.01 sec)</p>
+        <p>To make these new privileges active, we need to run the following command:</p>
+        <p class="cd">FLUSH PRIVILEGES;</p>
+        <p><b>2. Connecting to MySQL from PHP</b></p>
+        <p>With this user, we can now connect to our MySQL database from PHP.</p>
+        <p dir="ltr"><span>A little background to help explain the different libraries you'll see on the web may be of value. The old (deprecated) way to connect to MySQL from PHP was to use a &ldquo;mysql&rdquo; function/class. This functionality has been replaced by &ldquo;mysqli&rdquo; (&ldquo;i&rdquo; for improved), which is very similar, but cleaned up several things about the approach. However, most people now recommend using PDO (PHP Data Objects). PDO is an abstraction that enables you to connect to different types of databases (e.g., MySQL, Postgres), and also has many convenient features such as prepared statements with named parameter replacement to help avoid SQL injection. For these reasons, most people recommend choosing PDO if you are starting out, but if you have old code written using &ldquo;mysql&rdquo; it may be easier to switch it to the more similar &ldquo;mysqli&rdquo; library.</span></p>
+        <p dir="ltr"><span>Using PDO, the syntax for connecting to a database is:</span></p>
+        <p dir="ltr"><span>$db = new PDO("mysql:host=</span><b>[host_name]</b><span>;dbname=</span><b>[database_name]"</b><span>, </span><b>[user_name]</b><span>, </span><b>[password]</b><span>);</span></p>
+        <p dir="ltr"><span>And if the connection attempt fails, it will throw an exception. So for example:</span></p>
+        <div>
+            <p dir="ltr"><span style="font-family: 'courier new', courier;">try<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">{<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp;$user = 'php';<br /></span> <span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp;$password = 'php-pass'; <br /> </span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp;$db = new PDO('mysql:host=127.0.0.1;dbname=myTestDB', $user, $password);<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">}<br /></span> <span style="font-family: 'courier new', courier; font-size: 12pt;">catch (PDOException $ex) <br /> </span><span style="font-family: 'courier new', courier; font-size: 12pt;">{<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp;echo 'Error!: ' . $ex-&gt;getMessage();<br /></span> <span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp;die(); <br /> </span><span style="font-family: 'courier new', courier; font-size: 12pt;">}</span></p>
+            <p dir="ltr"><span>(Note that for my local machine setup, mysql wouldn't connect with the hostname of &ldquo;localhost,&rdquo; but seemed to work just fine with the ip: 127.0.0.1)</span></p>
+            <p dir="ltr"><span>Once you have a connection, you can then issue queries such as:</span></p>
+            <p dir="ltr"><span style="font-family: 'courier new', courier;">foreach ($db-&gt;query('SELECT username, password FROM user') as $row)<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">{<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp;echo 'user: ' . $row['username'];<br /></span> <span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp;echo ' password: ' . $row['password']; <br /> </span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp;echo '&lt;br /&gt;';<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">}</span></p>
+            <p dir="ltr"><span>Or, alternatively:</span></p>
+            <p dir="ltr"><span style="font-family: 'courier new', courier;">$statement = $db-&gt;query('SELECT username, password FROM user');<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">while ($row = $statement-&gt;fetch(PDO::FETCH_ASSOC))<br /></span> <span style="font-family: 'courier new', courier; font-size: 12pt;">{ <br /> </span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp;echo 'user: ' . $row['username'] . ' password: ' . $row['password'] . '&lt;br /&gt;';<br /></span> <span style="font-family: 'courier new', courier; font-size: 12pt;">}</span></p>
+            <p dir="ltr"><span>Or even:</span></p>
+            <p dir="ltr"><span style="font-family: 'courier new', courier;">$statement = $db-&gt;query('SELECT username, password FROM user');<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">$results = $statement-&gt;fetchAll(PDO::FETCH_ASSOC);</span></p>
+            <div>
+                <p dir="ltr"><b>3. Using Prepared Statements</b></p>
+                <p dir="ltr"><span>As mentioned, one of the strengths of PDO is the ease of using prepared statements to help you avoid SQL injection. </span><a href="http://wiki.hashphp.org/PDO_Tutorial_for_MySQL_Developers" target="_blank"><span>Click here to see an example.</span></a></p>
+                <p dir="ltr"><span style="font-family: 'courier new', courier;">$stmt = $db-&gt;prepare('SELECT * FROM table WHERE id=:id AND name=:name');<br class="kix-line-break" />$stmt-&gt;bindValue(':id', $id, PDO::PARAM_INT);<br class="kix-line-break" />$stmt-&gt;bindValue(':name', $name, PDO::PARAM_STR);<br class="kix-line-break" />$stmt-&gt;execute();<br class="kix-line-break" />$rows = $stmt-&gt;fetchAll(PDO::FETCH_ASSOC);</span></p>
+                <p dir="ltr"><span>Or:</span></p>
+                <p dir="ltr"><span style="font-family: 'courier new', courier;">$stmt = $db-&gt;prepare('SELECT * FROM table WHERE id=:id AND name=:name');<br class="kix-line-break" />$stmt-&gt;execute(array(':name' =&gt; $name, ':id' =&gt; $id));<br class="kix-line-break" />$rows = $stmt-&gt;fetchAll(PDO::FETCH_ASSOC);</span></p>
+                <p dir="ltr"><span></span><a href="http://wiki.hashphp.org/PDO_Tutorial_for_MySQL_Developers" target="_blank"><span>Click here for some further examples.</span></a></p>
+            </div>
+        </div>
+
+
+
+
+        </div>
+    </div>
+
+
+</body>
+
+</html>
