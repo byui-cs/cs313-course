@@ -1,18 +1,19 @@
 After completing the assignment, please answer the questions in this text file and submit it to I-Learn.
 
-1. Copy and paste the textual output of your database tables.
+1. Copy and paste the URL for your web application:
 
 
-2. Describe something from your database that you think came together very nicely.
+2. Copy and paste the URL for your source code repository (e.g., GitHub):
 
 
-3. Describe something from your database that you think could be improved or extended in the future.
+3. Briefly list and describe the elements of the application that are functioning. Include any special instructions about how to login and/or use your application.
 
 
-4. Briefly describe the "coolest" thing you learned while completing this assignment.
+4. Briefly describe any pieces of the assignment that are not yet working correctly.
 
 
-5. Briefly describe the concept of a foreign key constraint and why it could be useful.
+5. Briefly describe the "coolest" thing you learned while completing this assignment.
+
 
 6. Please select the category you feel best describes your assignment:
 A - Some attempt was made
