@@ -1,0 +1,49 @@
+After completing the assignment, please answer the questions in this text file and submit it to I-Learn.
+
+1. Project Title / One sentence descpription:
+
+
+2. Copy and paste the URL for your web application:
+
+
+3. Copy and paste the URL for your source code repository (e.g., GitHub):
+
+
+4. Please provide a brief description of what your project does and how to use the application. Make sure to include any required information such as a username/password if necessary.
+
+
+5. Briefly describe any pieces of the assignment that are not yet working correctly.
+
+
+6. Provide evidence of your database design by showing the tables, describing each one, and then showing the create statements necessary to create each. To do so, run the following commands in MySQL and then copy and paste the results into the essay text box.
+  SHOW TABLES
+  Then for each table:
+  DESCRIBE your-table-name;
+  SHOW CREATE TABLE your-table-name;
+  where “your-table-name” is the name of the table.
+
+--------------------------------
+Project Self-assessment
+--------------------------------
+
+For the each of the following criteria, please stat which category you feel best describes your work and give a 1-2 sentence justification for each. The categories are:
+
+A - Some attempt was made
+B - Developing, but signficantly deficient
+C - Slightly deficient, but still mostly adequate
+D - Meets requirements
+E - Shows creativity and excels above and beyond requirements
+
+1. Professional look and feel
+
+2. Accomplishes a meaningful/interesting task
+
+3. Demonstrates good database design principles
+
+4. Demonstrates skill in database retrieval
+
+5. Demonstrates skill in database modification
+
+6. Demonstrates mastery of client-side/server-side coordination and communication.
+
+7. Overall Project

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>CS 313 - Preparation Material</title>
+    <link rel="stylesheet" type="text/css" href="../course/css/style.css" />
+</head>
+
+<body>
+    <header id="courseTitle">
+        <span class="icon-byui-logo"></span>
+        <h1>CS 313 | Web Engineering II</h1>
+    </header>
+    <article>
+        <h2>07 Prepare : Reading</h2>
+
+        <h3>Preparation Material</h3>
+        <p>The new material this week is fairly minimal because we are focused on wrapping up and cementing the concepts we have been using all semester. There are, however, a few topics to consider:</p>
+
+        <p><b>Authentication:</b> The goal here is not to become a security expert, but to at least be aware of some of the common vulnerabilities and techniques.
+        <ul>
+            <li><p>Perhaps the best way to handle authentication on your PHP site is to use an external library/service to handle it. There are many intricacies associated with security, so entrusting these issues to someone who has gone through the details rather than reinventing the wheel can be a really good idea. One such approach is to use <a href="http://openid.net/get-an-openid/what-is-openid/" target="_blank">OpenID. </a></p></li>
+            <li><p>If, however, you are going to store usernames and passwords in your application, it is critical (and easy!) to at least hash the passwords rather than storing them directly. See <a href="http://www.phptherightway.com/#password_hashing" target="_blank">Password Hashing </a> &nbsp;and <a href="http://www.php.net/manual/en/faq.passwords.php" target="_blank">Safe Password Hashing. </a></p></li>
+            <li><p>Also consider these <a href="http://codingkilledthecat.wordpress.com/2012/09/04/some-best-practices-for-web-app-authentication/" target="_blank">Best Practices for Web App Authentication. </a></p></li>
+        </ul>
+        <p><b>AJAX and PHP:</b> For the most part, AJAX should be a review from previous classes in client side development.</p>
+        <ul>
+            <ul>
+                <li><p>Using a client side library.</p></li>
+                <ul>
+                    <li><p>While AJAX can be done using basic JavaScript, many well-established libraries exist that can make the job much easier. In industry it is very standard to use these libraries for client side interaction.</p></li>
+                    <li><p><a href="http://jquery.com/" target="_blank">jQuery </a> is one good option to consider as a lightweight and easy to use library (there are obviously many others as well).</p></li>
+                </ul>
+                <li><p>JSON</p></li>
+                <ul>
+                    <li><p>While your PHP page can return any data back for your JavaScript to parse, it is often helpful to return JSON. PHP has a built-in function to encode variables/arrays in JSON format: <a href="http://us3.php.net/json_encode" target="_blank">json_encode. </a></p></li>
+                    <li><p>If you are returning JSON, you should set the MIME type to match. Putting this at the top of your PHP page will do the trick:</p></li>
+                    <ul>
+                        <li><p>header('Content-type: application/json');</p></li>
+                    </ul>
+                </ul>
+                <li><p>A simple example of sending back data in JSON format from PHP</p></li>
+                <ul>
+                    <li><p><a href="http://www.caveofprogramming.com/frontpage/articles/php/php-json-an-example-javascript-json-client-with-php-server/" target="_blank">Cave of Programming example</a></p></li>
+                </ul>
+            </ul>
+        </ul>
+        <p><b>Other thoughts on PHP:</b></p>
+        <ul>
+            <ul>
+                <ul>
+                    <li><p><a href="http://mashable.com/2010/11/19/pros-cons-php/" target="_blank">Consider these thoughts on some of the pros and cons of PHP</a></p></li>
+                </ul>
+            </ul>
+        </ul>
+        <p><b>Best practices in PHP:</b></p>
+        <ul>
+            <ul>
+                <li><p>This week, when posting to the developer forum, please try to identify a best practice suggestion for some component of PHP development.</p></li>
+            </ul>
+        </ul>
+        
+
+
+    </article>
+
+</body>
+
+</html>
