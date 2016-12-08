@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Web Engineering II - Ponder and Prove</title>
+    <link rel="stylesheet" type="text/css" href="../course/style.css" />
+</head>
+
+<body>
+    <div id="frame"><img src="../course/cs313.png" border="0" alt="Web Engineering II CS 313" title="Web Engineering II CS 313" width="100%" />
+        <div id="content">
+
+
+        <h1>Set UP IDE and Create a Java Web App</h1>
+        <p>For development purposes, you will want to have a nice IDE setup on your local computer. You can then do most of your development there, and deploy your application to your web server for milestones.</p>
+        <p>While you could choose from serveral different IDEs and Java application containers, these instructions will guide you through the process with NetBeans and GlassFish (which comes with it).</p>
+        <p>1. Download and install the JaveEE version of NetBeans ( https://netbeans.org/downloads/ ). Please note that other versions will not contain the GlassFish server and other predefined packages that we will use.</p>
+        <p>2. Open NetBeans, and create a new project. We will be using Maven as our build system, so in the new project menu, select "Maven" and then "Web application".</p>
+        <p>3. Give the project a name (e.g., FirstProject) and for the project settings, choose the GlassFish server that came with your NetBeans install, and select "Java 7 Web" for the Java version. (If the GlassFish server does not appear in your list of selections, you may have to click "Add..." and follow the prompts to download and install it, using the default settings that it provides).</p>
+        <p>4. This will create for you a number of files, including an index.html page that displays "Hello World".</p>
+        <p>5. Right click the project, and select a new "Servlet" (you may have to look in the "other" menu if it doesn't show up in the short list).</p>
+        <p>6. Give the class a name (e.g., "HelloServlet"), and a package (e.g., "helloWorld").</p>
+        <p>7. Notice (and leave) the default Servlet and URL patterns. They should match the name of your servlet. This will put an annotation before your class that will instruct the server to load and run your class when that URL is requested.</p>
+        <p>8. NetBeans will create the class for you with quite a few methods already filled in. Most importantly, notice that it created a doGet and doPost method for you that call a "processRequest" method that contains code to generate a basic webpage.</p>
+        <p>9. Add something to the HTML that will be generated in the processRequest method, so that you will know that it is really your servlet that you see in the browser.</p>
+        <p>10. Press the green "play" button to build and run your application. This may take a few minutes for the first time as it downloads any Maven dependencies and then starts up the GlassFish server. When it completes, you should see the index.html "Hello World" page.</p>
+        <p>11. Change the URL to have the name of your servlet. Note that you do not need the ".java" or any other extension for the servlet it should simply be something like: "http://localhost:8080/FirstProject/HelloServlet".</p>
+        <p>12. Observe the results of your very first servlet and celebrate!</p>
+
+
+        <h2>ScreenCast</h2>
+        <p><a href="https://video.byui.edu/media/CS+313A+Hello+World+Servlet+%28Part+I%29/0_2h2k4bug" target="_BLANK">This screencast</a> may also be helpful in setting this up.</p>
+        
+        </div>
+    </div>
+
+
+</body>
+
+</html>

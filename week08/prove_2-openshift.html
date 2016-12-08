@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Web Engineering II - Ponder and Prove</title>
+    <link rel="stylesheet" type="text/css" href="../course/style.css" />
+</head>
+
+<body>
+    <div id="frame"><img src="../course/cs313.png" border="0" alt="Web Engineering II CS 313" title="Web Engineering II CS 313" width="100%" />
+        <div id="content">
+
+
+        <h1>Deploy your application to OpenShift</h1>
+        <p>In order to deploy your application to OpenShift, you will need to create a new Java application gear.</p>
+
+        <p>You should not remove the PHP gear at this point (especially if you have not received a score for your project yet!).</p>
+
+        <p>To create your new gear:</p>
+        <ol>
+            <li>Login to OpenShift and create a new application</li>
+            <li>Select "Tomcat 7" as the type.</li>
+            <li>Choose a name, for example, "java". Leave the source code git repository blank, select "no scaling", and then click "Create Application".</li>
+            <li>This may take a few minutes while your Java application server is set up and configured.</li>
+        </ol>
+
+        <h2>Deploying to OpenShift</h2>
+
+        <p>There are different ways that Java web applications can be deployed to a server. One is to let your server build the application for your. Another, and more simplistic option is to build your application locally, package it into a WAR file (Java Web ARchive) and then deploy that single file.</p>
+
+        <p>For this class we will use the second approach because there are fewer moving pieces that can potentially go wrong, but you should be aware that the other option is also used in the World.</p>
+
+        <p>The following page contains instructions to <a href="./prove_2-openshift-war.html">Build a WAR file and deploy it directly</a></p>
+
+        <!--
+        <p>At this point, you have a choice to make about how you will build and deploy your application:</p>
+
+        <p>Will you let OpenShift build the Java application from your source, or will you pre-build a WAR file (Java Web ARchive) and push that up?</p>
+
+        <p>The most straight-forward option is to simply build a WAR file and deploy it. This is listed as option #1. In industry, this type of build process (building a .war file and deploying it) is common for deploying to staging and live servers. The deployment would usually not be done via Git (it is for source control not compiled files), but that is the way OpenShift uses to deploy files, so that is the way you do it if you choose to deploy a .war file.</p>
+
+        <p>The second option is to push your source to OpenShift along with a Maven build file and let OpenShift build it. This is nice because you don't have to put a compiled .war file into your Git repository (which seems a little awkward) and also, all the dependencies can be managed via your Maven file and pulled onto the server automatically. This is common in industry for deploying to test and development servers, because your Maven build can also be configured to run unit tests, etc. Because there are a few more moving pieces in this approach, there are more chances for something to go wrong. That said, once you have it set up and working, it should not be any more work to deploy.</p>
+
+        <p>For the purposes of this class, any of these options (or something else) is perfectly fine. The important thing is that you are able to deploy your application to the Web.</p>
+
+        <p>
+        	The following are instructions to help guide you through the option you choose:
+            <ol>
+        	   <li><a href="313-08-prove_2-openshift-war.html">Build a WAR file and deploy it directly</a></li>
+        	   <li><a href="313-08-prove_2-openshift-build.html">Let OpenShift build your application</a></li>
+            </ol>
+        </p>
+
+-->
+
+<!--
+        <h2>ScreenCast</h2>
+        <p><a href="https://video.byui.edu/media/CS+313A+Hello+World+Servlet+%28Part+II%29/0_416ubgjz" target="_BLANK">This screencast</a> may also be helpful in setting this up.</p>
+-->    
+
+        </div>
+    </div>
+
+
+</body>
+
+</html>
