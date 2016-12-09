@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Web Engineering II - Preparation</title>
+    <link rel="stylesheet" type="text/css" href="../course/style.css" />
+</head>
+
+<body>
+    <div id="frame"><img src="../course/cs313.png" border="0" alt="Web Engineering II CS 313" title="Web Engineering II CS 313" width="100%" />
+        <div id="content">
+
+
+
+        <h1>PART THREE - EXAMPLE: SCRIPTURE APPLICATION (ADDING NEW DATA AND PARSING FILES)</h1>
+        
+            <p dir="ltr"><b>Introduction</b></p>
+            <p dir="ltr"><span>In the previous two parts of this tutorial, we created a simple Java web application to get a list of scriptures and display them using a JSP. In this final part of the tutorial, we will add the ability to add new scriptures and also show an example of reading from and writing to files.</span></p>
+            <p dir="ltr"><b>New Scripture Form</b></p>
+            <p dir="ltr"><span>We begin by creating a new scripture form. This can be a simple HTML page that will post to a servlet. Right-click the WebContent directory and select New -&gt; HTML File. Enter a name such as, "newScripture.html", and select Finish.</span></p>
+            <p dir="ltr"><span>On this new page, we can change the title to "Add New Scripture" and add an HTML form such as:</span></p>
+            <p dir="ltr"><span style="font-family: 'courier new', courier;">&lt;form method="POST" action="CreateScripture"&gt;<br /><span style="font-size: 12pt;">&nbsp; &nbsp; &nbsp;Book: &lt;input type="text" name="txtBook" /&gt;&lt;br /&gt;<br /></span><span style="font-size: 12pt;">&nbsp; &nbsp; &nbsp;Chapter: &lt;input type="text" name="txtChapter" /&gt;&lt;br /&gt;<br /></span><span style="font-size: 12pt;">&nbsp; &nbsp; &nbsp;Verse: &lt;input type="text" name="txtVerse" /&gt;&lt;br /&gt;<br /></span><span style="font-size: 12pt;">&nbsp; &nbsp; &nbsp;&lt;br /&gt;<br /></span><span style="font-size: 12pt;">&nbsp; &nbsp; &nbsp;&lt;input type="submit" value="Submit" /&gt;<br /></span><span style="font-size: 12pt;">&lt;/form&gt;</span></span>
+            </p>
+            <p dir="ltr"><span>Notice the action of the form is "CreateScripture". This will send a post to a Servlet that will we create shortly, called, "CreateScripture".</span></p>
+            <p dir="ltr"><span>The complete HTML page looks as follows:</span></p>
+            <p dir="ltr"><span style="font-family: 'courier new', courier;">&lt;!DOCTYPE html&gt;<br /><span style="font-size: 12pt;">&lt;html&gt;<br /></span><span style="font-size: 12pt;">&lt;head&gt;<br /></span><span style="font-size: 12pt;">&lt;meta charset="UTF-8"&gt;<br /></span><span style="font-size: 12pt;">&lt;title&gt;Add New Scripture&lt;/title&gt;<br /></span><span style="font-size: 12pt;">&lt;/head&gt;<br /></span><span style="font-size: 12pt;">&lt;body&gt;</span></span>
+            </p>
+            <p dir="ltr"><span style="font-family: 'courier new', courier;">&lt;form method="POST" action="CreateScripture"&gt;<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; &nbsp;Book: &lt;input type="text" name="txtBook" /&gt;&lt;br /&gt;<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; &nbsp;Chapter: &lt;input type="text" name="txtChapter" /&gt;&lt;br /&gt;<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; &nbsp;Verse: &lt;input type="text" name="txtVerse" /&gt;&lt;br /&gt;<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; &nbsp;&lt;br /&gt;<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; &nbsp;&lt;input type="submit" value="Submit" /&gt;<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&lt;/form&gt;</span></p>
+            <p dir="ltr"><span style="font-family: 'courier new', courier;">&lt;/body&gt;<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&lt;/html&gt;</span></p>
+            <p dir="ltr"><b>Create a Servlet to Handle the Submission</b></p>
+            <p dir="ltr"><span>Next, we need to create the Servlet to handle the submission. As noted, we need to call this Servlet, "CreateScripture" because that is what we specified in our form action. In the project window, expand the Java Resources, src, and scriptures nodes, then right click the scriptures package and select New -&gt; Servlet. Enter the name of "CreateScripture" and finish.</span></p>
+            <p dir="ltr"><span>Because we specified "POST" as the method for the form, we need to make sure to use the "doPost" method of our servlet class. In this method, we can first get the book from the request form variable:</span></p>
+            <p dir="ltr"><span style="font-family: 'courier new', courier;">String book = request.getParameter("txtBook");</span></p>
+            <p dir="ltr"><span>Next, we can get the chapter and verse, converting them to integers:</span></p>
+            <p dir="ltr"><span style="font-family: 'courier new', courier;">int chapter = Integer.parseInt(request.getParameter("txtChapter"));<br /><span style="font-size: 12pt;">int verse = Integer.parseInt(request.getParameter("txtVerse"));</span></span>
+            </p>
+            <p dir="ltr"><span>Please note that for simplicity, in this tutorial, we are not doing any validation or error checking that should be done in a real application.</span></p>
+            <p dir="ltr"><span>We can then create a new scripture object with this values (which of course requires us to import "scriptures.model.Scripture"):</span></p>
+            <p dir="ltr"><span style="font-family: 'courier new', courier;">Scripture newScripture = new Scripture(book, chapter, verse);</span></p>
+            <p dir="ltr"><span>The next thing to be done is to actually add the scripture to the list. For this part, we will need to create a new scripture data handler class with an "add" method, and pass in our new scripture. We will come back to this shortly, but at the present time, we will leave a comment and then redirect the user to the scripture list page, so they can see the new list with their scripture added (once we fill in that part!).</span></p>
+            <p dir="ltr"><span>The redirect is done by using a response.SendRedirect() method call to the page we want the user to go. In this case we redirect to the "ShowList" servlet, which will load the list and then forward on to our JSP to render it.</span></p>
+            <p dir="ltr"><span style="font-family: 'courier new', courier;">response.sendRedirect("ShowList");</span></p>
+            <p dir="ltr"><b>sendRedirect vs forward</b></p>
+            <p dir="ltr"><span>In this case we used a response.sendRedirect rather than a servletContext.forward. This will actually send a response to the client with a 302 status code, telling the browser to request the new URL. A benefit of this is that the new URL in the browser will be "ShowList" rather than "CreateScripture" so that the page can be refreshed or bookmarked without side effects.</span></p>
+            <p dir="ltr"><span>The complete Servlet now looks as follows:</span></p>
+            <p dir="ltr"><span style="font-family: 'courier new', courier;">package scriptures;</span></p>
+            <p dir="ltr"><span style="font-family: 'courier new', courier;">import java.io.IOException;</span></p>
+            <p dir="ltr"><span style="font-family: 'courier new', courier;">import javax.servlet.ServletException;<br /><span style="font-size: 12pt;">import javax.servlet.annotation.WebServlet;<br /></span><span style="font-size: 12pt;">import javax.servlet.http.HttpServlet;<br /></span><span style="font-size: 12pt;">import javax.servlet.http.HttpServletRequest;<br /></span><span style="font-size: 12pt;">import javax.servlet.http.HttpServletResponse;</span></span>
+            </p>
+            <p dir="ltr"><span style="font-family: 'courier new', courier;">import scriptures.model.Scripture;<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;"></span></p>
+            <p dir="ltr"><span style="font-family: 'courier new', courier; font-size: 12pt;">/**<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">* Servlet implementation class CreateScripture<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">*/<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">@WebServlet("/CreateScripture")<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">public class CreateScripture extends HttpServlet {<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp;private static final long serialVersionUID = 1L;</span></p>
+            <p dir="ltr"><span style="font-family: 'courier new', courier; font-size: 12pt;"></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; &nbsp;/**<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; &nbsp;* @see HttpServlet#HttpServlet() &nbsp;<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; &nbsp;*/<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; &nbsp;public CreateScripture() {<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; super();<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; // TODO Auto-generated constructor stub<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; &nbsp;}</span></p><span style="font-family: 'courier new', courier;"><br /></span>
+            <p dir="ltr"><span style="font-family: 'courier new', courier;"><span class="Apple-tab-span"></span>&nbsp; &nbsp; &nbsp; &nbsp;/**
+                <br />
+                </span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp;* @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp;*/<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp;protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; String book = request.getParameter("txtBook");<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; int chapter = Integer.parseInt(request.getParameter("txtChapter"));<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; int verse = Integer.parseInt(request.getParameter("txtVerse"));</span></p>
+            <p dir="ltr"><span style="font-family: 'courier new', courier;"><span class="Apple-tab-span"></span><span class="Apple-tab-span"></span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Scripture newScripture = new Scripture(book, chapter, verse);</span>
+            </p>
+            <p dir="ltr"><span style="font-family: 'courier new', courier;"><span class="Apple-tab-span"></span><span class="Apple-tab-span"></span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; // TODO: Add this scripture to the list</span>
+            </p>
+            <p dir="ltr"><span style="font-family: 'courier new', courier;"><span class="Apple-tab-span"></span><span class="Apple-tab-span"></span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; response.sendRedirect("ShowList");
+                <br />
+                </span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; &nbsp;}<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">}</span></p>
+            <p dir="ltr"><span>At this point, we can run our web application. Submit a form, which should redirect to the ShowList page and show us the original list of scriptures (because we have not actually added the scripture yet).</span></p>
+            <p dir="ltr"><b>Create a New Scripture Data Handler</b></p>
+            <p dir="ltr"><span>Previously, we were using a hard coded data handler to load a list of scriptures. For this example, we will now create a new handler that will save and load a list of scriptures to a file. A more common (and better) way to do this would be to use a database, but because we have not covered database connections in Java yet, we will use the file system.</span></p>
+            <p dir="ltr"><span>Our approach will be to have a single file where each line represents a scripture, with the book, chapter, and verse separated by a comma.</span></p>
+            <p dir="ltr"><span>To enable reading and writing from the file in this way, we can first modify our Scripture class to have a "toFileString()" method that returns a scripture with the commas in the correct spot, and a "loadFromFileString(String str)" that parses a comma-delimited string and sets the values. Thus the following methods can be added to the Scripture class:</span></p>
+            <p dir="ltr"><span><span class="Apple-tab-span"></span></span><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp;public String toFileString() {<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return book + "," + chapter + "," + verse;<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; &nbsp;}</span></p>
+            <p dir="ltr"><span style="font-family: 'courier new', courier;">&nbsp;<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; &nbsp;public void loadFromFileString(String str) {<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; // TODO: Validation should be done here<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; String[] parts = str.split(",");</span></p>
+            <p dir="ltr"><span style="font-family: 'courier new', courier;">&nbsp;<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; book = parts[0];<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; chapter = Integer.parseInt(parts[1]);<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; verse = Integer.parseInt(parts[2]);<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; &nbsp;}</span></p>
+            <p dir="ltr"><span>Next, we need to create a new data handler class to read and write the file. In the project explorer, browse to the model package, right click and create a new Java class called, "FileScriptureHandler". This class should implement the ScriptureDataHandler interface, which means it must declare that (i.e., "implements ScriptureDataHandler") and provide a getFavoriteScriptures() method. We will also need a method to get/set the filename, and one to add a new scripture to the list.</span></p>
+            <p dir="ltr"><span>First, we will create a private String to hold the file name, a constructor to take this fileName, and create a getter and setter for it:</span></p>
+            <p dir="ltr"><span style="font-family: 'courier new', courier;">private String fileName;</span></p>
+            <p dir="ltr"><span style="font-family: 'courier new', courier;">public FileScriptureHandler(String fileName) {<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp;this.fileName = fileName;<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">}</span></p>
+            <p dir="ltr"><span style="font-family: 'courier new', courier;">public String getFileName() {<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp;return fileName;<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">}</span></p>
+            <p dir="ltr"><span style="font-family: 'courier new', courier;">public void setFileName(String fileName) {<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp;this.fileName = fileName;<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">}</span></p>
+            <p dir="ltr"><span>Then, create a new method called "addScripture" that takes a scripture:</span></p>
+            <p dir="ltr"><span style="font-family: 'courier new', courier;">public void addScripture(Scripture scripture) {<br /><span style="font-size: 12pt;">}</span></span>
+            </p>
+            <p dir="ltr"><span>Then in this method, we first open the file for appending:</span></p>
+            <p dir="ltr"><span style="font-family: 'courier new', courier;">BufferedWriter writer = new BufferedWriter(new FileWriter(getFileName(), true));</span></p>
+            <p dir="ltr"><span>Then we can write out the scripture in the correct format and close the file:</span></p>
+            <p dir="ltr"><span style="font-family: 'courier new', courier;">writer.write(scripture.toFileString() + "\n");<br /><span style="font-size: 12pt;">writer.close();</span></span>
+            </p>
+            <p dir="ltr"><span>Finally, we add a getFavoriteScriptures method to load from the file in a similar fashion. The complete file then looks as follows:</span></p>
+            <p dir="ltr"><span style="font-family: 'courier new', courier;">package scriptures.model;</span></p>
+            <p dir="ltr"><span style="font-family: 'courier new', courier;">import java.io.BufferedReader;<br /><span style="font-size: 12pt;">import java.io.BufferedWriter;<br /></span><span style="font-size: 12pt;">import java.io.FileReader;<br /></span><span style="font-size: 12pt;">import java.io.FileWriter;<br /></span><span style="font-size: 12pt;">import java.io.IOException;<br /></span><span style="font-size: 12pt;">import java.util.ArrayList;<br /></span><span style="font-size: 12pt;">import java.util.List;</span></span>
+            </p>
+            <p dir="ltr"><span style="font-family: 'courier new', courier;">public class FileScriptureHandler implements ScriptureDataHandler {</span></p>
+            <p dir="ltr"><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp;private String fileName;</span></p>
+            <p dir="ltr"><span style="font-family: 'courier new', courier;"><span class="Apple-tab-span"></span>&nbsp; &nbsp; &nbsp;public FileScriptureHandler(String fileName) {
+                <br /><span style="font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; this.fileName = fileName;<br /></span><span style="font-size: 12pt;">&nbsp; &nbsp; &nbsp;}</span></span>
+            </p>
+            <p dir="ltr"><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp;public String getFileName() {<br /><span style="font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return fileName;<br /></span><span style="font-size: 12pt;">&nbsp; &nbsp; &nbsp;}</span></span>
+            </p>
+            <p dir="ltr"><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp;public void setFileName(String fileName) {<br /><span style="font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; this.fileName = fileName;<br /></span><span style="font-size: 12pt;">&nbsp; &nbsp; &nbsp;}<br /></span><span style="font-size: 12pt;">&nbsp;<br /></span><span style="font-size: 12pt;">&nbsp; &nbsp; &nbsp;public void addScripture(Scripture scripture) {<br /></span><span style="font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; try {<br /></span><span style="font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;BufferedWriter writer = new BufferedWriter(new FileWriter(getFileName(), true));<br /></span><span style="font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;writer.write(scripture.toFileString() + "\n");<br /></span><span style="font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;writer.close();</span><span style="font-size: 12pt;">&nbsp;</span></span>
+            </p>
+            <p dir="ltr"><span style="font-family: 'courier new', courier;"><span class="Apple-tab-span"></span><span class="Apple-tab-span"></span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; } catch (IOException e) {
+                <br /><span style="font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;e.printStackTrace();<br /></span><span style="font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }<br /></span><span style="font-size: 12pt;">&nbsp; &nbsp; &nbsp;}</span></span>
+            </p>
+            <p dir="ltr"><span style="font-family: 'courier new', courier;"><span style="font-size: 12pt;"></span><span style="font-size: 12pt;">&nbsp; &nbsp; &nbsp;@Override<br /></span><span style="font-size: 12pt;">&nbsp; &nbsp; &nbsp;public List&lt;Scripture&gt; getFavoriteScriptures() {<br /></span><span style="font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; List&lt;Scripture&gt; list = new ArrayList&lt;Scripture&gt;();</span></span>
+            </p>
+            <p dir="ltr"><span style="font-family: 'courier new', courier;"><span style="font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; try {<br /></span><span style="font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;BufferedReader reader = new BufferedReader(new FileReader(getFileName()));</span></span>
+            </p>
+            <p dir="ltr"><span style="font-size: 12pt; font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;String line;</span></p>
+            <p dir="ltr"><span style="font-family: 'courier new', courier;"><span style="font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;while ((line = reader.readLine()) != null) {<br /></span><span style="font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Scripture scripture = new Scripture();<br /></span><span style="font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; scripture.loadFromFileString(line);<br /></span><span style="font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; list.add(scripture);<br /></span><span style="font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}</span></span>
+            </p>
+            <p dir="ltr"><span style="font-family: 'courier new', courier;"><span class="Apple-tab-span"></span><span class="Apple-tab-span"></span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; } catch (IOException e) {
+                <br /><span style="font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;e.printStackTrace();<br /></span><span style="font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</span></span>
+            </p>
+            <p dir="ltr"><span style="font-family: 'courier new', courier;"><span style="font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return list;<br /></span><span style="font-size: 12pt;">&nbsp; &nbsp; &nbsp;}<br /></span><span style="font-size: 12pt;">}</span></span>
+            </p>
+            <p dir="ltr"><b>Use the new FileScriptureHandler</b></p>
+            <p dir="ltr"><span>Now that we have a new file system scripture data handler, we can use it to retrieve the list of scriptures from file and to add to it.</span></p>
+            <p dir="ltr"><span>In the CreateScripture servlet, where we had previously left a comment, we can now replace it with:</span></p>
+            <p dir="ltr"><span style="font-family: 'courier new', courier;">FileScriptureHandler handler = new FileScriptureHandler("list.txt");<br /><span style="font-size: 12pt;">handler.addScripture(newScripture);</span></span>
+            </p>
+            <p dir="ltr"><span>Then on the ShowList servlet, because our new handler implements the same interface, we just have to change this line:</span></p>
+            <p dir="ltr"><span style="font-family: 'courier new', courier;">ScriptureDataHandler handler = new HardCodedScriptureHandler();</span></p>
+            <p dir="ltr"><span>to this:</span></p>
+            <p dir="ltr"><span style="font-family: 'courier new', courier;">ScriptureDataHandler handler = new FileScriptureHandler("list.txt");</span></p>
+            <p dir="ltr"><span>Assuming that our web server user account has access to write files in the current directory, we can then run the complete application, starting on the newScriptureHTML page, add a new scripture and see the resulting list!</span></p>
+            <p dir="ltr"><b>Updating the Interface</b></p>
+            <p dir="ltr"><span>You may notice that in our CreateScripture Servlet, we used the concrete type, "FileScriptureHandler" rather than the interface. As before it would be better to use an interface for this to further separate our concrete implementation, so that we could easily change to a DatabaseHandler or something else in the future. To do this, we would need to modify the ScriptureDataHandler interface to contain an addScripture method, and then update all classes that implement the interface. In this case that would mean the "HardCodedScriptureHandler" would have to be updated. Even though it doesn't really have a way to add to the list, it would have to implement this method, and throw an exception or do nothing.</span></p>
+            <p dir="ltr"><b>Reading and Writing Files at OpenShift</b></p>
+            <p dir="ltr"><span>Because OpenShift has different permissions, and will delete your old directory every time you push new content, they have created a data directory to be used for the purpose of data files like our scripture list. This directory can be found using a system environment variable:</span></p>
+            <p dir="ltr"><span style="font-family: 'courier new', courier;">String dataDirectory = System.getenv("OPENSHIFT_DATA_DIR");</span></p>
+            <p dir="ltr"><span>Your application can read and write to this directory, and files created there will persist among different deployments.</span></p>
+
+
+
+
+        </div>
+    </div>
+
+
+</body>
+
+</html>

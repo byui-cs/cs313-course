@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Web Engineering II - Preparation</title>
+    <link rel="stylesheet" type="text/css" href="../course/style.css" />
+</head>
+
+<body>
+    <div id="frame"><img src="../course/cs313.png" border="0" alt="Web Engineering II CS 313" title="Web Engineering II CS 313" width="100%" />
+        <div id="content">
+
+
+        <h1>PART ONE - EXAMPLE: SCRIPTURE APPLICATION (STARTING THE VIEW AND THE CONTROLLER)</h1>
+        <p><span style="color: #0097c9; font-family: proxima-nova, helvetica, arial; font-size: 14pt;">OBJECTIVE</span></p>
+        <p>The the basics of Servlet / JSP Interaction.</p>
+        <h4>EXAMPLE</h4>
+        <p>Let's consider that we are to build a simple application to keep a list of scriptures. This application will accept a new scripture to be added to the list, and all the scriptures in the list can be displayed.</p>
+        <h4>INSTRUCTIONS:</h4>
+        <p><b>1. Create Project in Eclipse</b></p>
+        <ul>
+            <li><span style="font-size: 12pt;">First, we start by creating a dynamic web application in Eclipse.</span></li>
+            <li><span style="font-size: 12pt;">File-&gt;New-&gt;Dynamic Web Project</span></li>
+            <li><span style="font-size: 12pt;">Type in the name "scriptures", make sure Tomcat v.7 is selected as the target runtime.</span></li>
+        </ul>
+        <p><b>2. Create first JSP</b></p>
+        <p>Let's start by creating a simple JSP that can display the list of scriptures. Expand the scriptures project, right-click the WebContent folder, and select New -&gt; JSP File. Choose a name such as "scriptureList.jsp", and select finish.</p>
+        <p>Change the title to "Scripture List" and add the following into the body:</p>
+        <p><span style="font-family: 'courier new', courier;">&lt;div&gt;</span>
+            <br /><span style="font-family: 'courier new', courier;">Scriptures:&lt;br /&gt;&lt;br /&gt;</span>
+            <br /><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp; &nbsp; Proverbs 3:5&lt;br /&gt;</span>
+            <br /><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp; &nbsp; Doc. &amp;amp; Cov. 112:10&lt;br /&gt;</span>
+            <br /><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp; &nbsp; John 7:17&lt;br /&gt;</span>
+            <br /><span style="font-family: 'courier new', courier;">&lt;/div&gt;</span></p>
+        <p>The complete page should be:</p>
+        <p><span style="font-family: 'courier new', courier;">&lt;%@ page language="java" contentType="text/html; charset=ISO-8859-1"</span>
+            <br /><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; pageEncoding="ISO-8859-1"%&gt;</span>
+            <br /><span style="font-family: 'courier new', courier;">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"</span>
+            <br /><span style="font-family: 'courier new', courier;">"http://www.w3.org/TR/html4/loose.dtd"&gt;</span>
+            <br /><span style="font-family: 'courier new', courier;">&lt;html&gt;</span>
+            <br /><span style="font-family: 'courier new', courier;">&lt;head&gt;</span>
+            <br /><span style="font-family: 'courier new', courier;">&lt;meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"&gt;</span>
+            <br /><span style="font-family: 'courier new', courier;">&lt;title&gt;Scripture List&lt;/title&gt;</span>
+            <br /><span style="font-family: 'courier new', courier;">&lt;/head&gt;</span>
+            <br /><span style="font-family: 'courier new', courier;">&lt;body&gt;</span>
+            <br /><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp; &nbsp;&lt;div&gt;</span>
+            <br /><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Scriptures:&lt;br /&gt;&lt;br /&gt;</span></p>
+        <p><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Proverbs 3:5&lt;br /&gt;&nbsp;</span>
+            <br /><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Doc. &amp;amp; Cov. 112:10&lt;br /&gt;</span>
+            <br /><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;John 7:17&lt;br /&gt;</span>
+            <br /><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp; &nbsp;&lt;/div&gt;</span>
+            <br /><span style="font-family: 'courier new', courier;">&lt;/body&gt;</span>
+            <br /><span style="font-family: 'courier new', courier;">&lt;/html&gt;</span></p>
+        <p>We can now click the green play button in Eclipse to start up the Tomcat service and display our simple webpage.</p><img src="./img/mvc-1.png" border="0" width="436px;" height="219px;" />
+        <p><b>3. Introduce Scriptlets</b></p>
+        <p>While this page now displays the three scriptures, it is certainly not dynamic in any way. We can now change the page to use scriptures, which allows us to put Java code directly into the page in between &lt;% and %&gt; tags as follows:</p>
+        <p>In the body of the page, we can now introduce Java code, to create a new ArrayList of Strings and add our scriptures to the list.</p>
+        <p><span style="font-family: 'courier new', courier;">&lt;%</span>
+            <br /><span style="font-family: 'courier new', courier;">List&lt;String&gt; scriptures = new ArrayList&lt;String&gt;();</span>
+            <br /><span style="font-family: 'courier new', courier;">scriptures.add("Proverbs 3:5");</span>
+            <br /><span style="font-family: 'courier new', courier;">scriptures.add("Doc. &amp;amp; Cov. 112:10");</span>
+            <br /><span style="font-family: 'courier new', courier;">scriptures.add("John 7:17");</span>
+            <br /><span style="font-family: 'courier new', courier;">%&gt;</span></p>
+        <p>This will require us to import List and ArrayList at the top of our JSP:</p>
+        <p><span style="font-family: 'courier new', courier;">&lt;%@ page import="java.util.List" %&gt;</span></p>
+        <p><span style="font-family: 'courier new', courier;">&lt;%@ page import="java.util.ArrayList" %&gt;</span></p>
+        <p>&nbsp;</p>
+        <p>Then we can iterate through each scripture in the list and&nbsp;</p>
+        <p><span style="font-family: 'courier new', courier;">&lt;%</span>
+            <br /><span style="font-family: 'courier new', courier;">for (String scripture : scriptures) {</span>
+            <br /><span style="font-family: 'courier new', courier;">out.println(scripture + "&lt;br /&gt;");</span>
+            <br /><span style="font-family: 'courier new', courier;">}</span>
+            <br /><span style="font-family: 'courier new', courier;">%&gt;&nbsp;</span></p>
+        <p>The complete source of the JSP now looks as follows:</p>
+        <p><span style="font-family: 'courier new', courier;">&lt;%@ page language="java" contentType="text/html; charset=ISO-8859-1"</span>
+            <br /><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;pageEncoding="ISO-8859-1"%&gt;</span>
+            <br /><span style="font-family: 'courier new', courier; background-color: #ffcc99;">&lt;%@ page import="java.util.List" %&gt;</span>
+            <br /><span style="font-family: 'courier new', courier; background-color: #ffcc99;">&lt;%@ page import="java.util.ArrayList" %&gt;</span></p>
+        <p>&nbsp;</p>
+        <p><span style="font-family: 'courier new', courier;">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">"http://www.w3.org/TR/html4/loose.dtd"&gt;<br /></span> <span style="font-family: 'courier new', courier; font-size: 12pt;">&lt;html&gt; <br /> </span><span style="font-family: 'courier new', courier; font-size: 12pt;">&lt;head&gt;<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&lt;meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"&gt;<br /></span> <span style="font-family: 'courier new', courier; font-size: 12pt;">&lt;title&gt;Scripture List&lt;/title&gt; <br /> </span><span style="font-family: 'courier new', courier; font-size: 12pt;">&lt;/head&gt;<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&lt;body&gt;</span></p>
+        <p><span style="font-family: 'courier new', courier; background-color: #ffcc99;">&lt;%</span>
+            <br /><span style="font-family: 'courier new', courier; background-color: #ffcc99;">List&lt;String&gt; scriptures = new ArrayList&lt;String();</span>
+            <br /><span style="font-family: 'courier new', courier; background-color: #ffcc99;">scriptures.add("Proverbs 3:5");</span>
+            <br /><span style="font-family: 'courier new', courier; background-color: #ffcc99;">scriptures.add("Doc. &amp;amp; Cov. 112:10");</span>
+            <br /><span style="font-family: 'courier new', courier; background-color: #ffcc99;">scriptures.add("John 7:17");</span>
+            <br /><span style="font-family: 'courier new', courier; background-color: #ffcc99;">%&gt;</span></p>
+        <p><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp; &nbsp; &lt;div&gt;</span></p>
+        <p><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Scriptures:&lt;br /&gt;&lt;br /&gt;</span></p>
+        <p><span style="font-family: 'courier new', courier; background-color: #ffcc99;">&lt;%</span>
+            <br /><span style="background-color: #ffcc99;"><span style="font-family: 'courier new', courier;">for (String scripture : scriptures){<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp;out.println(scripture + "&lt;br /&gt;");<br /></span> <span style="font-family: 'courier new', courier; font-size: 12pt;">}</span> </span>
+        </p>
+        <p><span style="font-family: 'courier new', courier; background-color: #ffcc99;">%&gt;<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp; &lt;/div&gt;</span></p>
+        <p><span style="font-family: 'courier new', courier;">&lt;/body&gt;<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&lt;/html&gt;</span></p>
+        <p>This is NOT the best way to do some of these tasks, as we will see through the completion of this tutorial, but it will put the scriptures into the list, and then iterate through the list, displaying them one at a time to the screen. Clicking the green play button in Eclipse will show the page in the browser and produce the exact same page as before, but this time it is dynamically generated.</p>
+        <p><b>4. Generate the list in a servlet</b></p>
+        <p>We obviously don't want to hard-code the scriptures into the JSP page, but want to instead get them from the server (ultimately from a database or the file system, etc.). Also, in following the MVC design pattern, we want our JSP to serve as the View component, and handle as little of the business logic as possible.</p>
+        <p>To accomplish this, we can create a servlet, have it set up the list, and then have it transfer control to the JSP to render the list.</p>
+        <p>In Eclipse, right click the project and select New -&gt; Servlet. Then type a package name, such as "scriptures" and a class name, such as "ShowList", and click finish. This creates a new java class shown under Java Resources -&gt; src -&gt; scriptures -&gt; ShowList.java</p><img src="./img/mvc-2.png" border="0" width="261px;" height="269px;" />
+        <p>Before the declaration of the new servlet class, notice the annoation: @WebServlet("/ShowList"). This means that our servlet will be invoked for URLs matching "ShowList".</p>
+        <p>Because this page is a type of query (not causing side effects), we want to use the GET method, and therefore can delete the auto-generated "doPost" method, and put our code in the "doGet" method. We can cut and paste the code to generate the list from the JSP to put it in this method (of course, this also requires importing List and ArrayList at the top of the file):&nbsp;</p>
+        <p><span style="font-family: 'courier new', courier;">List&lt;String&gt; scriptures = new ArrayList&lt;String&gt;();</span>
+            <br /><span style="font-family: 'courier new', courier;">scriptures.add("Proverbs 3:5");</span>
+            <br /><span style="font-family: 'courier new', courier;">scriptures.add("Doc. &amp;amp; Cov. 112:10");</span>
+            <br /><span style="font-family: 'courier new', courier;">scriptures.add("John 7:17");&nbsp;</span></p>
+        <p dir="ltr">But we then need a way to pass this list to the JSP. We first put it on the request object:</p>
+        <p><span style="font-family: 'courier new', courier;">request.setAttribute("scriptures", scriptures);</span></p>
+        <p>And then tell the server to transfer control to the JSP, passing it our current request and response:</p>
+        <p><span style="font-family: 'courier new', courier;">request.getRequestDispatcher("scriptureList.jsp").forward(request, response);</span></p>
+        <p>The complete servlet file looks as follows:</p>
+        <p><span style="font-family: 'courier new', courier;">package scriptures;&nbsp;</span></p>
+        <p><span style="font-family: 'courier new', courier; background-color: #ffcc99;">import java.io.IOException;</span>
+            <br /><span style="font-family: 'courier new', courier; background-color: #ffcc99;">import java.util.ArrayList;</span>
+            <br /><span style="font-family: 'courier new', courier;">import java.util.List;</span>
+            <br /><span style="font-family: 'courier new', courier;">import javax.servlet.ServletException;</span>
+            <br /><span style="font-family: 'courier new', courier;">import javax.servlet.annotation.WebServlet;</span>
+            <br /><span style="font-family: 'courier new', courier;">import javax.servlet.http.HttpServlet;</span>
+            <br /><span style="font-family: 'courier new', courier;">import javax.servlet.http.HttpServletRequest;</span>
+            <br /><span style="font-family: 'courier new', courier;">import javax.servlet.http.HttpServletResponse;</span></p>
+        <p><span style="font-family: 'courier new', courier;">/**</span>
+            <br /><span style="font-family: 'courier new', courier;">&nbsp;* Servlet implementation class ShowList</span>
+            <br /><span style="font-family: 'courier new', courier;">&nbsp;*/</span>
+            <br /><span style="font-family: 'courier new', courier;">@WebServlet("/ShowList")</span>
+            <br /><span style="font-family: 'courier new', courier;">public class ShowList extends HttpServlet {</span>
+            <br /><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp; &nbsp;private static final long serialVersionUID = 1L;</span></p>
+        <p><span style="font-family: 'courier new', courier;">&nbsp; &nbsp;/**<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; * @see HttpServlet#HttpServlet()<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; */<br /></span> <span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp;public ShowList() { <br /> </span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp;super();<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp;// TODO Auto-generated constructor stub<br /></span> <span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp;}</span></p>
+        <p><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp; /**</span></p>
+        <p><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp; &nbsp;* @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)</span></p>
+        <p><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp; &nbsp;*/<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; &nbsp; protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {</span></p>
+        <p><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="background-color: #ffcc99;">List&lt;String&gt; scriptures = new ArrayList&lt;String&gt;();</span></span>
+            <br /><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="background-color: #ffcc99;">scriptures.add("Proverbs 3:5");</span></span>
+            <br /><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="background-color: #ffcc99;">scriptures.add("Doc. &amp;amp; Cov. 112:10");</span>
+            <br /> </span><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="background-color: #ffcc99;">scriptures.add("John 7:17");</span></span>
+        </p>
+        <p><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span style="background-color: #ffcc99;">request.setAttribute("scriptures", scriptures);<br /></span></span><span style="font-family: 'courier new', courier; font-size: 12pt; background-color: #ffcc99;">request.getRequestDispatcher("scriptureList.jsp").forward(request,response);</span></p>
+        <p><span style="font-family: 'courier new', courier; font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp;}</span></p>
+        <p><span style="font-family: 'courier new', courier; font-size: 12pt;">}</span></p>
+        <p><span style="font-family: verdana, geneva; font-size: 12pt;">We can now update the JSP to get the scripture list from the request and output it. We first remove the scriptlet that created the list (because it is now in the servlet code), and change the loop to get the list from the request attributes:</span> <span style="font-size: 12pt;">&nbsp;</span></p>
+        <p><span style="font-family: 'courier new', courier;">&lt;%</span>
+            <br /><span style="font-family: 'courier new', courier;">for (String scripture : (List&lt;String&gt;)request.getAttribute("scriptures")) {</span>
+            <br /><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;out.println(scripture + "&lt;br /&gt;");</span>
+            <br /><span style="font-family: 'courier new', courier;">}</span>
+            <br /><span style="font-family: 'courier new', courier;">%&gt;</span></p>
+        <p>We can now run the servlet, by selecting it (ShowList.java) and clicking the play button.</p><img src="./img/mvc-3.png" border="0" width="430px;" height="162px;" /><span style="font-size: 12pt;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span>
+        <p>Notice that the URL says "ShowList" rather than "scriptureList.jsp". The client is not aware that we transferred control to the JSP to render the page, but rather just sees this as a request to the ShowList servlet.</p>
+        <p><b>5. Using JSTL</b></p>
+        <p>As we have discussed, in the MVC design pattern, we want the JSP to serve as our View, and we want to avoid logic as much as possible in it. In this regard, while scriptlets are allowed, their use is highly discourage, because we are now mixing direct Java code with our presentation. The preferred approach is to instead use the JSTL (or JSF components, but we aren't going to introduce them yet).</p>
+        <p>Because the JSTL is not included by default in Tomcat or GlassFish, we need to download the jstl-1-2.jar file and put it in our WEB-INF/lib folder. Or, if you are using Maven, you can specify the dependency in your pom.xml file as follows:</p><pre class="default prettyprint prettyprinted"><code><span class="tag">&lt;dependency&gt;<br /></span><span class="tag">&nbsp; &lt;groupId&gt;</span><span class="pln">javax.servlet</span><span class="tag">&lt;/groupId&gt;</span><span class="pln"><br /></span><span class="tag">&nbsp; &lt;artifactId&gt;</span><span class="pln">jstl</span><span class="tag">&lt;/artifactId&gt;<br /></span><span class="tag">&nbsp; &lt;version&gt;</span><span class="pln">1.2</span><span class="tag">&lt;/version&gt;<br /></span><span class="tag">&lt;/dependency&gt;</span></code><br /><br /></pre>
+        <p>Then in our JSP, we include the following at the top to use the core tag library:</p>
+        <p>&nbsp;<span style="font-family: 'courier new', courier;">&lt;%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %&gt;</span><span style="font-size: 12pt;">&nbsp;</span></p>
+        <p>We can then replace our scriptlet with the following:</p>
+        <p><span style="font-family: 'courier new', courier;">&lt;c:forEach var="scripture" items="${scriptures}"&gt;</span></p>
+        <p><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;${scripture}&lt;br /&gt;</span></p>
+        <p><span style="font-family: 'courier new', courier;">&lt;/c:forEach&gt;</span></p>
+        <p>Notice that we are using the forEach tag from the core library, and we are using the EL syntax for both the request attribute (${scriptures}) and our iterator (${scripture}).</p>
+        <p>The complete JSP file now looks as follows:</p>
+        <p><span style="font-family: 'courier new', courier;">&lt;%@ page language="java" contentType="text/html; charset=ISO-8859-1"</span>
+            <br /><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; pageEncoding="ISO-8859-1"%&gt;</span>
+            <br /><span style="font-family: 'courier new', courier; background-color: #ffcc99;">&lt;%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %&gt;</span></p>
+        <p><span style="font-family: 'courier new', courier;">&nbsp;</span></p>
+        <p><span style="font-family: 'courier new', courier;">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"&gt;</span>
+            <br /><span style="font-family: 'courier new', courier;">&lt;html&gt;</span>
+            <br /><span style="font-family: 'courier new', courier;">&lt;head&gt;</span>
+            <br /><span style="font-family: 'courier new', courier;">&lt;meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"&gt;</span>
+            <br /><span style="font-family: 'courier new', courier;">&lt;title&gt;Scripture List&lt;/title&gt;</span>
+            <br /><span style="font-family: 'courier new', courier;">&lt;/head&gt;</span>
+            <br /><span style="font-family: 'courier new', courier;">&lt;body&gt;</span></p>
+        <p><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp; &nbsp;&lt;div&gt;</span>
+            <br /><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Scriptures:&lt;br /&gt;&lt;br /&gt;</span></p>
+        <p><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<span style="background-color: #ffcc99;">&lt;c:forEach var="scripture" items="${scriptures}"&gt;</span></span>
+            <br /><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<span style="background-color: #ffcc99;">${scripture}&lt;br /&gt;</span></span>
+            <br /><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<span style="background-color: #ffcc99;">&lt;/c:forEach&gt;</span></span>
+        </p>
+        <p><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp; &nbsp;&lt;/div&gt;</span></p>
+        <p><span style="font-family: 'courier new', courier;">&lt;/body&gt;</span>
+            <br /><span style="font-family: 'courier new', courier;">&lt;/html&gt;</span></p>
+        <p><span style="font-size: 12pt;">We can now select the ShowList servlet, click the Green play button and see the same output, but this time, without having to use scriptlets.</span><span style="font-size: 12pt;">&nbsp;</span></p>
+        <p>By using the JSTL we have now made the page much cleaner, and removed the potential for complex/involved Java logic to find its way onto the page, and instead, created it as a very straightforward "View", and left all of the logic to our Controller, the ShowList servlet.<span style="font-size: 12pt;">&nbsp;</span></p>
+
+
+
+        </div>
+    </div>
+
+
+</body>
+
+</html>
