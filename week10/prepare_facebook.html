@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Web Engineering II - Preparation</title>
+    <link rel="stylesheet" type="text/css" href="../course/style.css" />
+</head>
+
+<body>
+    <div id="frame"><img src="../course/cs313.png" border="0" alt="Web Engineering II CS 313" title="Web Engineering II CS 313" width="100%" />
+        <div id="content">
+
+
+        <h1>Authentication with the Facebook API</h1>
+        <h3>Objective</h3>
+        <p>Demonstrate the basics of connecting to the Facebook API using OAuth 2 authentication.</p>
+        <p>To do this, we will develop a simple web application that enables a user to sign in with their Facebook credentials, and then displays a list of their friends. We will be using the facebook4j library to facilitate this.</p>
+        <p><b>Note</b>: It appears that the Facebook API has changed slightly since this example was written, and newly created apps may not have access to the list of friends anymore. The authentication process is still the same, but in the end where this example shows how to display the list of friends, your new app may not be able to. Instead, you could just display the user's own name, or other data that is still available, to verify that your application is working.</p>
+        <h3>Understanding the basics of the Oauth 2.0 Handshaking process.</h3>
+        <p>In order to access Facebook to the get friends of a particular user, we need to kinds of access. First, our application needs to authenticate with Facebook, and second, the user also needs to authenticate.</p>
+        <p>When we create a new application at Facebook, we are given access credentials, which could be thought of as a "username" and "password" for our <i>application</i>. Then whenever a user wants to use our application, our application will pass its credentials to Facebook along with the users. The easiest way to do this, would be to get the user's Facebook username and password, and then the application could pass their information with the application information all at once. The drawback of this is that our application would have to obtain and store the users Facebook password, which is not desired from a security perspective.</p>
+        <p>The better way is for our application to redirect the user to Facebook to have them log in there. At the same time, we also give Facebook the credentials for our application, and a "CallBack" URL for the user to be sent to after they log in. This process is described well in the documentation of the FamilySearch API: <a href="https://familysearch.org/developers/docs/guides/oauth2">https://familysearch.org/developers/docs/guides/oauth2</a></p>
+        <h3>Creating an application with Facebook</h3>
+        <p>Before we can connect to Facebook, we first need to create a Facebook app and obtain the necessary access credentials.</p>
+        <ol>
+            <li>Go to <a href="http://developers.facebook.com/" target="_blank">http://developers.facebook.com/</a></li>
+            <li>Sign in with your Facebook username and password.</li>
+            <li>If after signing in, if it redirects you to the main Facebook.com site, go back to <a href="https://developers.facebook.com/" target="_blank">https://developers.facebook.com/</a></li>
+            <li>Click on the "My Apps" dropdown and select "Add a new App"</li>
+            <li>Enter a new name for your application, select "WWW" for the type of application.</li>
+            <li>Enter the name of your new application, and click create.</li>
+            <li>Enter your email, select a category and click create app id.</li>
+            <li>For the quickstart, you can enter "http://localhost:8080/" for now as the site URL, and click next.</li>
+            <li>For the next steps, you can simply click "Skip to the Developer Dashboard".</li>
+            <li>On the dashboard page, you will see your App ID, and your App Secret. These are like a "username" and "password" for your application itself. Copy and paste these values to a text editor for use later on (obviously you need to click "show" to see the secret).</li>
+        </ol>
+        <p>For example:</p><img src="./img/facebook-1.png" border="0" width="624px;" height="296px;" />
+        <p>&nbsp;</p>
+        <p>You should be good to move to the next stage of the tutorial at this point. If you didn't add a web URL above, you can go to the settings tab and click the "Add Platform" button, and select a website.</p>
+        <p>Then in the Site URL box, you can enter "http://localhost:8080/". This tells facebook the places your application will be redirecting back and forth to.</p>
+        <p>Later on, you will need to click the "Add Platform" button again, and enter the URL of your OpenShift server.</p>
+        <h3>Creating our web application</h3>
+        <p>In NetBeans, create a new Maven Web Project, named "facebookDemo" or something similar.</p>
+        <p>Then, add to the index.html page a link to login and see their friends. The index.html file should like like the following:</p>
+
+<div class="code">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;Facebook Demo&lt;/title&gt;
+        &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8"&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;h1&gt;Facebook Demo&lt;/h1&gt;
+        &lt;p&gt;&lt;a href="SignIn"&gt;Click here&lt;/a&gt; to sign in to Facebook.&lt;/p&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+
+</div>
+
+
+        <h3>Including the facebook4j library</h3>
+        <p>To facilitate the interaction with the Facebook library, we will be using the open-source, facebook4j library to wrap the low level API calls.</p>
+        <p>If you are using Maven, you can simply add the following to your pom.xml dependency list.</p>
+        <p><span>&lt;dependency&gt;</span>
+            <br /><span>&nbsp; &lt;groupId&gt;org.facebook4j&lt;/groupId&gt;</span>
+            <br /><span>&nbsp; &lt;artifactId&gt;facebook4j-core&lt;/artifactId&gt;</span>
+            <br /><span>&nbsp; &lt;version&gt;2.4.5&lt;/version&gt;</span>
+            <br /><span>&lt;/dependency&gt;</span></p>
+        <p><span>If you are not using Maven, t</span><span>his can be downloaded from:&nbsp;</span><a href="http://facebook4j.org/download/facebook4j-core-2.1.0.jar">http://facebook4j.org/download/facebook4j-core-2.1.0.jar</a><span>. After downloading this JAR, add it to the WEB-INF/lib folder.</span></p>
+        <p><span>As always, check for the latest versions of these libraries before downloading. It is likely they have been updated since this tutorial was written.</span></p>
+        <p>We now need to configure the facebook4j library to use the application id and secret we obtained from Facebook. It will look for a file called "facebook4j.properties" in our class path. The easiest way to handle this is to select the "source packages" folder, Then click File -&gt; New File, and then under "Other" select "Properties File". Enter the name: "facebook4j" as the file name (it should automatically append ".properties" to your file). Double check that the file is being created in: "src/main/java"</p>
+        <p>Paste the following contents into this blank file:</p>
+        <p><span style="font-family: 'courier new', courier;">debug=true<br />oauth.appId=xxxx<br />oauth.appSecret=yyyy<br />oauth.permissions=email,user_friends<br />jsonStoreEnabled=true</span></p>
+        <p>Of course, you should change "xxxx" to be the app ID your obtained from facebook and yyyy to be the app secret.</p>
+
+        <p>The permissions value is a comma separated list of all the different things your application wants to be able to do in behalf of the user. For example, see their email address, or "publish_stream" will make it so that your application can post to their "wall", etc.</p>
+        
+        <p>If you are using NetBeans/Maven, it will not include files from your source directories in your build. So you will need to specify that Maven should include this resource when it builds/deploys, because this is not it's default case. To do so, you should add the following to the "build" element of the pom.xml.</p>
+        <p>&lt;resources&gt;
+            <br />&nbsp; &lt;resource&gt;
+            <br />&nbsp; &nbsp; &lt;directory&gt;src/main/java&lt;/directory&gt;
+            <br />&nbsp; &nbsp; &lt;excludes&gt;&lt;exclude&gt;**/*.java&lt;/exclude&gt;&lt;/excludes&gt;
+            <br />&nbsp; &lt;/resource&gt;
+            <br />&lt;/resources&gt;</p>
+        <div>&nbsp;</div>
+
+        <p>At this point, you can do a "clean and build" which will cause Maven to download the Facebook4j library.</p>
+
+        <h3>Create a SignIn Servlet</h3>
+        <p>Create a SignIn servlet, by selecting File -&gt; New File, and choosing a Servlet. Give this servlet the class name of "SignIn" and put in an a package (something other than the default one).</p>
+        <p>Also, create a CallBack servlet, for the user to return to, after signing in with Facebook. Select New -&gt; Servlet. Enter the same package name and a class name of "CallBack".</p>
+
+        <p>From the SignIn Servlet, we need to set up the initial credentials for our application and then redirect the user to Facebook to sign in. We will provide a callback URL for Facebook to return the user to upon successful sign in. To construct these URLs, we will use the facebook4j library.</p>
+
+        <p>In the processRequest method (or potentially doGet) of the SignIn servlet, we first create a new Facebook object and put it on the session for future use:</p>
+        <p><span style="font-family: 'courier new', courier;">Facebook facebook = new FacebookFactory().getInstance();</span>
+            <br /><span style="font-family: 'courier new', courier;">request.getSession().setAttribute("facebook", facebook);</span></p>
+        <p>This requires the following imports:</p>
+        <p><span style="font-family: 'courier new', courier;">import facebook4j.Facebook;</span>
+            <br /><span style="font-family: 'courier new', courier;">import facebook4j.FacebookFactory;</span></p>
+        <p>Then, we build the CallBack URL by taking the current request URL (for the SignIn servlet), and replacing the current servlet name with "CallBack" as follows:</p>
+        <p><span style="font-family: 'courier new', courier;">StringBuffer requestUrl = request.getRequestURL();</span>
+            <br /><span style="font-family: 'courier new', courier;">int lastSlashIndex = requestUrl.lastIndexOf("/");</span></p>
+        <p><span style="font-family: 'courier new', courier;">&nbsp;</span></p>
+        <p><span style="font-family: 'courier new', courier;">String callBackUrl = requestUrl.substring(0, lastSlashIndex) + "/CallBack";</span></p>
+        <p>Next, we use the Facebook4j object to generate a URL to Facebook that the user will be redirected to, as follows:</p>
+        <p><span style="font-family: 'courier new', courier;">String facebookUrl = facebook.getOAuthAuthorizationURL(callBackUrl);</span></p>
+        <p>Finally, we can redirect to the Facebook URL, using the response.sendRedirect method:</p>
+        <p><span style="font-family: 'courier new', courier;">response.sendRedirect(facebookUrl);</span></p>
+        <p>The complete processRequest method for the SignIn servlet should then look as follows:</p>
+        <p><span style="font-family: 'courier new', courier;">protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {</span>
+            <br /><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; Facebook facebook = new FacebookFactory().getInstance();</span></p>
+        <p><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; request.getSession().setAttribute("facebook", facebook);</span></p>
+        <p><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; StringBuffer requestUrl = request.getRequestURL();</span>
+            <br /><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; int lastSlashIndex = requestUrl.lastIndexOf("/");</span></p>
+        <p><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; String callBackUrl = requestUrl.substring(0, lastSlashIndex) + "/CallBack";</span></p>
+        <p><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; String facebookUrl = facebook.getOAuthAuthorizationURL(callBackUrl);</span></p>
+        <p><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; response.sendRedirect(facebookUrl);</span>
+            <br /><span style="font-family: 'courier new', courier;">}</span></p>
+        <h3>Creating the Callback Servlet</h3>
+        <p>If we run the login process at this point, the user should successfully be redirected to Facebook to sign in there, and then when they sign in there, Facebook will redirect them back to our CallBack servlet, and will pass an access token for our application to use. We then need to store this information to use with future requests.</p>
+        <p>In the processRequest (or doGet) method of the CallBack servlet, we first get the Facebook4j object that we stored on the Session:</p>
+        <p><span style="font-family: 'courier new', courier;">Facebook facebook = (Facebook)request.getSession().getAttribute("facebook");</span></p>
+        <p>Next, we get the oauthCode parameter that was passed by Facebook as a GET parameter named, "code", as follows:</p>
+        <p><span style="font-family: 'courier new', courier;">String oauthCode = request.getParameter("code");</span></p>
+        <p>Finally, we give this oauthCode to the Facebook object, by calling the getOAuthAccessToken method, which will set up the Facebook object for future queries. Because this method throws an exception we need to handle it properly. For this tutorial, we will simply display the stack trace. This is done as follows:</p>
+        <p><span style="font-family: 'courier new', courier;">try {</span>
+            <br /><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp;facebook.getOAuthAccessToken(oauthCode);</span>
+            <br /><span style="font-family: 'courier new', courier;">} catch (FacebookException e) {</span>
+            <br /><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp;e.printStackTrace();</span>
+            <br /><span style="font-family: 'courier new', courier;">}</span></p>
+        <p>Finally, we can redirect the user to our home page, or any other page we would like. For example:</p>
+        <p><span style="font-family: 'courier new', courier;">response.sendRedirect("welcome.jsp");</span></p>
+        <p>The complete doGet method of the CallBack servlet should then look as follows:</p>
+        <p><span style="font-family: 'courier new', courier;">protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {</span>
+            <br /><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp;Facebook facebook = (Facebook)request.getSession().getAttribute("facebook");</span></p>
+        <p><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp;String oauthCode = request.getParameter("code");</span></p>
+        <p><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp;try {</span>
+            <br /><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; facebook.getOAuthAccessToken(oauthCode);</span>
+            <br /><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp;} catch (FacebookException e) {</span>
+            <br /><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; e.printStackTrace();</span>
+            <br /><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp;}</span>
+            <br /><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp;response.sendRedirect("welcome.jsp");</span>
+            <br /><span style="font-family: 'courier new', courier;">}</span></p>
+        <h3>Getting the list of friends</h3>
+        <div class="tips">Unforunately, since this demo was put together, Facebook has changed the way they handle getting friends. Under their new system, you can only get friends <em>that also use your app</em>. In our case, none of our friends use our app, because we just created it, so the friends list will come back empty. You can still get the user's name from Facebook as shown below, but the Friends list will be empty for you at this point.</div>
+
+        <p>Now that we have finished the OAuth handshaking process and obtained the correct access information, we can get a list of friends from the API and display it to the user.</p>
+        <p>First, we create the welcome.jsp page and add a link to a new servlet, "ShowFriends", for example:</p>
+        <p><span style="font-family: 'courier new', courier;">&lt;a href="ShowFriends"&gt;Click here to see your friends&lt;/a&gt;</span></p>
+        <p>Then, create another Servlet, this time named, "ShowFriends". In the processRequest method of this servlet, we first need to get the current Facebook4j object that we have stored on the session:</p>
+
+        <p><span style="font-family: 'courier new', courier;">Facebook facebook = (Facebook)request.getSession().getAttribute("facebook");</span></p>
+        <p>We can then get the users name or their list of friends from this object as follows:</p>
+        <p><span style="font-family: 'courier new', courier;">String name = facebook.getName();</span>
+            <br /><span style="font-family: 'courier new', courier;">ResponseList&lt;Friend&gt; list = facebook.getFriends();</span></p>
+        <p>We could pass this list to a JSP View to render, or for this tutorial, we will just iterate through the list and output each one to the response stream. This requires a few additional lines to setup the writer, iterate through the list, and the handle exceptions.</p>
+        <p>The complete processRequest method of the ShowFriends servlet should then look as follows:</p>
+        <p><span style="font-family: 'courier new', courier;">protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {</span>
+            <br /><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp;Facebook facebook = (Facebook)request.getSession().getAttribute("facebook");</span></p>
+        <p><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp;PrintWriter out = response.getWriter();</span></p>
+        <p><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp;try {</span>
+            <br /><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; out.write("Your name is: " + facebook.getName() + "\n\n");</span>
+            <br /><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ResponseList&lt;Friend&gt; list = facebook.getFriends();</span>
+            <br /><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; for (Friend friend : list) {</span>
+            <br /><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;out.write(friend.getName() + "\n");</span>
+            <br /><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }</span></p>
+        <p><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp;} catch (IllegalStateException e) {</span>
+            <br /><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; e.printStackTrace();</span>
+            <br /><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp;} catch (FacebookException e) {</span>
+            <br /><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; e.printStackTrace();</span>
+            <br /><span style="font-family: 'courier new', courier;">&nbsp; &nbsp; &nbsp;}</span>
+            <br /><span style="font-family: 'courier new', courier;">}</span></p>
+        <p>The user can now sign in (which redirects to Facebook and back) and view their list of friends. For example:</p>
+        <p>&nbsp;</p><img src="./img/facebook-2.png" border="0" width="385px;" height="191px;" />
+
+      <!--   <p>And the final project list should look something like this:</p><img src="./img/facebook-3.png" border="0" width="297px;" height="324px;" />
+        <div>&nbsp;</div>
+ -->
+
+        </div>
+    </div>
+
+
+</body>
+
+</html>
