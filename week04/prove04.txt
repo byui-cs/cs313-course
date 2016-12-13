@@ -12,7 +12,8 @@ After completing the assignment, please answer the questions in this text file a
 4. Briefly describe the "coolest" thing you learned while completing this assignment.
 
 
-5. Briefly describe the concept of a foreign key constraint and why it could be useful.
+5. Briefly describe two principles of good database design.
+
 
 6. Please select the category you feel best describes your assignment:
 A - Some attempt was made

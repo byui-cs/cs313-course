@@ -20,3 +20,5 @@ After completing the assignment, please answer the questions in this text file a
 
 7. List plans for next week (and note if they are different than your original milestone plans for next week).
 
+
+8. When is HTTP Get the right verb for a web service call? When should Post be used instead?

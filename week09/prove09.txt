@@ -14,8 +14,10 @@ After completing the assignment, please answer the questions in this text file a
 
 5. Briefly describe the "coolest" thing you learned while completing this assignment.
 
+6. Briefly describe the Model-View-Controller design pattern in your own words.
 
-6. Please select the category you feel best describes your assignment:
+
+7. Please select the category you feel best describes your assignment:
 A - Some attempt was made
 B - Developing, but significantly deficient
 C - Slightly deficient, but still mostly adequate
@@ -23,6 +25,6 @@ D - Meets requirements
 E - Shows creativity and excels above and beyond requirements
 
 
-7. Provide a brief justification (1-2 sentences) for selecting that category.
+8. Provide a brief justification (1-2 sentences) for selecting that category.
 
 

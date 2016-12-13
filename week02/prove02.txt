@@ -17,7 +17,7 @@ After completing the assignment, please answer the questions in this text file a
 6. What is the difference between an HTTP Get and Post? When should each be used?
 
 
-6. Please select the category you feel best describes your assignment:
+7. Please select the category you feel best describes your assignment:
 A - Some attempt was made
 B - Developing, but significantly deficient
 C - Slightly deficient, but still mostly adequate
@@ -25,6 +25,6 @@ D - Meets requirements
 E - Shows creativity and excels above and beyond requirements
 
 
-7. Provide a brief justification (1-2 sentences) for selecting that category.
+8. Provide a brief justification (1-2 sentences) for selecting that category.
 
 
