@@ -14,6 +14,8 @@ After completing the assignment, please answer the questions in this text file a
 
 5. Briefly describe the "coolest" thing you learned while completing this assignment.
 
+6. What is the difference between an HTTP Get and Post? When should each be used?
+
 
 6. Please select the category you feel best describes your assignment:
 A - Some attempt was made
