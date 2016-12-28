@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>CS 313 - Prove</title>
+  <link rel="stylesheet" type="text/css" href="../course/css/style.css"/>
+</head>
+
+<body>
+
+<header id="courseTitle">
+  <span class="icon-byui-logo"></span>
+  <h1>CS 313 | Web Engineering II</h1>
+</header>
+
+<article>
+  <h2>01 Prove : Hello World Assignment : Deploy a Hello World Page</h2>
+
+  <h3>Create a Hello World Page</h3>
+  <p>In the web subdirectory, create your own hello.html page that displays the text "Hello World." You
+    are free to use a text editor of your choice. In this example we are using the Sublime Text editor (subl).</p>
+
+  <pre><code class="bash">
+$ cd cs313-php
+
+$ subl web/hello.html
+</code></pre>
+
+  <h3>Commit the Hello World Page</h3>
+  <p>Use the git status command to see your changes and then use the git add and commit commands to include your changes
+    to the local repository</p>
+
+  <pre><code class="bash">
+$ git status
+  On branch master
+  Your branch is up-to-date with 'origin/master'.
+  Untracked files:
+  (use "git add &lt;file&gt;..." to include in what will be committed)
+
+  web/hello.html
+
+  nothing added to commit but untracked files present (use "git add" to track)
+
+$ git add web/hello.html
+
+$ git status
+  On branch master
+  Your branch is up-to-date with 'origin/master'.
+  Changes to be committed:
+  (use "git reset HEAD &lt;file&gt;..." to unstage)
+
+    new file:   web/hello.html
+
+ $ git commit -m "added hello world page"
+    [master ae7f2f9] added hello world page
+    1 file changed, 5 insertions(+)
+    create mode 100644 web/hello.html
+</code></pre>
+
+  <h3>Deploy the Hello World Page</h3>
+  <p>Use the git push command to deploy your updated application code with the hello page to Heroku.</p>
+
+  <pre><code class="bash">
+git push heroku master
+Counting objects: 4, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (4/4), 372 bytes | 0 bytes/s, done.
+Total 4 (delta 1), reused 0 (delta 0)
+remote: Compressing source files... done.
+remote: Building source:
+remote:
+remote: -----> PHP app detected
+remote: -----> Bootstrapping...
+remote: -----> Installing platform packages...
+remote:        - php (5.6.29)
+remote:        - apache (2.4.20)
+remote:        - nginx (1.8.1)
+remote: -----> Installing dependencies...
+remote:        Composer version 1.2.4 2016-12-06 22:00:51
+remote:        Loading composer repositories with package information
+remote:        Installing dependencies from lock file
+remote:        Nothing to install or update
+remote:        Generating optimized autoload files
+remote: -----> Preparing runtime environment...
+remote: -----> Checking for additional extensions to install...
+remote: -----> Discovering process types
+remote:        Procfile declares types -> web
+remote:
+remote: -----> Compressing...
+remote:        Done: 13.5M
+remote: -----> Launching...
+remote:        Released v4
+remote:        https://afternoon-mesa-40442.herokuapp.com/ deployed to Heroku
+remote:
+remote: Verifying deploy... done.
+To https://git.heroku.com/afternoon-mesa-40442.git
+   9e63bb9..ae7f2f9  master -> master
+</code></pre>
+
+  <h3>Open the Hello World Page</h3>
+  <p>Use the generated URL or the heroku open command to view your application in a browser and append your new
+    "/hello.html" file to the URL (e.g. https://afternoon-mesa-40442.herokuapp.com/hello.html) to see your new hello
+    world page deployed in the Cloud.</p>
+
+  <h3>Celebrate!</h3>
+  <p>Congratulations! Throughout the semester you will use this same pattern of add, commit, and push to update your
+    projects.</p>
+
+</article>
+
+<script src="../course/js/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+</body>
+
+</html>
