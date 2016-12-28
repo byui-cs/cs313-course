@@ -2,51 +2,109 @@
 <html>
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>CS 313 - Preparation Material</title>
-    <link rel="stylesheet" type="text/css" href="../course/css/style.css" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>CS 313 - Preparation Material</title>
+  <link rel="stylesheet" type="text/css" href="../course/css/style.css"/>
 </head>
 
 <body>
-    <header id="courseTitle">
-        <span class="icon-byui-logo"></span>
-        <h1>CS 313 | Web Engineering II</h1>
-    </header>
-    <article>
-        <h2>04 Prepare : Reading</h2>
+<header id="courseTitle">
+  <span class="icon-byui-logo"></span>
+  <h1>CS 313 | Web Engineering II</h1>
+</header>
+<article>
+  <h2>04 Prepare : Reading</h2>
 
-        <h3>Preparation Material</h3>
-        
-        <p>To prepare for the weekly team activity, before meeting with your group, please read the following tutorials:</p>
+  <h3>Preparation Material</h3>
 
-        <p>If this is your first dose of databases, you should also work through the sections marked optional here.</p>
-        <ol>
-            <li><p>Watch <a href="http://www.youtube.com/watch?v=z2kbsG8zsLM" target="_blank">this short video</a> introducing relational databases. (<a href="./transcripts/An-Introduction-to-Relational-Databases.rtf">transcript</a>)</p></li>
-            
-            <li><p>Follow <a href="http://net.tutsplus.com/tutorials/databases/sql-for-beginners/" target="_blank">this tutorial</a>. It will walk you through the basics of creating a new database, putting a table into it, filling it with data and selecting it. I would strongly recommend doing these basic commands on your own database as you go through it.</p></li>
+  <p>To prepare for the weekly team activity, before meeting with your group, please read the following tutorials:</p>
 
-            <li><p>(Optional) An <a href="http://dev.mysql.com/doc/refman/5.5/en/tutorial.html" target="_blank">additional tutorial</a> to cover the same concepts as the last item is available from the official MySql website. Sections 3.1 to 3.3 (including their sub-sections) address essentially the same concepts as the link above, but (in my opinion) are a little more complex and in-depth.</p></li>
-            
-            <li><p>(Optional) If you are familiar with the many-to-many relationships, you may skip this video, but otherwise, watch <a href="https://www.youtube.com/watch?v=bVOxPo598Y0" target="_blank">this short video</a> (<a href="./transcripts/Many-to-Many-Relationships.rtf">transcript</a>) outlining the concepts of many-to-many relationships.</p></li>
-        </ol>
+  <p>If this is your first dose of databases, you should also work through the sections marked optional here.</p>
 
-        <h4>Setting up MySQL at OpenShift</h4>
-        <ol>
-            <li><p>Sign in to your account at OpenShift.com</p></li>
-            <li><p>Go to the applications tab and select your application.</p></li>
-            <li><p>Click "Add MySQL 5.5", and agree to "Add the Cartridge".</p></li>
-            <li><p>Make note of your root username and password.</p></li>
-            <li><p>On the applications page, under "Tools and Support", Click to Add "phpMyAdmin 4.0".</p></li>
-            <li><p>You can now access phpMyAdmin, at a URL similar to: URL: https://php-sburton.rhcloud.com/phpmyadmin/</p></li>
-        </ol>
-        <h3>Helps and Screencasts</h3>
-        <ul>
-            <li><p>Screencast: <a href="https://video.byui.edu/media/CS+313A+Setting+Up+And+Connecting+to+MySQL+on+OpenShift/0_2kphcj4k" target="_blank">Setting UP and Connecting to MySQL on OpenShift</a></p></li>
-            <li><p>Screencast: <a href="https://video.byui.edu/media/CS+313A+Working+with+MySQL+on+OpenShift+and+the+Local+Host/0_x2wc9r41" target="_blank">Working with MySQL on OpenShift and the Local Host</a></p></li>
-        </ul>
+  <ol>
+    <li><p>Watch <a href="http://www.youtube.com/watch?v=z2kbsG8zsLM" target="_blank">this short video</a> introducing
+      relational databases. (<a href="./transcripts/An-Introduction-to-Relational-Databases.rtf">transcript</a>)</p>
+    </li>
+
+    <li><p>Follow <a href="https://www.postgresql.org/docs/9.6/static/tutorial.html" target="_blank">this tutorial</a>.
+      It will walk you through the basics of creating a new database, putting a table into it, filling it with data and
+      selecting it. I would strongly recommend doing these basic commands on your own database as you go through it.
+      (Remember that you have probably already installed Postgres and you don't need to repeat it as part of this
+      tutorial.)</p></li>
+
+    <li><p>(Optional) If you are familiar with the many-to-many relationships, you may skip this video, but otherwise,
+      watch <a href="https://www.youtube.com/watch?v=bVOxPo598Y0" target="_blank">this short video</a> (<a
+        href="./transcripts/Many-to-Many-Relationships.rtf">transcript</a>) outlining the concepts of many-to-many
+      relationships.</p></li>
+  </ol>
+
+  <h3>Creating a Postgres database on Heroku</h3>
+
+  <p>Instead of using the standard Postgres createdb and psql commands, the Heroku CLI provides some easy shortcuts for
+    creating and interacting with a Postgres database in your Cloud application.</p>
+
+  <p>Make sure to run these commands from the parent directory of application code to get the full Heroku context.</p>
+
+  <p>The following commands will create a free instance of Postgres on Heroku and retrieve details.</p>
+
+  <pre><code class="bash">
+$ heroku addons:create heroku-postgresql:hobby-dev
+Creating heroku-postgresql:hobby-dev on ⬢ afternoon-mesa-40442... free
+Database has been created and is available
+ ! This database is empty. If upgrading, you can transfer
+ ! data from another database with pg:copy
+Created postgresql-colorful-90657 as DATABASE_URL
+Use heroku addons:docs heroku-postgresql to view documentation
+</code></pre>
+
+  <pre><code class="bash">
+$ heroku config -s
+DATABASE_URL='postgres://cgojnkcoqncmxf:e510ef76e9f981ffd3069afa499c4d2bd748c1f2ea77e9da50f906dbe8f8c3e1@ec2-23-21-184-181.compute-1.amazonaws.com:5432/dfnorfi59oivff'
+</code></pre>
+
+  <pre><code class="bash">
+$ heroku pg:info
+=== DATABASE_URL
+Plan:        Hobby-dev
+Status:      Available
+Connections: 0/20
+PG Version:  9.6.1
+Created:     2016-12-28 20:18 UTC
+Data Size:   7.2 MB
+Tables:      0
+Rows:        0/10000 (In compliance)
+Fork/Follow: Unsupported
+Rollback:    Unsupported
+Add-on:      postgresql-colorful-90657
+</code></pre>
+
+  <p>The following Heroku CLI command provides all of the required parameters to automatically connect to your Postgres database in Heroku.</p>
+
+  <pre><code class="bash">
+$ heroku pg:psql
+--> Connecting to postgresql-colorful-90657
+psql (9.6.0, server 9.6.1)
+SSL connection (protocol: TLSv1.2, cipher: ECDHE-RSA-AES256-GCM-SHA384, bits: 256, compression: off)
+Type "help" for help.
+
+afternoon-mesa-40442::DATABASE=>
+  </code></pre>
+
+  <h3>Helps and Screencasts</h3>
+  <ul>
+    <li><p>Screencast: <a
+      href="https://video.byui.edu/media/CS+313A+Setting+Up+And+Connecting+to+MySQL+on+OpenShift/0_2kphcj4k"
+      target="_blank">Setting UP and Connecting to MySQL on OpenShift</a></p></li>
+    <li><p>Screencast: <a
+      href="https://video.byui.edu/media/CS+313A+Working+with+MySQL+on+OpenShift+and+the+Local+Host/0_x2wc9r41"
+      target="_blank">Working with MySQL on OpenShift and the Local Host</a></p></li>
+  </ul>
 
 
-    </article>
+</article>
+
+<script src="../course/js/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
 
 </body>
 
