@@ -15,12 +15,9 @@ After completing the assignment, please answer the questions in this text file a
 5. Briefly describe any pieces of the assignment that are not yet working correctly.
 
 
-6. Provide evidence of your database design by showing the tables, describing each one, and then showing the create statements necessary to create each. To do so, run the following commands in MySQL and then copy and paste the results into the essay text box.
-  SHOW TABLES
-  Then for each table:
-  DESCRIBE your-table-name;
-  SHOW CREATE TABLE your-table-name;
-  where “your-table-name” is the name of the table.
+6. Provide evidence of your database design by dumping the SQL that describes your Heroku database to the file "output.sql" using the following command. Submit this SQL file in addition to the submission file for this assignment.
+
+  $ heroku run 'pg_dump $DATABASE_URL' > output.sql
 
 --------------------------------
 Project Self-assessment
