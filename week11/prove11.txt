@@ -1,6 +1,6 @@
 After completing the assignment, please answer the questions in this text file and submit it to I-Learn.
 
-1. Project Title / One sentence descpription:
+1. Project Title / One sentence description:
 
 
 2. Copy and paste the URL for your web application (if applicable):

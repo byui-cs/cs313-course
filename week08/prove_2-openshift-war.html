@@ -26,7 +26,7 @@
         <p>git push</p>
         <p>to deploy your code to your OpenShift server.</p>
         <p>When you clone your repository from the OpenShift repository, it will create a "webapps" subdirectory. This is where you will put your WAR file.</p>
-        <p>3. To build your WAR file in NetBeans, simply click the Clean and Build button. By default this will create a .war file in the "target" directory under your application. Find this .war file and copy it and paste it directly in the webapps subdirectory that you got when you cloned from OpenShift. It will simplifiy things later if you rename it to not include the version number and "snapshot" or else that will be part of your URL.</p>
+        <p>3. To build your WAR file in NetBeans, simply click the Clean and Build button. By default this will create a .war file in the "target" directory under your application. Find this .war file and copy it and paste it directly in the webapps subdirectory that you got when you cloned from OpenShift. It will simplify things later if you rename it to not include the version number and "snapshot" or else that will be part of your URL.</p>
         <p>Please note that because there is a default pom.xml (Maven configuration file) in the root of your repository, OpenShift will use it to build and deploy the root application. The first time you push, this will cause a series of dependencies to be downloaded to get Maven up to date. If you don't want this build to happen every time you do a push, you can simply remove the pom.xml file. ("git rm pom.xml").</p>
         <p>Once your war file has been deployed, you can view your web application at a URL like:</p>
         <p>http://java-yourUserName.rhcloud.com/helloWorld/HelloServlet</p>

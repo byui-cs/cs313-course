@@ -1,6 +1,6 @@
 After completing the assignment, please answer the questions in this text file and submit it to I-Learn.
 
-1. Project Title / One sentence descpription:
+1. Project Title / One sentence description:
 
 
 2. Copy and paste the URL for your web application:
@@ -29,7 +29,7 @@ Project Self-assessment
 For the each of the following criteria, please stat which category you feel best describes your work and give a 1-2 sentence justification for each. The categories are:
 
 A - Some attempt was made
-B - Developing, but signficantly deficient
+B - Developing, but significantly deficient
 C - Slightly deficient, but still mostly adequate
 D - Meets requirements
 E - Shows creativity and excels above and beyond requirements
