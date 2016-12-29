@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>CS 313 - Preparation Material</title>
+  <link rel="stylesheet" type="text/css" href="../course/css/style.css"/>
+</head>
+
+<body>
+
+<header id="courseTitle">
+  <span class="icon-byui-logo"></span>
+  <h1>CS 313 | Web Engineering II</h1>
+</header>
+
+<article>
+
+  <h2>05 Prepare : Querying from PHP</h2>
+
+  <h3>Connecting to Postgres from PHP</h3>
+  <p>This document covers the very basics of querying data contained in our Postgres database from PHP. It is not
+    intended to be exhaustive, but rather to help you get started so you can then turn to tutorials and examples on the
+    Internet with more context.</p>
+
+  <p>Using PDO, the syntax for connecting to a database is</p>
+
+  <p>
+  <pre>$db = new PDO("pgsql:host=[host_name];port=[database_port];dbname=$dbName[database_name]", [user_name], [password]);</pre>
+  </p>
+
+  <p>And if the connection attempt fails, it will throw an exception.</p>
+
+  <pre><code class="php">
+try
+{
+  $user = 'postgres';
+  $password = 'password';
+  $db = new PDO('pgsql:host=127.0.0.1;dbname=myTestDB', $user, $password);
+}
+catch (PDOException $ex)
+{
+  echo 'Error!: ' . $ex->getMessage();
+  die();
+}
+</code></pre>
+
+  <p>(Note that for my local machine setup, Postgres wouldn't connect with the hostname of “localhost,” but seemed to
+    work
+    just fine with the ip: 127.0.0.1.)</p>
+
+  <p>Once you have a connection, you can then issue queries.</p>
+
+  <pre><code class="php">
+foreach ($db->query('SELECT username, password FROM note_user') as $row)
+{
+  echo 'user: ' . $row['username'];
+  echo ' password: ' . $row['password'];
+  echo '&lt;br/&gt;';
+}
+</code></pre>
+
+  <p>or</p>
+
+  <pre><code class="php">
+$statement = $db->query('SELECT username, password FROM note_user');
+while ($row = $statement->fetch(PDO::FETCH_ASSOC))
+{
+  echo 'user: ' . $row['username'] . ' password: ' . $row['password'] . '&lt;br/&gt;';
+}
+</code></pre>
+
+  <p>or</p>
+
+  <pre><code class="php">
+$statement = $db->query('SELECT username, password FROM note_user');
+$results = $statement->fetchAll(PDO::FETCH_ASSOC);
+</code></pre>
+
+  <h3>Using Prepared Statements</h3>
+
+  <p>As mentioned, one of the strengths of PDO is the ease of using prepared statements to help you avoid SQL
+    injection.</p>
+
+  <pre><code class="php">
+$stmt = $db->prepare('SELECT * FROM table WHERE id=:id AND name=:name');
+$stmt->bindValue(':id', $id, PDO::PARAM_INT);
+$stmt->bindValue(':name', $name, PDO::PARAM_STR);
+$stmt->execute();
+$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+</code></pre>
+
+  <p>or</p>
+
+  <pre><code class="php">
+$stmt = $db->prepare('SELECT * FROM table WHERE id=:id AND name=:name');
+$stmt->execute(array(':name' => $name, ':id' => $id));
+$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+</code></pre>
+
+</article>
+
+<script src="../course/js/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+</body>
+
+</html>

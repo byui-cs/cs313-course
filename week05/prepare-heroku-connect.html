@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>CS 313 - Preparation Material</title>
+  <link rel="stylesheet" type="text/css" href="../course/css/style.css"/>
+</head>
+
+<body>
+
+<header id="courseTitle">
+  <span class="icon-byui-logo"></span>
+  <h1>CS 313 | Web Engineering II</h1>
+</header>
+
+<article>
+
+  <h2>05 Prepare : Connecting to Postgres on Heroku</h2>
+
+  <h3>Connecting to Postgres on Heroku</h3>
+  <p>Heroku automatically creates an environment variable <em>DATABASE_URL</em> for the admin Postgres user and its
+    password, along with the hostname and port of the database instance (it is likely not found at localhost in their
+    environment).</p>
+
+  <p>You can access this environment variable in PHP and parse it.</p>
+
+  <pre><code class="php">
+$dbUrl = getenv('DATABASE_URL');
+
+$dbopts = parse_url($dbUrl);
+
+$dbHost = $dbopts["host"];
+$dbPort = $dbopts["port"];
+$dbUser = $dbopts["user"];
+$dbPassword = $dbopts["pass"];
+$dbName = ltrim($dbopts["path"],'/');
+
+$db = new PDO("pgsql:host=$dbHost;port=$dbPort;dbname=$dbName", $dbUser, $dbPassword);
+</code></pre>
+
+  <h3>Connecting to Postgres on your local machine or Heroku</h3>
+  <p>The code shown above works great to connect to Postgres in the Heroku environment, but it will then NOT work for
+    your local configuration. One way to set up your code to connect in either location, is to test for the Heroku
+    environment variables first. If it exists, then you know you are in the Heroku environment, if not, you know you are
+    in your local environment and can set up the variables accordingly.</p>
+
+  <pre><code class="php">
+// default Heroku Postgres configuration URL
+$dbUrl = getenv('DATABASE_URL');
+
+if (empty($dbUrl)) {
+ // example localhost configuration URL with postgres username and a database called cs313db
+ $dbUrl = "postgres://postgres:password@localhost:5432/cs313db";
+}
+</code></pre>
+
+  <p>The downside to this code is that you are still putting your local credentials into your source code files that
+    will be committed to GitHub. A way around this is to create a local environment variable <em>DATABASE_URL</em> with
+    the same name and format as Heroku.</p>
+
+  <p>The following puts these ideas together. The main components of this code could be extracted into shared PHP
+    function.</p>
+
+  <pre><code class="php">
+&lt;html&gt;
+&lt;body&gt;
+
+&lt;?php
+
+// default Heroku Postgres configuration URL
+$dbUrl = getenv('DATABASE_URL');
+
+if (empty($dbUrl)) {
+ // example localhost configuration URL with postgres username and a database called cs313db
+ $dbUrl = "postgres://postgres:password@localhost:5432/cs313db";
+}
+
+$dbopts = parse_url($dbUrl);
+
+print "&lt;p&gt;$dbUrl&lt;/p&gt;\n\n";
+
+$dbHost = $dbopts["host"];
+$dbPort = $dbopts["port"];
+$dbUser = $dbopts["user"];
+$dbPassword = $dbopts["pass"];
+$dbName = ltrim($dbopts["path"],'/');
+
+print "&lt;p&gt;pgsql:host=$dbHost;port=$dbPort;dbname=$dbName&lt;/p&gt;\n\n";
+
+try {
+ $db = new PDO("pgsql:host=$dbHost;port=$dbPort;dbname=$dbName", $dbUser, $dbPassword);
+}
+catch (PDOException $ex) {
+ print "&lt;p&gt;error: $ex->getMessage() &lt;/p&gt;\n\n";
+ die();
+}
+
+foreach ($db->query('SELECT now()') as $row)
+{
+ print "&lt;p&gt;$row[0]&lt;/p&gt;\n\n";
+}
+
+?&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+  <h3>Using an Admin User</h3>
+
+  <p>As a final note, using the Heroku variable will have you using the Admin user for your database, which is not the
+    best thing to do from a security standpoint. It is the simplest thing to get working, and I would recommend starting
+    there. At this point, you likely have enough other things to worry about with your projects. But if you want to do
+    it "the right way", see if you can create your own DB user and create the environment variables you need for it.
+    This can be a little bit complicated, but can be done either by using the Heroku CLI, or by adding a hook to your
+    commit process. For those that decide to dive into this, please post your findings to the course website.</p>
+
+</article>
+
+<script src="../course/js/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+</body>
+
+</html>
