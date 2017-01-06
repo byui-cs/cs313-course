@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>CS 313 - Prove</title>
+  <link rel="stylesheet" type="text/css" href="../course/css/style.css"/>
+</head>
+
+<body>
+
+<header id="courseTitle">
+  <span class="icon-byui-logo"></span>
+  <h1>CS 313 | Web Engineering II</h1>
+</header>
+
+<article>
+  <h2>01 Prove : Hello World Assignment : Pushing your code to GitHub</h2>
+
+  <h3>GitHub</h3>
+  <p>In this document we will set up a repository at GitHub, and push your source code there as well.</p>
+
+  <p>GitHub is essentially a big database of source code for people all around the world. You can make your source code public or private and configure many different permissions and settings. Each project has its own repository, or "repo". This repository will be a clone of the one on your local computer. Thus, you will have three copies of your code, 1) on your local computer, 2) at Heroku, and 3) at GitHub.</p>
+
+  <h3>Create a new repository</h3>
+  <ol>
+    <li><p>Go to <a href="http://github.com" target="_blank">GitHub.com</a> and sign up for a new account if you haven't already. If you already have an account, that is perfect, you can use it here.</p></li>
+
+    <li><p>After creating an account, return to GitHub.com and sign in. In the upper right corner of the screen you should see a "+" icon. Click this and select "New Repository".</p></li>
+
+    <li><p>Choose a name for your repository (likely cs313-php or something similar).</p></li>
+
+    <li><p>Leave the repo public and do not check the box for a readme. Leave .gitignore and license as "none".</p>
+
+      <div class="tips">
+        <p>Instructor Tip:</p>
+        <p>It's not technically a problem if you add these other files now, but it makes it a little more difficult when you go to push to GitHub for the first time, because you'll have conflicts that you'll have to resolve. So at this point, it's easiest to leave everything blank.</p>
+      </div>
+
+    </li>
+    <li><p>Click the button to create the repository.</p></li>
+    <li><p>On the page that follows, you should see a URL for your new repository (e.g., "https://github.com/sburton42/cs313-php-17w.git"). Copy this URL for use later on.</p></li>
+  </ol>
+
+  <h3>Connect your code to your repository</h3>
+  <p>We now have an empty repository at GitHub, so we can now connect our local copy to it.</p>
+  <ol>
+    <li><p>In a terminal window, change to the directory of your PHP project. For example:</p>
+
+<pre><code class="bash">
+$ cd cs313-php
+</code></pre>
+
+    </li>
+    <li><p>First, we can see all the remotes that our local repository is connected to. This is done by running the following command:</p>
+
+<pre><code class="bash">
+$ git remote -v
+heroku  https://git.heroku.com/secret-sierra-28842.git (fetch)
+heroku  https://git.heroku.com/secret-sierra-28842.git (push)
+origin  https://github.com/byui-cs/cs313-php (fetch)
+origin  https://github.com/byui-cs/cs313-php (push)
+</code></pre>
+      <p>In my case, I have two remotes, one called "origin" where I cloned from originally, and the second called, "heroku" that we use to push to our Heroku server. We will now add a third remote for GitHub.</p>
+
+      <p>A remote simply means this is another repository that we may sync up with. When we want to push or pull from any of these repositories we can use the remote name (e.g., "heroku") rather than having to type out the complete URL.</p>
+
+    </li>
+
+    <li><p>Add a remote for GitHub, pasting in the URL that you copied earlier. This is done as follows, but of course replacing the URL with your own.</p>
+<pre><code class="bash">
+$ git remote add github https://github.com/sburton42/cs313-php-17w.git
+</code></pre>
+
+    </li>
+
+    <li><p>Verify that your new remote has been added, by running the command as before to list the remotes:</p>
+<pre><code class="bash">
+$ git remote -v
+github  https://github.com/sburton42/cs313-php-17w.git (fetch)
+github  https://github.com/sburton42/cs313-php-17w.git (push)
+heroku  https://git.heroku.com/secret-sierra-28842.git (fetch)
+heroku  https://git.heroku.com/secret-sierra-28842.git (push)
+origin  https://github.com/byui-cs/cs313-php (fetch)
+origin  https://github.com/byui-cs/cs313-php (push)
+</code></pre>
+
+    <p>In the above output, you can see that "github" has been added as a remote.</p>
+
+    </li>
+
+    <li><p>We can now push our source code to GitHub, by pushing our repository to the "github" remote. We do this the same way we pushed to Heroku, except that we specify that we want the github remote this time as follows:</p>
+<pre><code class="bash">
+$ git push github master
+Counting objects: 18, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (11/11), done.
+Writing objects: 100% (18/18), 1.75 KiB | 0 bytes/s, done.
+Total 18 (delta 3), reused 0 (delta 0)
+remote: Resolving deltas: 100% (3/3), done.
+To https://github.com/sburton42/cs313-php-17w.git
+ * [new branch]      master -> master
+</code></pre>
+
+    </li>
+
+    <li><p>The final step is to return to your repository page in the browser (at GitHub.com) and refresh the page. You should now see your code!</p>
+    </li>
+
+  </ol>  
+
+</article>
+
+<script src="../course/js/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+</body>
+
+</html>
