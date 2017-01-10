@@ -24,25 +24,62 @@
         </div>
 
         <h3>Overview</h3>
+        <p>Design a simple relational database structure and create the schema in a Postgres database.</p>
+
+        <h3>Instructions</h3>
+        <p>Consider that you have been asked to write an application to store notes for users for general conference talks. The basic requirements are:</p>
+
+        <ol>
+            <li><p>This system must track notes for multiple users.</p></li>
+            <li><p>The speakers should be tracked separately from the conference because one speaker will speak at multiple conferences.</p></li>
+            <li><p>Individual sessions of conference (e.g., Saturday morning, Sunday afternoon) need not be tracked, rather simply the year and month, (e.g., April 2009, Oct 2012).</p></li>
+            <li><p>You need not account for the fact that some speakers will speak multiple times at a conference, but assume that a note can be tied to a "speaker + conference."</p></li>
+            <li><p>Multiple notes can be added by the same user about a single conference talk.</p></li>
+        </ol>
+
+        <p>Your assignment is to create the database for this application. Please take into account good database design principles such as the elimination of redundant data, data type selection, primary keys, and foreign key relationships.</p>
+
+        <h4>Core Requirements</h4>
+        <ol>
+            <li>
+                <p>Design your database visually.</p>
+                <p>The first step is to put together a design for the database (i.e., outside of your PostgreSQL environment). You may want to use a collaborative image drawing or document editing application for this. It doesn't have to be formal or follow exact UML, but rather be a tool to discuss the things to include.</p>
+
+            </li>
+
+            <li>
+                <p>Log into PostreSQL on one of your computers and create the tables you have designed. Make sure that everyone on the team has a way of seeing and contributing to the SQL that is written.</p>
+                <p>It is often easiest to write the commands in a text editor first, and then copy and paste it into your SQL window. That way if (when!) you get errors, it's much easier to correct them and paste the content in again.</p>
+            </li>
+            <li>
+                <p>Add appropriate foreign key relationships for the tables you created.</p>
+            </li>
+        </ol>
+
+        <h4>Stretch Challenges</h4>
+        <p>After finishing the core requirements, ensure that everyone is at that point and understands the material. When everyone has completed the core requirements, you can move on to these stretch challenges.</p>
+
+        <ol>
+            <li><p>Change your database so that it tracks each session separately (Saturday Morning vs. Saturday Afternoon). Ensure that this also allows for different talks by the same speaker to be treated separately.</p></li>
+            <li><p>Create your database at Heroku, using one of your accounts.</p></li>
+            <li><p>Practice inserting some data from the last general conference. Insert at least 3 talks, and at least 2 notes per talk. Then demonstrate that you can query to receive all the notes about a particular talk.</p></li>
+        </ol>
+
+        <h3>Instructor's Solution</h3>
+        <p>As a part of this team activity, you are expected to look over a solution from the instructor, to compare your approach to that one. One of the questions on the I-Learn submission will ask you to provide insights from this comparison.</p>
+
+        <p>Please DO NOT open the solution until you have worked through this activity as a team for the one hour period. At the end of the hour, if you are still struggling with some of the core requirements, you are welcome to view the instructor's solution and use it to help you complete your own code. Even if you use the instructor's code to help you, you are welcome to report that you finished the core requirements, if you code them up yourself.</p>
+
+        <p>After working with your team for the one hour activity, <a href="https://github.com/byui-burton/cs313-course-dev/tree/master/week04/ta-solution/" target="_blank">click here for the instructor's solution</a>.</p>
+
+        <h3>Submission</h3>
+        <p>When you have finished this activity, please fill out the assessment in I-Learn. You are welcome to complete any additional parts of this activity by yourself or with others after your meeting before submitting the assessment.</p>
 
 
-        <p>For this assignment...</p>
-
-
-
-
-<pre><code class="javascript">
-function () {
-    // This is some pretty awesome code!
-    var name "test";
-}
-</code></pre>
 
 
     </article>
 
-   <script src="../course/js/highlight/highlight.pack.js"></script>
-   <script>hljs.initHighlightingOnLoad();</script>
 </body>
 
 </html>
