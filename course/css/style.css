@@ -351,3 +351,6 @@ div.tips p {
 	font-size: 0.8em;
 }
 
+.title-first-list li p:first-child {
+	font-weight: bold;
+}
