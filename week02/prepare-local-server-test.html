@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>CS 313 - Preparation Material</title>
+  <link rel="stylesheet" type="text/css" href="../course/css/style.css"/>
+</head>
+
+<body>
+
+<header id="courseTitle">
+  <span class="icon-byui-logo"></span>
+  <h1>CS 313 | Web Engineering II</h1>
+</header>
+
+<article>
+
+  <h2>Running PHP on your Local Server</h2>
+
+  <h3>Debugging Client-side Pages</h3>
+  <p>When you work on client-side HTML pages, it's easy to run them and view the contents. You can simply double click the file and it opens in your browser and you get see how it renders. This file will have a URL pointing to something on the file system like: <code>file:///Users/sburton/docs/prepare.html</code> .</p>
+
+  <p>Unfortunately, this will not work for PHP, because the browser can't (nor shouldn't) run PHP commands. These are things that happen on the server before the page is ever sent back to the client.</p>
+
+  <h3>Debugging with a Server</h3>
+  <p>Because these PHP pages need to be run on a server and then sent to the client, you could push them to your server (e.g., Heroku) and then test them in your browser. This would give you a URL like: <code>https://secret-sierra-28842.herokuapp.com/hello.html</code> .</p>
+
+  <p>Notice that this time, the URL refers to a server, in this case, something at herokuapp.com. That server is listening for requests on port 80, and if it gets a request for an html filename (e.g., hello.html), it looks in a certain directory on the file system for a file matching that name, and streams it back. If, however, the filename has a .php extension (e.g., hello.php), Apache is configured to treat it differently. In this case, it runs PHP on the file, and sends the result back to the client.</p>
+
+  <p>You certainly could do your development this way, relying on Heroku's server to run PHP on your files and send them back. However, this takes a lot of time to make a minor change and see its effect.</p>
+
+  <h3>Debugging with a Local Server</h3>
+  <p>Having Heroku run PHP and send the file back is hard for debugging, but yet we need a server to run this server-side code. So what can be done? The answer is that we can install the very same server code that Heroku has on our local computer. Then, your laptop listens for requests, just like Heroku would, and when it gets one, it can either send back html files, or run PHP on .php files and stream them back, just like a remote server would.</p>
+
+  <p>This is what WAPP (or MAPP, etc.) is all about. It installs the Apache web server along with PHP, and a PostgreSQL database. Then, if your firewall were configured for it, people around the world could request webpages from your laptop just as they can from other servers. Now, we don't want others connecting to our computers, but we do want to connect to it ourselves, so we need a "server" name. The server name that means "my local computer" is <code>localhost</code>.</p>
+
+  <p>When Apache is running, it will answer requests made to localhost. It will then look for documents in its document root, such as .html, .css, and .php files. To use it, we then need to know A) how to start Apache, and B) where this document root folder is.</p>
+
+  <h4>Starting Apache</h4>
+  <p>When you installed WAPP (or MAPP, etc.) it create a manager program for you. It is called something like wappstack-manager. When you run this program you will see three tabs, one of them is "Manage Servers". On this tab, you can select Apache and click the start button.</p>
+
+  <h4>Finding the Apache Document Root Folder</h4>
+  <p>In the same manager program you use to start Apache, on the Welcome tab, you'll notice a button named something like "Go to Document Root". This opens a file browser to the root directory of your installation. From here, you should click on apache2, and then "htdocs". This directory is where Apache will look for files.</p>
+
+  <p>Also from the manager program welcome tab, you'll see a button named something like "Go to Application". This will open a browser to connect to your local server. Notice that the URL will be something like: <code>http://localhost/index.php</code>, where localhost indicates to make requests to the Apache server program running on your local computer.</p>
+
+  <div class="tips">
+    <p>Instructor Tip:</p>
+    <p>Some installations of MAPP will default to use a port other than port 80. In this case, when you go to the application, you'll notice that it goes to localhost:8080 with whatever port number it is configured to use. This is important, because this is where Apache is listing for your requests, so you must always include this port number.</p>
+  </div>
+
+  <h3>Testing your PHP Setup</h3>
+  <p>To test your PHP setup, in the apache2/htdocs/ folder, create a new file called, "hello.php". Open this file in a text editor and include something like the following:</p>
+
+<pre><code class="php">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;/head&gt;
+
+&lt;body&gt;
+  &lt;p&gt;
+&lt;?php
+  echo 'Hello from PHP!';
+?&gt;
+  &lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+  <p>Now, in your browser enter the url: <code>http://localhost/hello.php</code> . If everything is configured correctly, Apache should run PHP on your file and return the results (a web page that has the content "Hello from PHP").</p>
+
+  <p>This is the directory that you should put your files in, so that you can test them using localhost.</p>
+
+</article>
+
+<script src="../course/js/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+</body>
+
+</html>
