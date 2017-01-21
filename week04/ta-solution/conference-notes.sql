@@ -4,10 +4,16 @@ CREATE DATABASE conference;
 # Connect to the database, so that our tables, etc., will be there
 \c conference
 
+# When you run these commands at Heroku, you won't need (or be able to) create
+# your own separate database first. It will already be created and you will
+# be connected to it.
+
+
 # A few helpful commands you might want during the process:
 # \dt - Lists the tables
 # \d+ public.user - Shows the details of the user table
 # DROP TABLE public.user - Removes the user table completely so we can re-create it
+# \q - Quit the application and go back to the regular command prompt
 
 CREATE TABLE public.user
 (
