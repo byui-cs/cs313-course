@@ -28,9 +28,15 @@
 
     <li><p>Follow <a href="https://www.postgresql.org/docs/9.6/static/tutorial.html" target="_blank">this tutorial</a>.
       It will walk you through the basics of creating a new database, putting a table into it, filling it with data and
-      selecting it. I would strongly recommend doing these basic commands on your own database as you go through it.
-      (Remember that you have probably already installed Postgres and you don't need to repeat it as part of this
-      tutorial.)</p></li>
+      selecting it. I would strongly recommend doing these basic commands on your own database as you go through it.</p>
+
+      <div class="tips">
+        <p>Instructor Tips:</p>
+        <p>Remember that if you have installed WAPP/MAPP/etc, then you have already installed Postgres and you don't need to repeat it as part of this
+        tutorial. If your command to create the DB fails, it may be that the postgres applications (createdb and psql) are not in your system path, i.e. the place your computer looks for programs to run. To fix this, you'll need to either type the full path of the program (e.g., C:/Users/Wappstack/.../postgres/bin/createdb or something similar), or you will need to add that folder to your path environment variable.</p>
+        <p>Similarly, if you have problems logging into your database, it may be that you have not supplied the postgres user name. This is done by passing it on the command line, like so: "createdb -U postgres" replacing postgres with whatever username your installer created, but in my case, it was simply "postgres". Then, you'll need to know the password you set up when you installed the database.</p>
+      </div>
+    </li>
 
     <li><p>(Optional) If you are familiar with the many-to-many relationships, you may skip this video, but otherwise,
       watch <a href="https://www.youtube.com/watch?v=bVOxPo598Y0" target="_blank">this short video</a> (<a
