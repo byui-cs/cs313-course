@@ -1,21 +1,18 @@
 After completing the assignment, please answer the questions in this text file and submit it to I-Learn.
 
-1. Copy and paste the textual output of your database tables.
+1. Describe something from your database that you think came together very nicely.
 
 
-2. Describe something from your database that you think came together very nicely.
+2. Describe something from your database that you think could be improved or extended in the future.
 
 
-3. Describe something from your database that you think could be improved or extended in the future.
+3. Briefly describe the "coolest" thing you learned while completing this assignment.
 
 
-4. Briefly describe the "coolest" thing you learned while completing this assignment.
+4. Briefly describe two principles of good database design.
 
 
-5. Briefly describe two principles of good database design.
-
-
-6. Please select the category you feel best describes your assignment:
+5. Please select the category you feel best describes your assignment:
 A - Some attempt was made
 B - Developing, but significantly deficient
 C - Slightly deficient, but still mostly adequate
@@ -23,6 +20,6 @@ D - Meets requirements
 E - Shows creativity and excels above and beyond requirements
 
 
-7. Provide a brief justification (1-2 sentences) for selecting that category.
+6. Provide a brief justification (1-2 sentences) for selecting that category.
 
 
