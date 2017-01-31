@@ -24,10 +24,75 @@
         </div>
 
         <h3>Overview</h3>
+        <p>Last week, we created a database to hold scriptures and a simple website to display them. This week, we will create a database that can hold scriptures and topics, and link scriptures to topics.</p>
+
+        <h3>Instructions</h3>
+        <p>Add to your scripture DB from last week. If you no longer have that database, please create a table for scriptures with columns for id, book, chapter, verse, and content. You are welcome to refer to the <a href="https://github.com/byui-burton/cs313-course-dev/tree/master/week06/ta-solution/" target="_blank">instructor's solution</a> for last week's team activity for help in creating this table.</p>
+        <h4>Core Requirements</h4>
+        <ol>
+            <li>
+                <p>Create a table called topic with two columns: id and name. Then, manually insert into this table the following topics: Faith, Sacrifice, Charity.</p>
+
+                <p>Create another table to link scriptures to topics. (This is a many-to-many relationship, so it requires another table for the linking). Make sure to include foreign keys constraints.</p>
+            </li>
+            <li><p>Create a PHP page to insert a new scripture along with its topics. (Note that you are inserting a new scripture and adding a link to an existing topic, all in the same POST)</p>
+                <p>Show a text box for:
+                    <ul>
+                        <li><p>Book</p></li>
+                        <li><p>Chapter</p></li>
+                        <li><p>Verse</p></li>
+                        <li><p>Content (The text of the scripture. A textarea would probably be the best choice here).</p></li>
+                    </ul>
+                </p>
+                <p>Then, have the PHP script generate checkboxes for each topic contained in the DB table.</p>
+                <p>Finally, have a submit button to insert the scripture into the database, and connect it to the selected topics.</p>
+            </li>
+
+            <li>
+                <p>After a user submits the form, have the application show a page that lists all the scriptures in the database, each one with it's associated topics.</p>
+
+                <p>Using your PHP page, insert the following scriptures into the database along with the applicable topics:</p>
+                <ul>
+                    <li><p>Hebrews 11:4</p></li>
+                    <li><p>1 Corinthians 13:13</p></li>
+                    <li><p>Moroni 7:47</p></li>
+                </ul>
+            </li>
+        </ol>
+
+        <h4>Stretch Challenges</h4>
+        <p>After finishing the core requirements, ensure that everyone is at that point and understands the material. When everyone has completed the core requirements, you can move on to these stretch challenges.</p>
+
+        <div class="online-notes">
+
+            <h4>Concerning this week's stretch challenges...</h4>
+
+            <p>Please don't move on to these until you have complete the core requirements.</p>
+
+            <p>For those that have experience, it may seem natural to implement these from the beginning (especially combining the submission and results pages). However, for students who are doing this for the first time, it can be a little confusing. This is the reason the activity is design the way that it is.</p>
+
+            <p>Similarly, please work through these in order, completing #2 before switching to #3. They will cause you to play with different approaches.</p>
+
+        </div>
 
 
-        <p>For this assignment...</p>
+        <ol>
+            <li><p>Create another checkbox at the end of the list, with an empty text box next to it. If the user selects this checkbox, add a new topic with the corresponding name to the database in addition to adding the scripture, and the link between them.</p></li>
+        
+            <li><p>Have the list of previously entered scriptures, along with their topics, display on the same page as the "new scripture entry" portion described above. When a new scripture is entered, refresh the page to show the newly entered scripture along with the previous ones.</p>
 
+            <li><p>Complete the previous stretch challenge without causing a page refresh (i.e., use AJAX to complete the submission and update).</p></li>
+        </ol>
+
+        <h3>Instructor's Solution</h3>
+        <p>As a part of this team activity, you are expected to look over a solution from the instructor, to compare your approach to that one. One of the questions on the I-Learn submission will ask you to provide insights from this comparison.</p>
+
+        <p>Please DO NOT open the solution until you have worked through this activity as a team for the one hour period. At the end of the hour, if you are still struggling with some of the core requirements, you are welcome to view the instructor's solution and use it to help you complete your own code. Even if you use the instructor's code to help you, you are welcome to report that you finished the core requirements, if you code them up yourself.</p>
+
+        <p>After working with your team for the one hour activity, <a href="https://github.com/byui-burton/cs313-course-dev/tree/master/week06/ta-solution/" target="_blank">click here for the instructor's solution</a>.</p>
+
+        <h3>Submission</h3>
+        <p>When you have finished this activity, please fill out the assessment in I-Learn. You are welcome to complete any additional parts of this activity by yourself or with others after your meeting before submitting the assessment.</p>
 
 
     </article>
