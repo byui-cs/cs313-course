@@ -25,8 +25,70 @@
 
         <h3>Overview</h3>
 
+<!--         <p>Please note that the password_hash functions are available in PHP 5.5, but our OpenShift servers are only using PHP 5.4. There is a forward compatibility library available at: <a href="https://github.com/ircmaxell/password_compat/blob/master/lib/password.php" target="_blank">https://github.com/ircmaxell/password_compat/blob/master/lib/password.php</a></p>
+            <p>Download the contents of this php file, save it as a file "password.php" in your current directory, and then you can require and use this file just the same is if you were using PHP 5.5.</p>
+ -->
+        <p>Your assignment is to create a simple login page and allow users to sign up with a new username and password. In doing so, you'll use password hashing libraries to keep passwords secret.</p>
 
-        <p>For this assignment...</p>
+        <h3>Instructions</h3>
+        <h4>Getting Started</h4>
+        <ul>
+            <li><p>Create a simple database table for users with an ID, a username, and a password (to store hashed passwords).</p></li>
+
+            <li><p>Create three pages (described in more detail below), a welcome page, a sign-in page, and a sign-up page. You may wish to create additional PHP pages to help in the processing of the submitted values.</p></li>
+        </ul>
+
+        <h4>Core Requirements</h4>
+        <ol>
+            <li>
+                <p>Create a sign-up page that asks for a username and password, and then inserts this into the database.</p>
+
+                <p>Make sure that you do not insert the password directly into the database, use the password_hash() function to generate a hash of it, and insert that into the database.</p>
+
+                <p>After inserting the user, redirect to the sign-in page.</p>
+
+                <div class="tips">
+                    <p>Instructor Tip:</p>
+                    <p>For redirects, you can specify the new location in the header: <code>header('Location:&nbsp;'&nbsp;.&nbsp;$newURL);</code>. Then don't forget to include a "die()" command afterward, in case there are other things on the page that could be rendered when it is not desired.</p>
+                </div>
+            </li>
+
+            <li>
+                <p>Create a sign-in page that prompts for a username and a password. (Make sure to use a password HTML element, rather than a text box).</p>
+
+                <ul>
+                    <li><p>If a correct username/password is entered, save the user id to the session and redirect to the welcome page.</p></li>
+                    <li><p>If an incorrect username/password is entered, stay on this page.</p></li>
+                    <li><p>Make sure to use the password_verify() function and compare against the hash in your database.</p></li>
+                    <li><p>This page should have a link to the sign-up page.</p></li>
+                </ul>
+            </li>
+            <li>
+                <p>Create a welcome page that checks for a current logged-in user.</p>
+                <p>If a user is found, the welcome page should display, "Welcome [username]" (where [username] is the current user's username.)</p>
+                <p>If no user is logged in, the welcome page should automatically redirect to the sign-in page.</p>
+            </li>
+
+        </ol>
+
+        <h4>Stretch Challenges</h4>
+        <p>After finishing the core requirements, ensure that everyone is at that point and understands the material. When everyone has completed the core requirements, you can move on to these stretch challenges.</p>
+
+        <ol>
+            <li><p>Add two password boxes to the sign-up page, and ensure that they match before inserting. If they do not, stay on that page, but display a message in red, and put red asterisks next to the boxes. For this requirement, please make this check in PHP.</p></li>
+            <li><p>Add to the previous stretch challenge the requirement that a password must be at least 7 characters and contain a number. Again, make this check in PHP.</p></li>
+            <li><p>Add a client-side check for stretch challenges 1 and 2 to detect these conditions without requiring a page submission.</p></li>
+        </ol>
+
+        <h3>Instructor's Solution</h3>
+        <p>As a part of this team activity, you are expected to look over a solution from the instructor, to compare your approach to that one. One of the questions on the I-Learn submission will ask you to provide insights from this comparison.</p>
+
+        <p>Please DO NOT open the solution until you have worked through this activity as a team for the one hour period. At the end of the hour, if you are still struggling with some of the core requirements, you are welcome to view the instructor's solution and use it to help you complete your own code. Even if you use the instructor's code to help you, you are welcome to report that you finished the core requirements, if you code them up yourself.</p>
+
+        <p>After working with your team for the one hour activity, <a href="https://github.com/byui-burton/cs313-course-dev/tree/master/week07/ta-solution/" target="_blank">click here for the instructor's solution</a>.</p>
+
+        <h3>Submission</h3>
+        <p>When you have finished this activity, please fill out the assessment in I-Learn. You are welcome to complete any additional parts of this activity by yourself or with others after your meeting before submitting the assessment.</p>
 
 
 
