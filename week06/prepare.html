@@ -15,10 +15,9 @@
     <article>
         <h2>06 Prepare : Reading</h2>
 
-        <h3>Preparation Material</h3>
         <p>To prepare for the week, please read/watch the following resources before meeting with your group. Please consider the links here as a starting point. As you find other good references, please post them to the wiki.</p>
 
-        <h4>Basic query information</h4>
+        <h3>Basic query information</h3>
         <p>We have touched on many of these queries in past weeks. The following links are from W3Schools, and give a good basic overview of the syntax of the query.</p>
         <p>Please note the importance of the WHERE clause on the update and delete queries. <b>Without it, you will update or delete every row in the table!</b> It is often helpful to run the exact query you plan to use for a delete as a "SELECT * FROM" type of query first, to see the rows that will be affected, and then change the "SELECT *" to "DELETE", etc.</p>
         <ul>
@@ -27,21 +26,47 @@
             <li><p><a href="http://www.w3schools.com/sql/sql_delete.asp" target="_blank">Delete</a></p></li>
             <li><p>In addition, depending on your projects, you may have need for other advanced queries, or functions (e.g., average, max, min). <a href="http://www.w3schools.com/sql/default.asp" target="_blank">The W3Schools page</a> is a decent resource to list these options and give you the basics to get you started, but you may need to seek out further information for whichever topic you need.</p></li>
         </ul>
-        <h4>Connecting from PHP</h4>
-        <p>Running these queries from PHP is no different than connecting and running a Select query as we have done previously.</p>
-        <p>One point that is worth noting: after inserting a row into a table where an auto-generated ID is the primary key, it is often useful to get that new id, for future updates or inserts into other tables. The last inserted id is can be obtained using:</p>
+        <h3>Connecting from PHP</h3>
+        <p>For the most part, running these queries from PHP is no different than connecting and running a Select query as we have done previously.</p>
+
+        <h4>PostgreSQL Permissions to Insert</h4>
+        <p>In order to insert into a table, a user must have insert permissions on that table. For example, these permissions could be added as follows:</p>
+
+<pre><code class="sql">
+GRANT SELECT, INSERT, UPDATE ON product TO my_user;
+</code></pre>
+
+        <p>That will give the user my_user access to the select, insert, and update the data in product.</p>
+
+        <p>If this table has an auto-incrementing id, PostgreSQL also requires that you give permission to use and update the sequence associated with that id. The sequence is essentially a table that keeps track of the next id for that table. If you had an "id" column on "product", then by default the sequence would be named "product_id_seq". Permission could then be granted as follows:</p>
+
+
+<pre><code class="sql">
+GRANT USAGE, SELECT ON SEQUENCE product_id_seq TO my_user;
+</code></pre>
+
+        <p>Alternatively, you can grant access to all tables and sequences in a schema in one statement, as follows:</p>
+
+<pre><code class="sql">
+GRANT SELECT, INSERT, UPDATE ON ON TABLES IN SCHEMA public TO my_user;
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO my_user;
+</code></pre>
+
+
+        <h4>Getting the id of a newly inserted row</h4>
+        <p>After inserting a row into a table where an auto-generated ID is the primary key, it is often useful to get that new id, for future updates or inserts into other tables. The last inserted id is can be obtained using:</p>
 <pre><code class="php">
 $newId = $pdo-&gt;lastInsertId(sequence_name);
 </code></pre>
 
-        <p>Some DB providers (e.g., MySQL) don't require a sequence name, but PostgreSQL requires it. The sequence is essentially a table that keeps track of the next id for that table. If you created an "id" column on a "product" table, then by default the sequence name would be: "product_id_seq", and after inserting into the product table, you could obtain the newly created id as follows:</p>
+        <p>Some DB providers (e.g., MySQL) don't require a sequence name, but PostgreSQL requires it. If you created an "id" column on a "product" table, then by default the sequence name would be: "product_id_seq", and after inserting into the product table, you could obtain the newly created id as follows:</p>
 
 <pre><code class="php">
 $newId = $pdo-&gt;lastInsertId('product_id_seq');
 </code></pre>
 
 
-        <h4>Other Topics</h4>
+        <h3>Other Topics</h3>
         <p>In addition, make sure you are comfortable with the following topics that we have encountered to some degree over the past weeks. A basic link from W3Schools is provided, but further research may be required.</p>
         <ul>
             <li><p>Constraints</p></li>
