@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>CS 313 - Prove</title>
+    <link rel="stylesheet" type="text/css" href="../course/css/style.css"/>
+</head>
+
+<body>
+
+<header id="courseTitle">
+    <span class="icon-byui-logo"></span>
+    <h1>CS 313 | Web Engineering II</h1>
+</header>
+
+<article>
+
+    <h2>08 Prove : Hello World Assignment : Deploy the Java Servlet WAR to Heroku</h2>
+
+    <h3>Create a Java Application Server on Heroku</h3>
+    <p>In a directory, that is completely independent of your NetBeans or Java source directories:</p>
+    <ol>
+        <li><p>Create a new repository for a Heroku Java application server.</p></li>
+        <li><p>Rename the repository (e.g. cs313-java).</p></li>
+        <li><p>Move into the repository.</p></li>
+        <li><p>Create the Heroku application.</p></li>
+        <li><p>Push the repository to Heroku.</p></li>
+        <li><p>Open the default Heroku index.html page.</p></li>
+    </ol>
+
+<pre><code class="bash">
+$ git clone https://github.com/heroku/devcenter-webapp-runner.git
+Cloning into 'devcenter-webapp-runner'...
+remote: Counting objects: 42, done.
+remote: Total 42 (delta 0), reused 0 (delta 0), pack-reused 42
+Unpacking objects: 100% (42/42), done.
+Checking connectivity... done.
+
+$ mv devcenter-webapp-runner cs313-java
+
+$ cd cs313-java
+
+/cs313-java$ heroku create
+Creating app... done, ⬢ sleepy-gorge-65101
+https://sleepy-gorge-65101.herokuapp.com/ | https://git.heroku.com/sleepy-gorge-65101.git
+
+$ git push heroku master
+Counting objects: 39, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (34/34), done.
+Writing objects: 100% (39/39), 8.83 KiB | 0 bytes/s, done.
+Total 39 (delta 15), reused 0 (delta 0)
+remote: Compressing source files... done.
+remote: Building source:
+remote:
+remote: -----> Java app detected
+remote: -----> Installing OpenJDK 1.8... done
+remote: -----> Installing Maven 3.3.9... done
+remote: -----> Executing: mvn -DskipTests clean dependency:list install
+remote:        [INFO] Scanning for projects...
+remote:        [INFO] Downloading: https://repo.maven.apache.org/maven2/org/apache/maven/plugins/maven-dependency-plugin/2.3/maven-dependency-plugin-2.3.pom
+
+...
+
+remote:        [INFO] ------------------------------------------------------------------------
+remote:        [INFO] BUILD SUCCESS
+remote:        [INFO] ------------------------------------------------------------------------
+remote:        [INFO] Total time: 8.196 s
+remote:        [INFO] Finished at: 2017-02-22T00:40:38+00:00
+remote:        [INFO] Final Memory: 16M/160M
+remote:        [INFO] ------------------------------------------------------------------------
+remote: -----> Discovering process types
+remote:        Procfile declares types -> web
+remote:
+remote: -----> Compressing...
+remote:        Done: 56.1M
+remote: -----> Launching...
+remote:        Released v3
+remote:        https://sleepy-gorge-65101.herokuapp.com/ deployed to Heroku
+remote:
+remote: Verifying deploy... done.
+To https://git.heroku.com/sleepy-gorge-65101.git
+ * [new branch]      master -> master
+
+$ heroku open
+</code></pre>
+
+    <h3>Install the Heroku Deploy Command</h3>
+    <p>Install the Heroku deploy command line tool plugin.</p>
+
+<pre><code class="bash">
+$ heroku plugins:install heroku-cli-deploy
+Installing plugin heroku-cli-deploy... done
+</code></pre>
+
+    <h3>Deploy the WAR to the Java Applicaiton Server</h3>
+    <ol>
+        <li><p>Move to the target directory with your WAR file (e.g. ~/NetBeansProjects/FirstProject/FirstProject/target).</p></li>
+        <li><p>Deploy your WAR file.</p></li>
+        <li><p>Move back into the Heroku repository directory.</p></li>
+        <li><p>Open the HelloServlet on Heroku.</p></li>
+        <li><p>Observe the results of your very first servlet on Heroku and celebrate!</p></li>
+    </ol>
+
+<pre><code class="bash">
+$ cd ~/NetBeansProjects/FirstProject/FirstProject/target
+
+$ heroku war:deploy FirstProject-1.0-SNAPSHOT.war --app=sleepy-gorge-65101
+Uploading FirstProject-1.0-SNAPSHOT.war
+-----> Packaging application...
+       - app: sleepy-gorge-65101
+       - including: webapp-runner.jar
+       - including: FirstProject-1.0-SNAPSHOT.war
+-----> Creating build...
+       - file: slug.tgz
+       - size: 8MB
+-----> Uploading build...
+       - success
+-----> Deploying...
+remote:
+remote: -----> heroku-deploy app detected
+remote: -----> Installing OpenJDK 1.8... done
+remote: -----> Discovering process types
+remote:        Procfile declares types -> web
+remote:
+remote: -----> Compressing...
+remote:        Done: 56.6M
+remote: -----> Launching...
+remote:        Released v4
+remote:        https://sleepy-gorge-65101.herokuapp.com/ deployed to Heroku
+remote:
+-----> Done
+
+$ cd cs313-java
+
+$ heroku open /HelloServlet
+</code></pre>
+
+
+    <h4>Screencast</h4>
+    <p><a href="https://video.byui.edu/media/War+Depoly+to+Heroku/0_5cywpws9" target="_blank">Deploy the Java Servlet WAR to Heroku</a></p>
+
+</article>
+
+<script src="../course/js/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+
+</html>
