@@ -1,0 +1,21 @@
+After completing the assignment, please answer the questions in this text file and submit it to I-Learn.
+
+0. Don't forget to also upload your javascript file to the assignment dropbox in I-Learn.
+
+1. Briefly describe any pieces of the assignment that are not yet working correctly.
+
+2. Briefly describe the "coolest" thing you learned while completing this assignment.
+
+3. Describe anything you did to go above and beyond with this assignment.
+
+4. Please select the category you feel best describes your assignment:
+A - Some attempt was made
+B - Developing, but significantly deficient
+C - Slightly deficient, but still mostly adequate
+D - Meets requirements
+E - Shows creativity and excels above and beyond requirements
+
+
+5. Provide a brief justification (1-2 sentences) for selecting that category.
+
+

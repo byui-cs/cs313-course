@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>CS 313 - Prove</title>
+    <link rel="stylesheet" type="text/css" href="../course/css/style.css" />
+</head>
+
+<body>
+    <header id="courseTitle">
+        <span class="icon-byui-logo"></span>
+        <h1>CS 313 | Web Engineering II</h1>
+    </header>
+    <article>
+        <h2>08 Prove : Assignment - Local Node.js Server</h2>
+
+        <h3>Overview</h3>
+        <p>Set up Node.js on your local computer, use it to create a local http server, that returns basic data.</p>
+
+        <h3>Instructions</h3>
+
+        <p>Your assignment this week is to create a local http server using node.js. </p>
+
+        <p>For this week, please don't use Express. The idea is for you to see how things work at the most fundamental level. Next week, we will improve on these ideas by using Express.</p>
+
+        <ol>
+            <li><p>Require the "http" package, and use the createServer method of your http server object to handle requests. Set it to listen on a port such as 8888.</p></li>
+
+            <li><p>Create a named callback function (e.g., onRequest) and pass that to your createServer method to handle the requests.</p></li>
+
+            <li>
+                <p>In your onRequest method, look for the requested path, and handle it according to the following:</p>
+
+                <ul>
+                    <li><p>If the requested path is "/home" have the response write an html page with an h1 tag that renders, "Welcome to the Home Page".</p></li>
+                    <li><p>If the requested path is "/getData" have the response write a JSON document that returns your name and class, (e.g., <code>{"name":"Br. Burton","class":"cs313"}</code></p></li>
+                    <li><p>If the requested path is anything else, have the response render an html page with a status code of 404, and on the page, render, "Page Not Found".</p></li>
+                </ul>
+
+            </li>
+            <li><p>Test your server by visiting it in a browser at: <code>http://localhost:8888/home</code> , etc.</p></li>
+        </ol>
+
+        <h4>Helpful Hints:</h4>
+
+        <ul>
+            <li><p>Try getting simple things to work first, such as just logging something to the console like, <code>console.log("Hello world");</code>. Then, write something simple to the response, and then finally try to handle the different requests.</p></li>
+
+            <li><p>There is a url module you can require that provides a url.parse() method that you can use to parse the request.url, and get the "pathname".</p></li>
+            <li><p>When starting your response, use the response.writeHead method to give a status code and a response type. Example:</p>
+<pre><code class="javascript">
+response.writeHead(200, {"Content-Type": "application/json"});
+response.writeHead(404, {"Content-Type": "text/html"});
+</code></pre>
+            </li>
+
+            <li><p>After writing the header, you can then use the response.write() method to write any text you would like. Example:</p>
+
+<pre><code class="javascript">
+response.write("&lt;h1&gt;Hello World&lt;/h1&gt;");
+</code></pre>
+
+            </li>
+            <li><p>When you are done writing the response, don't forget to end it with:</p>
+
+<pre><code class="javascript">
+response.end();
+</code></pre>
+            </li>
+        </ul>
+
+
+        <h3>Going above and beyond</h3>
+        <p>As always, you are encouraged to go above and beyond these requirements. For this project, you might consider working with query parameters, and making additional pages that have functionality, such as an "add" page that looks for two operands and returns their sum. Perhaps, it could take a third query parameter that specifies whether to return the result as JSON or as HTML.</p>
+        <p>Of course this is only one idea, you are welcome to explore anything else in the Node.js ecosystem.</p>
+
+        <h3>Submission</h3>
+        <p>For this week, you need to submit 2 files to I-Learn. First, submit the JavaScript file you created above.</p>
+
+        <p>Then, download this assignment's <a href="./prove08.txt" target="_blank">submission form</a>, fill it out, and submit it to I-Learn as well.</p>
+
+
+
+    </article>
+
+   <script src="../course/js/highlight/highlight.pack.js"></script>
+   <script>hljs.initHighlightingOnLoad();</script>
+</body>
+
+</html>
