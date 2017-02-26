@@ -16,6 +16,7 @@
         <h2>09 Prepare : Reading</h2>
 
         <h3>Preparation Material</h3>
+
         <p>Before meeting with your groups, please go through the following preparation material:</p>
         <ul>
             <li><p><a href="http://en.wikipedia.org/wiki/JavaServer_Pages" target="_blank">A basic overview of what JSPs are.</a></p></li>
@@ -37,72 +38,68 @@
   &lt;version&gt;1.2&lt;/version&gt;
 &lt;/dependency&gt;
 </code></pre>
+
         <p>The following is a link to <a href="http://docs.oracle.com/javaee/5/tutorial/doc/bnakh.html" target="_blank">more information about the Core tag library</a> from the official Oracle tutorial.</p>
 
         <h3>Tutorials Similar to Your Assignment</h3>
         <p>There can be a lot to get your mind around with regard to servlets, JSPs, and how they work together. To help you see how they can work together, we have created a few tutorials. The first is a very simplistic application that computes a sum. The second is "Scripture Application" example that is a little bit more in depth, and discusses how we can use JSPs/Servlets in the MVC pattern.</p>
-        <p>For the first one, see: <a href="./prepare_simple-tutorial.html">Simple JSP / Servlet Tutorial</a></p>
+        <p>For the first one, see: <a href="prepare-simple-tutorial.html">Simple JSP/Servlet Tutorial</a></p>
 
         <p>The second tutorial is very similar to what you need to write for your weekly assignment and walking through it step by step will be a big help in getting this assignment done, especially if your Java is a little rusty. These will also be beneficial in preparing for your team activity, even though they are more in depth than what you will need to do for it. This tutorial is broken up into 3 parts:</p>
 
         <ul>
-            <li><p><a href="./prepare_1-view-controller.html">Part One</a> - Example: Scripture Application (Starting the View and the Controller)</p></li>
-            <li><p><a href="./prepare_2-model.html">Part Two</a> - Example: Scripture Application (Building a Model)</p></li>
-            <li><p><a href="./prepare_3-data.html">Part Three</a> - Example: Scripture Application (Adding new data and Parsing Files)</p></li>
+            <li><p><a href="prepare-view-controller.html">Part One</a> - Example: Scripture Application (Starting the View and the Controller)</p></li>
+            <li><p><a href="prepare-model.html">Part Two</a> - Example: Scripture Application (Building a Model)</p></li>
+            <li><p><a href="prepare-data.html">Part Three</a> - Example: Scripture Application (Adding New Data and Parsing Files)</p></li>
         </ul>
 
         <h4>Additional Material</h4>
         <p>Here are links to the official JSP tutorials from Oracle. They are a little bit long and somewhat technical in parts, but can be a good resource for more information:</p>
         <ul>
-            <li><a href="http://docs.oracle.com/javaee/5/tutorial/doc/bnagx.html" target="_blank">JSPs</a><a href="http://docs.oracle.com/javaee/5/tutorial/doc/bnakc.html" target="_blank">The JSTL</a></li>
+            <li><p><a href="http://docs.oracle.com/javaee/5/tutorial/doc/bnagx.html" target="_blank">JSPs</a></p></li>
+            <li><p><a href="http://docs.oracle.com/javaee/5/tutorial/doc/bnakc.html" target="_blank">The JSTL</a></p></li>
         </ul>
 
         <h3>Code Snippets</h3>
         <p>Here are a few helpful one liner code snippets that may come in handy:</p>
+
         <p><b>Getting get/post variables in Servlets:</b></p>
-        <ul>
-            <li>
-                <p>String password = request.getParameter("password");</p>
-            </li>
-        </ul>
+
+        <pre><code class="java">String password = request.getParameter("password");</code></pre>
+
         <p><b>Getting get/post variables in JSPs:</b></p>
         <ul>
             <li>
-                <p>This is a URL parameter: ${param.password}</p>
+                <p>This is a URL parameter: <code>${param.password}</code></p>
             </li>
         </ul>
+
         <p><b>Setting a session variable in a Servlet:</b></p>
-        <ul>
-            <li>
-                <p>request.getSession().setAttribute("userId", "test123");</p>
-            </li>
-        </ul>
+
+        <pre><code class="java">request.getSession().setAttribute("userId", "test123");</code></pre>
+
         <p><b>Getting a session variable in a JSP:</b></p>
         <ul>
             <li>
-                <p>This comes from the session: ${sessionScope.userId} or simply: ${userId}</p>
+                <p>This comes from the session: <code>${sessionScope.userId}</code> or simply: <code>${userId}</code></p>
             </li>
         </ul>
+
         <p><b>Transferring control from a servlet to a JSP to produce the content for the response:</b></p>
-        <ul>
-            <li>
-                <p>request.getRequestDispatcher("/myPage.jsp").forward(request, response);</p>
-            </li>
-        </ul>
+
+        <pre><code class="java">request.getRequestDispatcher("/myPage.jsp").forward(request, response);</code></pre>
+
         <p><b>Getting the current directory of a servlet (on the server), and opening a file for output in that dir:</b></p>
-        <ul>
-            <li><p>String path = getServletContext().getRealPath("/") + "filename.txt";</p></li>
-            <li><p>BufferedWriter out = new BufferedWriter(new FileWriter(path));</p></li>
-        </ul>
-        
+
+        <pre><code class="java">String path = getServletContext().getRealPath("/") + "filename.txt";
+BufferedWriter out = new BufferedWriter(new FileWriter(path));</code></pre>
+
 
 
     </article>
 
-
    <script src="../course/js/highlight/highlight.pack.js"></script>
    <script>hljs.initHighlightingOnLoad();</script>
-
 
 </body>
 
