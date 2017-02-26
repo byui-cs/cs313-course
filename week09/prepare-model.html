@@ -4,7 +4,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>CS 313 - Preparation Material</title>
-    <link rel="stylesheet" type="text/css" href="../course/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../course/css/style.css"/>
 </head>
 
 <body>
@@ -13,49 +13,249 @@
     <h1>CS 313 | Web Engineering II</h1>
 </header>
 <article>
-    <h2>09 Prepare : Reading</h2>
+    <h2>Part Two - Example: Scripture Application (Building a Model)</h2>
 
-    <h3>Part Two - Example: Scripture Application (Building a Model)</h3>
+    <h4>INTRODUCTION</h4>
+    <p>From the first part of this tutorial, we have created a simple servlet and JSP to display a list of scriptures.
+        In that example, we pulled all of the logic of building the list out of the View (the JSP) so that the JSP
+        simply renders the list for the user.</p>
+    <p>In this part of the tutorial, we will further encapsulate the scriptures and the logic around the list creation
+        into the Model component of our MVC approach, leaving the servlet to simply function as a Controller, getting a
+        request from the user, then getting data from the Model, and passing it to the View to be rendered.</p>
 
-        <h4>INTRODUCTION</h4>
-        <p>From the first part of this tutorial, we have created a simple servlet and JSP to display a list of scriptures. In that example, we pulled all of the logic of building the list out of the View (the JSP) so that the JSP simply renders the list for the user.</p>
-        <p>In this part of the tutorial, we will further encapsulate the scriptures and the logic around the list creation into the Model component of our MVC approach, leaving the servlet to simply function as a Controller, getting a request from the user, then getting data from the Model, and passing it to the View to be rendered.</p>
-        <p><b>Encapsulating the a scripture object</b></p>
-        <p>To this point, we have been using String's to represent each scripture in our list. Now, we will encapsulate this into a class to provide additional functionality and future flexibility.</p>
-        <p>To emphasize the separation between the Controller and the Model, we will create a separate sub-package for the classes in our model. Right-click the "scriptures" package, and select New -&gt; Package. Enter the name "scriptures.model", which will create a sub-folder underneath "scriptures" called "model"</p>
-        <p>Right click the "model" package, and select New -&gt; Class, and type the name "Scripture" as the class name. Notice that this is a regular Java class, there is nothing special about it that makes it unique to servlets or JSPs.</p>
-        <p>In this class we can create three private fields as follows:</p>
-        <p><span style="font-family: 'courier new', courier; font-size: 10pt;">private String book;</span>
-            <br /><span style="font-family: 'courier new', courier; font-size: 10pt;"> private int chapter;</span>
-            <br /><span style="font-family: 'courier new', courier; font-size: 10pt;"> private int verse;</span></p>
-        <p>Then we can create getters and setters for these fields, using the standard naming convention (i.e., getBook, setBook). Using this naming convention is critical as we will see later. We can also create a default no-argument constructor and also, for our convenience, a constructor that will take and set all three parts of the scripture at once. For simplicity, in this tutorial we will not perform error checking on the setting of these values.</p>
-        <p>The complete class now looks as follows:</p>
-        <p><span style="font-family: 'courier new', courier; font-size: 10pt;">package scriptures.model;<br /><span style="font-size: 10pt;"><br />public class Scripture {<br /></span></span><span style="font-family: 'courier new', courier; font-size: 10pt; line-height: 26.6666641235352px; white-space: nowrap;">&nbsp; private String book;<br /></span><span style="font-family: 'courier new', courier; font-size: 10pt; line-height: 26.6666641235352px; white-space: nowrap;">&nbsp; private int chapter;<br /></span><span style="font-family: 'courier new', courier; font-size: 10pt; line-height: 26.6666641235352px; white-space: nowrap;">&nbsp; private int verse;<br /></span><span style="font-family: 'courier new', courier; font-size: 10pt; line-height: 26.6666641235352px; white-space: nowrap;"><br />&nbsp; public Scripture(){<br /></span><span style="font-family: 'courier new', courier; font-size: 10pt; line-height: 26.6666641235352px; white-space: nowrap;">&nbsp; &nbsp; setBook("");<br /></span><span style="font-family: 'courier new', courier; font-size: 10pt; line-height: 26.6666641235352px; white-space: nowrap;">&nbsp; &nbsp; setChapter(1);<br /></span><span style="font-family: 'courier new', courier; font-size: 10pt; line-height: 26.6666641235352px; white-space: nowrap;">&nbsp; &nbsp; setVerse(1);<br /></span><span style="font-family: 'courier new', courier; font-size: 10pt; line-height: 26.6666641235352px; white-space: nowrap;">&nbsp; }</span></p><pre><span style="font-family: 'courier new', courier; font-size: 10pt;">&nbsp; public Scripture(String book, int chapter, int verse) {</span></pre><pre><span style="font-family: 'courier new', courier; font-size: 10pt;"></span><span style="font-family: 'courier new', courier; font-size: 10pt;">&nbsp; &nbsp; this.setBook(book);</span></pre><pre><span style="font-family: 'courier new', courier; font-size: 10pt;"></span><span style="font-family: 'courier new', courier; font-size: 10pt;">&nbsp; &nbsp; this.setChapter(chapter);</span></pre><pre><span style="font-family: 'courier new', courier; font-size: 10pt;"></span><span style="font-family: 'courier new', courier; font-size: 10pt;">&nbsp; &nbsp; this.setVerse(verse);</span><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">&nbsp; }</span><br /><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">&nbsp; public String getBook() {</span><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">&nbsp; &nbsp; return book;</span><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">&nbsp; }</span><br /><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">&nbsp; public void setBook(String book) {</span><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">&nbsp; &nbsp; this.book = book;</span><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">&nbsp; }</span><br /><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">&nbsp; public int getChapter() {</span><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">&nbsp; &nbsp; return chapter;</span><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">&nbsp; }</span><br />     <br /><span style="font-family: 'courier new', courier; font-size: 10pt;">&nbsp; public void setChapter(int chapter) {</span><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">&nbsp; &nbsp; this.chapter = chapter;</span><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">&nbsp; }</span><br /><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">&nbsp; public int getVerse() {</span><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">&nbsp; &nbsp; return verse;</span><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">&nbsp; }</span><br /><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">&nbsp; public void setVerse(int verse) {</span><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">&nbsp; &nbsp; this.verse = verse;</span><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">&nbsp; }</span><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">}</span></pre>
-        <p><b>Using the Scripture Class in our servlet and JSP<br /><br /></b><span style="font-size: 12pt;">With the new scripture class, we can change the ShowList servlet to use a List of "Scriptures" rather than a list of Strings. The body of the doGet method then looks as follows (of course, we also need to include "import scriptures.model.Scripture;" at the top):</span></p><pre><span style="font-family: 'courier new', courier; font-size: 10pt; background-color: #ffcc99;">List&lt;Scripture&gt; scriptures = new ArrayList&lt;Scripture&gt;();</span><br /><span style="font-family: 'courier new', courier; font-size: 10pt; background-color: #ffcc99;">scriptures.add(new Scripture("Proverbs", 3, 5));</span><br /><span style="font-family: 'courier new', courier; font-size: 10pt; background-color: #ffcc99;">scriptures.add(new Scripture("Doc. &amp; Cov.", 112, 10));</span><br /><span style="font-family: 'courier new', courier; font-size: 10pt; background-color: #ffcc99;">scriptures.add(new Scripture("John", 7, 17));</span><br /><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">request.setAttribute("scriptures", scriptures);</span></pre><pre><span style="font-family: 'courier new', courier; font-size: 10pt;">request.getRequestDispatcher("scriptureList.jsp").forward(request, response);<br /><br /></span></pre>
-        <p>At this point, we can run the servlet with the same JSP as before, but instead of seeing the scriptures, we will see something like the following:</p><pre><span style="font-family: 'courier new', courier; font-size: 10pt;">Scriptures:</span><br /><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">scriptures.model.Scripture@14985016</span><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">scriptures.model.Scripture@1bb1deea</span><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">scriptures.model.Scripture@3aa1e2da</span></pre>
-        <p>The problem here is that we did not override the toString method on the class, so it does not render it as we might like. We can add the following method to the Scripture class:</p><pre><span style="font-family: 'courier new', courier; font-size: 10pt;">       @Override</span><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">       public String toString() {</span><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">&nbsp; return book + " " + chapter + ":" + verse;</span><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">       }</span></pre>
-        <p>After adding this method, running the servlet produces the following:</p><pre><span style="font-family: 'courier new', courier; font-size: 10pt;">Scriptures:</span><br /><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">Proverbs 3:5</span><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">Doc. &amp; Cov. 112:10</span><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">John 7:17</span></pre>
-        <p><b>Adding customization to the View</b></p>
-        <p>If we wanted to customize the list of the scriptures, so that it did not use the default toString method, we can alter the JSP to use the different components individually. For example, suppose we wanted to make the book name bold. Rather than rendering the list as before:</p><pre><span style="font-family: 'courier new', courier; font-size: 10pt;">&lt;c:forEach var="scripture" items="$[scriptures}"&gt;</span><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">&nbsp; ${scripture}&lt;br &gt;</span><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">&lt;c:forEach&gt;</span></pre>
-        <p><span style="font-family: 'courier new', courier; font-size: 10pt;">We can change it to get each part of the scripture separately as follows:</span></p><pre><span style="font-family: 'courier new', courier; font-size: 10pt;">&lt;/c:forEach var="scripture" items="${scriptures}"&gt;</span><br /><span style="font-family: 'courier new', courier; font-size: 10pt; background-color: #ffcc99;">&nbsp; &lt;strong&gt;${scripture.book}&lt;/strong&gt; ${scripture.chapter}:${scripture.verse}&lt;br /&gt;</span><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">&lt;/c:forEach&gt;</span></pre>
-        <p>This will show the book name as "strong" (bold) text along with the chapter and verse, when running the servlet. Note that we used the property name (e.g., "book") directly, rather than using a getter (e.g., "getBook()"). This is not directly accessing the private field, but is in fact calling the proper getter, because we have used the standard naming convention.</p>
-        <p><b>Further separating the Model from the Controller</b></p>
-        <p>Even though we have encapsulated the scriptures into a class, we still have much of the application logic (the building of the list) in our Controller (the servlet). To further separate the two, we can create another class in our "scriptures.model" package, named, "ScriptureDataHandler".</p>
-        <p>In this class, we can then add a method, such as "getFavoriteScriptures()" to return a List of Scriptures.</p>
-        <p>The complete class then looks as follows:</p><pre><span style="font-family: 'courier new', courier; font-size: 10pt;">package scriptures.model;</span><br /><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">import java.util.ArrayList;</span><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">import java.util.List;</span><br /><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">public class ScriptureDataHandler {</span><br /><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">&nbsp; public List&lt;Scripture&gt; getFavoriteScriptures() {</span><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">&nbsp; &nbsp; List&lt;Scripture&gt; scriptures = new ArrayList();</span><br /><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">&nbsp; &nbsp; scriptures.add(new Scripture("Proverbs", 3, 5));</span><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">&nbsp; &nbsp; scriptures.add(new Scripture("Doc. &amp; Cov.", 112, 10));</span><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">&nbsp; &nbsp; scriptures.add(new Scripture("John", 7, 17));</span><br /><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">&nbsp; &nbsp; return scriptures;</span><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">&nbsp; }</span><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">}</span></pre>
-        <p>Then, the doGet method of the servlet can be refactored to the following:</p><pre><span style="font-family: 'courier new', courier; font-size: 10pt;">protected void doGet(HttpServletRequest request, HttpServletResponse response)<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;throws ServletException, IOException {</span><br /><span style="font-family: 'courier new', courier; font-size: 10pt; background-color: #ffcc99;">&nbsp; ScriptureDataHandler handler = new ScriptureDataHandler();</span><br /><span style="font-family: 'courier new', courier; font-size: 10pt; background-color: #ffcc99;">&nbsp; request.setAttribute("scriptures", handler.getFavoriteScriptures());</span><br /><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">&nbsp; request.getRequestDispatcher("scriptureList.jsp").forward(request, response);</span><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">}</span></pre>
-        <p>We have now removed the logic of generating the list of scriptures from the Controller, and could now easily change the process of generating favorite scriptures without affecting the servlet or JSP in any way.</p>
-        <p><b>One further layer of abstraction</b></p>
-        <p>Even though we have created the ScriptureDataHandler class, and removed it's logic from the servlet, in the future, we may want to get lists of scriptures from different sources, such as a file or a database. To facilitate this, rather than having our "hard-coded" version of the class as the the data handler, we can have ScriptureDataHandler be an interface that provides the getFavoriteScriptures method, and create a new class "HardCodedScriptureHandler" that implements the interface.</p>
-        <p>The new interface would look as follows:</p><pre><span style="font-family: 'courier new', courier; font-size: 10pt;">package scriptures.model;</span><br /><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">import java.util.List;</span><br /><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">public interface ScriptureDataHandler {</span><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">&nbsp; public List&lt;Scripture&gt; getFavoriteScriptures();</span><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">}</span></pre>
-        <p>And the hard-coded class would look as follows:</p><pre><span style="font-family: 'courier new', courier; font-size: 10pt;">package scriptures.model;</span><br /><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">import java.util.ArrayList;</span><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">import java.util.List;</span><br /><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">public class <span style="background-color: #ffcc99;">HardCodedScriptureHandler implements ScriptureDataHandler {</span></span><br /><br /><span style="font-family: 'courier new', courier; font-size: 10pt; background-color: #ffcc99;">&nbsp; @Override</span><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">&nbsp; public List&lt;Scripture&gt; getFavoriteScriptures() {</span><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">&nbsp; &nbsp; List&lt;Scripture&gt; scriptures = new ArrayList&lt;Scripture&gt;();</span><br /><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">&nbsp; &nbsp; scriptures.add(new Scripture("Proverbs", 3, 5));</span><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">&nbsp; &nbsp; scriptures.add(new Scripture("Doc. &amp; Cov.", 112, 10));</span><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">&nbsp; &nbsp; scriptures.add(new Scripture("John", 7, 17));</span><br /><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">&nbsp; &nbsp; return scriptures;</span><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">&nbsp; }</span><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">}</span></pre>
-        <p>Finally, we can change the Servlet to use the new class and interface as follows:</p><pre><span style="font-family: 'courier new', courier; font-size: 10pt;">protected void doGet(HttpServletRequest request, HttpServletResponse response)<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;throws ServletException, IOException {</span><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">&nbsp; ScriptureDataHandler handler = new <span style="background-color: #ffcc99;">HardCodedScriptureHandler</span>();</span><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">&nbsp; request.setAttribute("scriptures", handler.getFavoriteScriptures());</span><br /><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">&nbsp; request.getRequestDispatcher("scriptureList.jsp").forward(request, response);</span><br /><span style="font-family: 'courier new', courier; font-size: 10pt;">       }</span></pre>
-        <p>With these changes in place, we can run the servlet, and view the scripture list as before.</p>
-        <p>The final project looks as follows in Eclipse:</p><img src="./img/mvc-4.jpg" border="0" width="299" height="357" />
-        <p><b>Dependency Inversion</b></p>
-        <p>A few notes about this last change. By using an interface for our ScriptureDataHandler, if we want to change the list to come from a different source, we could easily change the instantiation of the "HardCodedScriptureHandler" to another class that implements the interface. And everything else remains the same. This further reduces the coupling between the concrete objects in the Model from the Controller.</p>
-        <p>We could add further separation, by pulling the instantiation of an actual, concrete scripture handler instance to another method, (using the Factory pattern or something similar), or even further to a configuration file of our program. This would allow us to select a completely different class without having to change the compilation of the program at all! This is a very powerful principle and could enable using one type of object for certain unit tests and another one for a staging or production environment. The ability to specify dependencies in this way is a version of the "Inversion of Control" principle, or Dependency Injection, and is a core element of what frameworks such as Spring, provide. We won't go into this idea further at this point, but you should be aware of this abstract, but powerful concept.</p>
+    <h3>Encapsulating the a scripture object</h3>
 
+    <p>To this point, we have been using String's to represent each scripture in our list. Now, we will encapsulate this
+        into a class to provide additional functionality and future flexibility.</p>
+    <p>To emphasize the separation between the Controller and the Model, we will create a separate sub-package for the
+        classes in our model. Right-click the "scriptures" package, and select New &gt; Package. Enter the name
+        "scriptures.model", which will create a sub-folder underneath "scriptures" called "model"</p>
+    <p>Right click the "model" package, and select New &gt; Class, and type the name "Scripture" as the class name.
+        Notice that this is a regular Java class, there is nothing special about it that makes it unique to servlets or
+        JSPs.</p>
+    <p>In this class we can create three private fields as follows:</p>
+
+    <pre><code class="java">private String book;
+private int chapter;
+private int verse;</code></pre>
+
+    <p>Then we can create getters and setters for these fields, using the standard naming convention (i.e., getBook,
+        setBook). Using this naming convention is critical as we will see later. We can also create a default
+        no-argument constructor and also, for our convenience, a constructor that will take and set all three parts of
+        the scripture at once. For simplicity, in this tutorial we will not perform error checking on the setting of
+        these values.</p>
+    <p>The complete class now looks as follows:</p>
+
+    <pre><code class="java">package scriptures.model;
+
+public class Scripture {
+
+    private String book;
+    private int chapter;
+    private int verse;
+
+    public Scripture() {
+        setBook("");
+        setChapter(1);
+        setVerse(1);
+    }
+
+    public Scripture(String book, int chapter, int verse) {
+        this.setBook(book);
+        this.setChapter(chapter);
+        this.setVerse(verse);
+    }
+
+    public String getBook() {
+        return book;
+    }
+
+    public void setBook(String book) {
+        this.book = book;
+    }
+
+    public int getChapter() {
+        return chapter;
+    }
+
+    public void setChapter(int chapter) {
+        this.chapter = chapter;
+    }
+
+    public int getVerse() {
+        return verse;
+    }
+
+    public void setVerse(int verse) {
+        this.verse = verse;
+    }
+
+}
+</code></pre>
+
+    <h3>Using the Scripture Class in our servlet and JSP</h3>
+
+    <p>With the new scripture class, we can change the ShowList
+        servlet to use a List of "Scriptures" rather than a list of Strings. The body of the doGet method then looks as
+        follows (of course, we also need to include "import scriptures.model.Scripture;" at the top):</p>
+
+    <pre><code class="java">List&lt;Scripture&gt; scriptures = new ArrayList&lt;
+Scripture&gt;();scriptures.add(new Scripture("Proverbs", 3, 5));
+scriptures.add(new Scripture("Doc. &amp; Cov.", 112, 10));
+scriptures.add(new Scripture("John", 7, 17));
+request.setAttribute("scriptures", scriptures);
+
+request.getRequestDispatcher("scriptureList.jsp").forward(request, response);
+</code></pre>
+
+    <p>At this point, we can run the servlet with the same JSP as before, but instead of seeing the scriptures, we will
+        see something like the following:</p>
+
+    <pre><code class="java">Scriptures:scriptures.model.Scripture@14985016scriptures.model.Scripture@1bb1deeascriptures.model.Scripture@3aa1e2da</code></pre>
+
+    <p>The problem here is that we did not override the toString method on the class, so it does not render it as we
+        might like. We can add the following method to the Scripture class:</p>
+
+    <pre><code class="java">@Override public String toString() { return book + " " + chapter + ":" + verse; }</code></pre>
+
+    <p>After adding this method, running the servlet produces the following:</p>
+
+    <pre><code class="java">Scriptures:Proverbs 3:5
+Doc. &amp; Cov. 112:10
+John 7:17
+</code></pre>
+
+    <h3>Adding customization to the View</h3>
+
+    <p>If we wanted to customize the list of the scriptures, so that it did not use the default toString method, we can
+        alter the JSP to use the different components individually. For example, suppose we wanted to make the book name
+        bold. Rather than rendering the list as before:</p>
+
+    <pre><code class="jsp">&lt;c:forEach var="scripture" items="$[scriptures}"&gt;
+    ${scripture}&lt;br /&gt;
+&lt;c:forEach&gt;
+</code></pre>
+
+    <p>We can change it to get each part of the scripture separately as follows:</p>
+
+    <pre><code class="jsp">&lt;/c:forEach var="scripture" items="${scriptures}"&gt;
+    &lt;strong&gt;${scripture.book}&lt;/strong&gt; ${scripture.chapter}:${scripture.verse}&lt;br /&gt;
+&lt;/c:forEach&gt;</code></pre>
+
+    <p>This will show the book name as "strong" (bold) text along with the chapter and verse, when running the servlet.
+        Note that we used the property name (e.g., "book") directly, rather than using a getter (e.g., "getBook()").
+        This is not directly accessing the private field, but is in fact calling the proper getter, because we have used
+        the standard naming convention.</p>
+
+    <h3>Further separating the Model from the Controller</h3>
+
+    <p>Even though we have encapsulated the scriptures into a class, we still have much of the application logic (the
+        building of the list) in our Controller (the servlet). To further separate the two, we can create another class
+        in our "scriptures.model" package, named, "ScriptureDataHandler".</p>
+    <p>In this class, we can then add a method, such as "getFavoriteScriptures()" to return a List of Scriptures.</p>
+    <p>The complete class then looks as follows:</p>
+
+    <pre><code class="java">package scriptures.model;
+import java.util.ArrayList;
+import java.util.List;
+
+public class ScriptureDataHandler {
+
+    public List&lt;Scripture&gt; getFavoriteScriptures() {
+
+        List&lt;Scripture&gt; scriptures = new ArrayList();
+        scriptures.add(new Scripture("Proverbs", 3, 5));
+        scriptures.add(new Scripture("Doc. &amp; Cov.", 112, 10));
+        scriptures.add(new Scripture("John", 7, 17));
+
+        return scriptures;
+    }
+}
+</code></pre>
+
+    <p>Then, the doGet method of the servlet can be refactored to the following:</p>
+
+    <pre><code class="java">protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    ScriptureDataHandler handler = new ScriptureDataHandler();
+
+    request.setAttribute("scriptures", handler.getFavoriteScriptures());
+    request.getRequestDispatcher("scriptureList.jsp").forward(request, response);
+}
+</code></pre>
+
+    <p>We have now removed the logic of generating the list of scriptures from the Controller, and could now easily
+        change the process of generating favorite scriptures without affecting the servlet or JSP in any way.</p>
+
+    <h3>One further layer of abstraction</h3>
+
+    <p>Even though we have created the ScriptureDataHandler class, and removed it's logic from the servlet, in the
+        future, we may want to get lists of scriptures from different sources, such as a file or a database. To
+        facilitate this, rather than having our "hard-coded" version of the class as the the data handler, we can have
+        ScriptureDataHandler be an interface that provides the getFavoriteScriptures method, and create a new class
+        "HardCodedScriptureHandler" that implements the interface.</p>
+    <p>The new interface would look as follows:</p>
+
+    <pre><code class="java">package scriptures.model;
+import java.util.List;
+
+public interface ScriptureDataHandler {
+    public List&lt;Scripture&gt; getFavoriteScriptures();
+}
+</code></pre>
+
+    <p>And the hard-coded class would look as follows:</p>
+
+<pre><code class="java">package scriptures.model;
+import java.util.ArrayList;
+import java.util.List;
+
+public class HardCodedScriptureHandler implements ScriptureDataHandler {
+
+    @Override
+    public List&lt;Scripture&gt; getFavoriteScriptures() {
+
+        List&lt;Scripture&gt; scriptures = new ArrayList&lt;Scripture&gt;();
+        scriptures.add(new Scripture("Proverbs", 3, 5));
+        scriptures.add(new Scripture("Doc. &amp; Cov.", 112, 10));
+        scriptures.add(new Scripture("John", 7, 17));
+
+        return scriptures;
+    }
+
+}
+</code></pre>
+
+    <p>Finally, we can change the Servlet to use the new class and interface as follows:</p>
+
+    <pre><code class="java">protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    ScriptureDataHandler handler = new HardCodedScriptureHandler();
+
+    request.setAttribute("scriptures", handler.getFavoriteScriptures());
+    request.getRequestDispatcher("scriptureList.jsp").forward(request, response);
+}
+</code></pre>
+
+    <p>With these changes in place, we can run the servlet, and view the scripture list as before.</p>
+    <p>The final project looks as follows in Eclipse:</p>
+
+    <p><img src="./img/mvc-4.jpg" style="border: 1px solid black;"/></p>
+
+    <h3>Dependency Inversion</h3>
+
+    <p>A few notes about this last change. By using an interface for our ScriptureDataHandler, if we want to change the
+        list to come from a different source, we could easily change the instantiation of the
+        "HardCodedScriptureHandler" to another class that implements the interface. And everything else remains the
+        same. This further reduces the coupling between the concrete objects in the Model from the Controller.</p>
+    <p>We could add further separation, by pulling the instantiation of an actual, concrete scripture handler instance
+        to another method, (using the Factory pattern or something similar), or even further to a configuration file of
+        our program. This would allow us to select a completely different class without having to change the compilation
+        of the program at all! This is a very powerful principle and could enable using one type of object for certain
+        unit tests and another one for a staging or production environment. The ability to specify dependencies in this
+        way is a version of the "Inversion of Control" principle, or Dependency Injection, and is a core element of what
+        frameworks such as Spring, provide. We won't go into this idea further at this point, but you should be aware of
+        this abstract, but powerful concept.</p>
 
 
 </article>
