@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>CS 313 - Team Activity</title>
+    <link rel="stylesheet" type="text/css" href="../course/css/style.css" />
+</head>
+
+<body>
+    <header id="courseTitle">
+        <span class="icon-byui-logo"></span>
+        <h1>CS 313 | Web Engineering II</h1>
+    </header>
+    <article>
+        <h2>09 Teach : Team Activity</h2>
+
+        <div class="online-notes">
+
+            <h4>Special Instructions for Online Students</h4>
+
+            <p>You need to coordinate a one hour synchronous meeting with your group for this activity.</p>
+
+        </div>
+
+        <h3>Objective</h3>
+        <p>Understand the fundamentals of Node.js and Express.</p>
+
+        <h3>Overview</h3>
+        <p>Create a Web application that performs basic Math operations. This application begins with a static form that asks the user to select a basic math operation (add, subtract, multiply, or divide) and two operands. When the form is submitted the user is shown a results page that displays the data that was submitted and the result.</p>
+
+        <h3>Instructions</h3>
+        <ol>
+            <li>
+                <p>Create a new Node.js application. You may want to do this by cloning the <a href="https://github.com/heroku/node-js-getting-started/" target="_blank">Heroku Node.js Getting Started</a> Git repository, and beginning from there. After cloning the repository, you'll want to run "npm install" in the application directory, to have it download any dependencies (i.e., express).</p>
+                <p>Create a static HTML page for your submission form. You may want to refer to the section on serving static files from the Express documentation for this.</p>
+                <p>Have your form action go to a route "/math" with the operation and the operands passed as parameters (it is probably easiest to begin with handling a Get method).</p>
+                <p>Verify that you can load your form in a browser (at localhost).</p>
+            </li>
+            
+            <li>
+                <p>Use Express to handle this route and connect it to a function (or functions) that will obtain the parameters, and compute the result. Then, report the correct result on the console and verify that everything is working.</p>
+                <p>At this point, focus on implementing the add function. You can complete the others as part of the stretch challenges.</p>
+            </li>
+
+            <li>
+                <p>Create a results page that is an EJS. Pass the result value from your Node.js JavaScript function to the EJS and have it render the result.</p>
+                <p>This may require you to search the Web a little about rendering data in an EJS. Also, you can reference how the Getting Started repo handles the request for "/" and uses the index.ejs file to render a response.</p>
+                <p>Verify that your app is working correctly.</p>
+            </li>
+        </ol>
+
+        <h4>Stretch Challenges</h4>
+        <p>After finishing the core requirements, ensure that everyone is at that point and understands the material. When everyone has completed the core requirements, you can move on to these stretch challenges.</p>
+
+        <ol>
+            <li><p>Add the functionality for the other operations (subtract, multiply, divide).</p></li>
+
+            <li><p>Add another route to your server, "math_service" that also computes the result of the math operation, but this time returns the result as JSON, rather than a formatted HTML document.<p></li>
+
+            <li><p>Add another button on your form (not a submit button) that uses AJAX to call your new math_service, obtain the result, and then update the DOM of the current page to display it.<p></li>
+
+<!--             <li><p>Deploy your app to one of your servers and verify that it works there.</p></li>
+ -->
+        </ol>
+
+        <h3>Instructor's Solution</h3>
+        <p>As a part of this team activity, you are expected to look over a solution from the instructor, to compare your approach to that one. One of the questions on the I-Learn submission will ask you to provide insights from this comparison.</p>
+
+        <p>Please DO NOT open the solution until you have worked through this activity as a team for the one hour period. At the end of the hour, if you are still struggling with some of the core requirements, you are welcome to view the instructor's solution and use it to help you complete your own code. Even if you use the instructor's code to help you, you are welcome to report that you finished the core requirements, if you code them up yourself.</p>
+
+        <p>After working with your team for the one hour activity, <a href="https://github.com/byui-burton/cs313-course-dev/tree/master/week09n/ta-solution/" target="_blank">click here for the instructor's solution</a>.</p>
+
+        <h3>Submission</h3>
+        <p>When you have finished this activity, please fill out the assessment in I-Learn. You are welcome to complete any additional parts of this activity by yourself or with others after your meeting before submitting the assessment.</p>
+
+
+
+    </article>
+
+   <script src="../course/js/highlight/highlight.pack.js"></script>
+   <script>hljs.initHighlightingOnLoad();</script>
+</body>
+
+</html>
