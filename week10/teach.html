@@ -23,10 +23,101 @@
 
         </div>
 
+        <h3>Objective</h3>
+        <p>Consume a simple API using REST and no authentication in Java.</p>
+
         <h3>Overview</h3>
+        <p>For today's team activity, we will create a simple web application to search for movies, using the API provided by <a href="http://www.omdbapi.com/" target="_blank">Open Movie Database API</a>. You should have a JSP with a search box, and, upon submission, have a servlet that processes the search, calls the API, and displays a list of movies that match. As a stretch challenge, make each move a link, that if submitted, will query the API and return more detailed information about the movie.</p>
+
+        <h3>Instructions</h3>
+        <p>Please note that there are some additional helps and some example code written below the requirements.</p>
+
+        <h4>Core requirements</h4>
+        <ol>
+            <li><p>Create a JSP with a search box for a movie title and a Servlet that handles the action of this HTML form. Verify that your Servlet is receiving the data from the JSP form.</p></li>
+            <li><p>On your Servlet, query the API for the movie information and, for debugging purposes, output the results of the API to the console. You should ensure that you can iterate through the results and that you have the necessary data.</p></li>
+            <li><p>Create a results JSP, then pass the data from the Servlet to this JSP, and render it appropriately.</p></li>
+        </ol>
+
+        <h4>Stretch Challenges</h4>
+        <p>After finishing the core requirements, ensure that everyone is at that point and understands the material. When everyone has completed the core requirements, you can move on to these stretch challenges.</p>
+
+        <ol>
+            <li><p>Get your search to work when including spaces in the query.</p></li>
+            <li><p>On the results page, make each movie a link to a Movie Details Servlet that uses a JSP to render its result. At this point, simply have it render the text "Movie details for id: xxxx", replacing the xxxx with the movie id.</p></li>
+            <li><p>Fill in the details of the move details page by querying the API again for the details of the movie with the specified id.</p></li>
+        </ol>
+
+        <h3>Helpful resources</h3>
+        <p>The following Java libraries may come in handy in this exercise:</p>
+        <p><a href="http://wiki.fasterxml.com/JacksonHome" target="_blank">Jackson Library for Parsing JSON</a></p>
+        <p>You can include this as a dependency in your project by adding the following to your Maven pom.xml file:</p>
+<pre><code class="xml">
+&lt;dependency&gt;
+  &lt;groupId&gt;com.fasterxml.jackson.core&lt;/groupId&gt;
+  &lt;artifactId&gt;jackson-databind&lt;/artifactId&gt;
+  &lt;version&gt;2.5.1&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+
+        <p>Or, if you are not using Maven, download 3 JARS from:</p>
+        <ul>
+            <li><p><a href="http://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.3.2/jackson-core-2.3.2.jar" target="_blank">http://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.3.2/jackson-core-2.3.2.jar</a></p></li>
+            <li><p><a href="http://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.3.2/jackson-databind-2.3.2.jar" target="_blank">http://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.3.2/jackson-databind-2.3.2.jar</a></p></li>
+            <li><p><a href="http://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-annotations/2.3.2/jackson-annotations-2.3.2.jar" target="_blank">http://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-annotations/2.3.2/jackson-annotations-2.3.2.jar</a></p></li>
+        </ul>
+
+        <p>The following examples demonstrate the basics of how the Jackson library can be used.</p>
+
+<pre><code class="java">
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+...
+
+URL url = new URL("http://www.omdbapi.com/?t=True%20Grit&amp;y=1969");
+
+ObjectMapper mapper = new ObjectMapper();
+Map&lt;String, Object&gt; map = mapper.readValue(url, Map.class);
+
+for (String key : map.keySet()) {
+    System.out.println(key + ": " + map.get(key));
+}
+</code></pre>
+
+        <p>If your JSON result contains an array, you can then access the list, which may potentially have a bunch of Maps in it. For example:</p>
+
+<pre><code class="java">
+URL url = new URL("http://www.omdbapi.com/?s=Park");
+ObjectMapper mapper = new ObjectMapper();
+
+Map&lt;String, Object&gt; map = mapper.readValue(url, Map.class);
+List list = (List)map.get("Search");
+
+for (Object item : list) {
+    Map&lt;String, Object&gt; innerMap = (Map&lt;String, Object&gt;)item;
+
+    for (String key : innerMap.keySet()) {
+        System.out.println(key + ": " + innerMap.get(key));
+    }
+}
+</code></pre>
+
+        <p>Be aware, there are some potential uncaught exceptions of casting to the wrong types in this code. It illustrates the basics, but you'll want to be very careful in your parsing.</p>
 
 
-        <p>For this assignment...</p>
+        <h4>Screencasts and Other Help</h4>
+        <p><a href="https://video.byui.edu/media/CS+313A+Movie+Search/0_c7kc0sie" target="_BLANK">Screencast</a> - Movie Search</p>
+
+
+        <h3>Instructor's Solution</h3>
+        <p>As a part of this team activity, you are expected to look over a solution from the instructor, to compare your approach to that one. One of the questions on the I-Learn submission will ask you to provide insights from this comparison.</p>
+
+        <p>Please DO NOT open the solution until you have worked through this activity as a team for the one hour period. At the end of the hour, if you are still struggling with some of the core requirements, you are welcome to view the instructor's solution and use it to help you complete your own code. Even if you use the instructor's code to help you, you are welcome to report that you finished the core requirements, if you code them up yourself.</p>
+
+        <p>After working with your team for the one hour activity, <a href="https://github.com/byui-burton/cs313-course-dev/tree/master/week09/ta-solution/" target="_blank">click here for the instructor's solution</a>.</p>
+
+        <h3>Submission</h3>
+        <p>When you have finished this activity, please fill out the assessment in I-Learn. You are welcome to complete any additional parts of this activity by yourself or with others after your meeting before submitting the assessment.</p>
 
 
 
