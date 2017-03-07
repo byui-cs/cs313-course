@@ -44,9 +44,10 @@ function getPerson(request, response) {
 function getPersonFromDb(id, callback) {
 	console.log("Getting person from DB with id: " + id);
 
-	pg.connect(connectionString, function(err, client, done) {
+	var client = new pg.Client(connectionString);
+
+	client.connect(function(err) {
 		if (err) {
-			done();
 			console.log("Error connecting to DB: ")
 			console.log(err);
 			callback(err, null);
@@ -56,8 +57,10 @@ function getPersonFromDb(id, callback) {
 		var params = [id];
 
 		var query = client.query(sql, params, function(err, result) {
-			// we are now done getting the data from the DB
-			done();
+			// we are now done getting the data from the DB, disconnect the client
+			client.end(function(err) {
+				if (err) throw err;
+			});
 
 			if (err) {
 				console.log("Error in query: ")
