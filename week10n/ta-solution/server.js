@@ -44,8 +44,7 @@ function getPerson(request, response) {
 function getPersonFromDb(id, callback) {
 	console.log("Getting person from DB with id: " + id);
 
-	results = [];
-	pg.connect(connectionString, (err, client, done) => {
+	pg.connect(connectionString, function(err, client, done) {
 		if (err) {
 			done();
 			console.log("Error connecting to DB: ")
@@ -56,19 +55,21 @@ function getPersonFromDb(id, callback) {
 		var sql = "SELECT id, first, last, birthdate FROM person WHERE id = $1::int";
 		var params = [id];
 
-		var query = client.query(sql, params);
-		query.on('row', (row) => {
-			// Each time we get a row from the DB, we can append it to our growing resultset
-			results.push(row);
-		});
-
-		query.on("end", () => {
+		var query = client.query(sql, params, function(err, result) {
 			// we are now done getting the data from the DB
 			done();
 
+			if (err) {
+				console.log("Error in query: ")
+				console.log(err);
+				callback(err, null);
+			}
+
+			console.log("Found result: " + JSON.stringify(result.rows));
+
 			// call whatever function the person that called us wanted, giving it
 			// the results that we have been compiling
-			callback(null, results);
+			callback(null, result.rows);
 		});
 	});
 
