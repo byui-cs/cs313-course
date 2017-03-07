@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>CS 313 - Team Activity</title>
+    <link rel="stylesheet" type="text/css" href="../course/css/style.css" />
+</head>
+
+<body>
+    <header id="courseTitle">
+        <span class="icon-byui-logo"></span>
+        <h1>CS 313 | Web Engineering II</h1>
+    </header>
+    <article>
+        <h2>10 Teach : Team Activity</h2>
+
+        <div class="online-notes">
+
+            <h4>Special Instructions for Online Students</h4>
+
+            <p>You need to coordinate a one hour synchronous meeting with your group for this activity.</p>
+
+        </div>
+
+        <h3>Objective</h3>
+        <p>Learn how to query a database from Node.js.</p>
+
+        <h3>Overview</h3>
+        <p>Consider a family history application that tracks the basic information for a person, and the relationship between parents and children. For this activity you will create this database, then use Node.js to query it and return the information for a particular person.</p>
+
+        <h3>Instructions</h3>
+        <ol>
+            <li>
+                <p>Create a person table that contains an id, first name, last name, and date of birth. Then, create another table to model the relationship of parents to children.</p>
+                <p>Once these are in place, populate them with a few records so that you can test them later. Also, don't forget to create a user and grant permissions to query this database.</p>
+            </li>
+            
+            <li>
+                <p>Create a new Node.js application and provide an endpoint for <code>getPerson</code> that accepts an id as a query parameter, queries the DB for that user and uses console.log() to display the data on the server.</p>
+<!--                 <div class="tips">
+                    <p>Instructor Tip</p>
+                    <p>This task involves several components. Rather than try to get them all working simultaneously, it is likely easier to get one simple thing working first, then slowly add to it. For example, you could consider separate tasks such as: creating the route and returning JSON with dummy values, querying the DB and just using console.Log() to display the values rather than trying to stream them back, converting the results to JSON, etc., and isolate them as much as possible.</p>
+                </div>
+ -->            </li>
+            
+            <li>
+                <p>For the <code>getPerson</code> endpoint, return the method back to the web response in JSON format.</p>
+                <p>The call to the DB could be a time consuming operation, so you should not have your server wait around for it and then send the data on the response (a blocking call). Instead, make sure you use a callback function so that a function that returns the response is invoked at the appropriate time.</p>
+            </li>
+            
+        </ol>
+
+        <h4>Stretch Challenges</h4>
+        <p>After finishing the core requirements, ensure that everyone is at that point and understands the material. When everyone has completed the core requirements, you can move on to these stretch challenges.</p>
+
+        <ol>
+            <li>
+                <p>Create a static web page that has a box for a person id, and then has a button labeled, "Get Details". When the user clicks this button, your page should use AJAX to call the getPerson endpoint above and render the data on the web page.</p>
+            </li>
+            <li>
+                <p>Create endpoints for <code>getParents</code> and <code>getChildren</code> that accept an id of a person and return a JSON list of the ids of their parents or children.</p>
+            </li>
+            
+            <li>
+                <p>Add two buttons to your static web page to use AJAX to get the parents and children of the person mentioned. You should display the names of the parents and children, which will require multiple requests (first to get a list of IDs and then cals for each of those ids to get the persons information)</p>
+            </li>
+            
+        </ol>
+
+        <h3>Instructor's Solution</h3>
+        <p>As a part of this team activity, you are expected to look over a solution from the instructor, to compare your approach to that one. One of the questions on the I-Learn submission will ask you to provide insights from this comparison.</p>
+
+        <p>Please DO NOT open the solution until you have worked through this activity as a team for the one hour period. At the end of the hour, if you are still struggling with some of the core requirements, you are welcome to view the instructor's solution and use it to help you complete your own code. Even if you use the instructor's code to help you, you are welcome to report that you finished the core requirements, if you code them up yourself.</p>
+
+        <p>After working with your team for the one hour activity, <a href="https://github.com/byui-burton/cs313-course-dev/tree/master/week10n/ta-solution/" target="_blank">click here for the instructor's solution</a>.</p>
+
+        <h3>Submission</h3>
+        <p>When you have finished this activity, please fill out the assessment in I-Learn. You are welcome to complete any additional parts of this activity by yourself or with others after your meeting before submitting the assessment.</p>
+
+
+
+    </article>
+
+   <script src="../course/js/highlight/highlight.pack.js"></script>
+   <script>hljs.initHighlightingOnLoad();</script>
+</body>
+
+</html>
