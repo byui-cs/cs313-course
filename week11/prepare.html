@@ -4,56 +4,72 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>CS 313 - Preparation Material</title>
-    <link rel="stylesheet" type="text/css" href="../course/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../course/css/style.css"/>
 </head>
 
 <body>
-    <header id="courseTitle">
-        <span class="icon-byui-logo"></span>
-        <h1>CS 313 | Web Engineering II</h1>
-    </header>
-    <article>
-        <h2>11 Prepare : Reading</h2>
+<header id="courseTitle">
+    <span class="icon-byui-logo"></span>
+    <h1>CS 313 | Web Engineering II</h1>
+</header>
+<article>
+    <h2>11 Prepare : Reading</h2>
 
-        <h3>Preparation Material</h3>
-        <p>Before meeting with your team, please review the following material on database access using Java. Please note that in order to interact with a database, you need to have a MySQL instance that you can interact with. Thus, while you are developing your code you need to do one of the following:</p>
-        <ol>
-            <li><p>Deploy your development code to your server where your MySQL instance exists.</p></li>
-            <li><p>Install a local instance of MySQL for development</p></li>
-            <li><p>Open the MySQL port on your server to allow remote connections, so that you can connect directly to it from your local machine.</p></li>
-        </ol>
-        <p>Option 1 (deploying your code for each test), can be cumbersome, especially if you are not using an automated build/deployment process.</p>
-        <p>Option 3 can be a major security risk. It is best practice to NOT allow direct connection to your database from outside your server(or data center/VPN, if your application is not all running on the same server).</p>
-        <p>Thus, the best approach is to install MySQL locally on your development machine, so you can test and debug code there, and then when it is ready to deploy, you actually deploy it to your server and do final testing there.</p>
-        <p>At this point, we can continue to use the MySQL instance that we downloaded with WAMP/MAMP for our Java development.</p>
-        <p>Please go through the following <a href="http://www.tutorialspoint.com/jdbc/jdbc-introduction.htm" target="_blank">tutorial on JDBC from tutorials point.</a> Please read the sections noted below in detail, and then at least skim over the others.</p>
-        <p>Please go through these sections in detail:</p>
-        <ul>
-            <li><p>Introduction</p></li>
-            <li><p>Sample Code</p></li>
-            <li><p>Connections</p></li>
-            <li><p>Statements</p></li>
-            <li><p>Result Sets</p></li>
-            <li><p>JDBC Examples: Insert, Select, Update, WHERE clause</p></li>
-        </ul>
-        <p>As always, you are encouraged to play around with the example code and find additional material outside the assigned reading. Please post helpful information to the course wiki.</p>
-        <p>As noted in the tutorial, you will need to get the JDBC driver for your database (in our case MySQL). This can be <a href="https://dev.mysql.com/downloads/connector/j/" target="_blank">downloaded directly from this MySQL.com page.</a> You will download a zip file containing source and documentation as well as a JAR file. This JAR should be put into your lib directory. (Please note that after selecting the platform and the download type it will ask you to sign in or create an account, but this is NOT necessary. There is another link below that allows you to simply download the driver). If you download the "platform independent" version, it will be a zip file that contains the necessary JAR along with some other files. If you download the windows installer, running it will place the necessary files in a directory similar to C:\Program Files(x86)\MySQL.</p>
-        <p>Alternatively, if you are using Maven, you can simply add this dependency to your pom.xml file (instead of manually downloading the JAR file):
+    <h3>Preparation Material</h3>
+    <p>Before meeting with your team, please review the following material on database access using Java. Please note
+        that in order to interact with a database, you need to have a Postgres instance that you can interact with.
+        Thus, while you are developing your code you need to do one of the following:</p>
+    <ol>
+        <li><p>Deploy your development code to your server where your Postgres instance exists.</p></li>
+        <li><p>Install a local instance of Postgres for development</p></li>
+        <li><p>Open the Postgres port on your server to allow remote connections, so that you can connect directly to it
+            from your local machine.</p></li>
+    </ol>
+    <p>Option 1 (deploying your code for each test), can be cumbersome, especially if you are not using an automated
+        build/deployment process.</p>
+    <p>Option 3 can be a major security risk. It is best practice to NOT allow direct connection to your database from
+        outside your server(or data center/VPN, if your application is not all running on the same server).</p>
+    <p>Thus, the best approach is to install Postgres locally on your development machine, so you can test and debug
+        code there, and then when it is ready to deploy, you actually deploy it to your server and do final testing
+        there.</p>
+    <p>At this point, we can continue to use the Postgres instance that we downloaded with WAPP/MAPP/XAMPP for our Java
+        development.</p>
+    <p>Please go through the following <a href="http://www.tutorialspoint.com/jdbc/jdbc-introduction.htm" target="_blank">
+        tutorial on JDBC from tutorials point.</a> (This tutorial is geared towards MySQL instead of Postgres, but the
+        concepts are the same.) Please read the sections noted below in detail, and then at least skim over the others.
+    </p>
+    <p>Please go through these sections in detail:</p>
+    <ul>
+        <li><p>Introduction</p></li>
+        <li><p>Sample Code</p></li>
+        <li><p>Connections</p></li>
+        <li><p>Statements</p></li>
+        <li><p>Result Sets</p></li>
+        <li><p>JDBC Examples: Insert, Select, Update, WHERE clause</p></li>
+    </ul>
+    <p>As always, you are encouraged to play around with the example code and find additional material outside the
+        assigned reading. Please post helpful information to the course wiki.</p>
+    <p>As noted in the tutorial, you will need to get the JDBC driver for your database (in our case Postgres). This can
+        be
+        <a href="https://jdbc.postgresql.org/download.html" target="_blank">downloaded directly from this page.</a> This
+        JAR
+        should be put into your lib directory.</p>
+    <p>Alternatively, if you are using Maven, you can simply add this dependency to your pom.xml file, instead of
+        manually downloading the JAR file:
 
-<pre><code>
+    <pre><code>
 &lt;dependency&gt;
-&nbsp; &lt;groupId&gt;mysql&lt;/groupId&gt;
-&nbsp; &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
-&nbsp; &lt;version&gt;5.1.34&lt;/version&gt;
+&nbsp; &lt;groupId&gt;org.postgresql&lt;/groupId&gt;
+&nbsp; &lt;artifactId&gt;postgresql&lt;/artifactId&gt;
+&nbsp; &lt;version&gt;9.4.1212&lt;/version&gt;
 &lt;/dependency&gt;
 </code></pre>
-        
 
 
-    </article>
+</article>
 
-   <script src="../course/js/highlight/highlight.pack.js"></script>
-   <script>hljs.initHighlightingOnLoad();</script>
+<script src="../course/js/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
 
 
 </body>

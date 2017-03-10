@@ -3,277 +3,397 @@
 
 <head>
     <title>Web Engineering II - Preparation</title>
-    <link rel="stylesheet" type="text/css" href="../course/style.css" />
+    <link rel="stylesheet" type="text/css" href="../course/style.css"/>
 </head>
 
 <body>
-    <div id="frame"><img src="../course/cs313.png" border="0" alt="Web Engineering II CS 313" title="Web Engineering II CS 313" width="100%" />
-        <div id="content">
+<div id="frame"><img src="../course/cs313.png" border="0" alt="Web Engineering II CS 313"
+                     title="Web Engineering II CS 313" width="100%"/>
+    <div id="content">
 
 
         <h1>JPA EXAMPLE (STUDENTS AND MAJORS)</h1>
         <h2>Overview</h2>
-        <p>The idea behind an Object-Relational Mapping (ORM) is that often, we have classes (objects) that represent entities in our program, and then we also have a representation of these entities in a relational database, and we then have to write many very generic methods to create, retrieve, update, and delete these objects. With an ORM, we simply specify how the objects map to the relational database tables, and then it can take care of the rest.</p>
-        <p>In this example, we will set up a simple database with students and majors, and use an ORM to map our Student and Major Java classes to corresponding tables in our relational database.</p>
-        <p>Beware that since this query is not dynamic Eclipselink will cache this query using the entityManagerFactory's shared cache. See <a href="https://wiki.eclipse.org/EclipseLink/Examples/JPA/Caching">https://wiki.eclipse.org/EclipseLink/Examples/JPA/Caching</a>. This gives the warning: "The limitation of the shared cache, is that if the database is changed directly through JDBC, or by another application or server, the objects in the shared cache will be stale." and provides methods to avoid caching.</p>
+        <p>The idea behind an Object-Relational Mapping (ORM) is that often, we have classes (objects) that represent
+            entities in our program, and then we also have a representation of these entities in a relational database,
+            and we then have to write many very generic methods to create, retrieve, update, and delete these objects.
+            With an ORM, we simply specify how the objects map to the relational database tables, and then it can take
+            care of the rest.</p>
+        <p>In this example, we will set up a simple database with students and majors, and use an ORM to map our Student
+            and Major Java classes to corresponding tables in our relational database.</p>
+        <p>Beware that since this query is not dynamic Eclipselink will cache this query using the
+            entityManagerFactory's shared cache. See <a
+                    href="https://wiki.eclipse.org/EclipseLink/Examples/JPA/Caching">https://wiki.eclipse.org/EclipseLink/Examples/JPA/Caching</a>.
+            This gives the warning: "The limitation of the shared cache, is that if the database is changed directly
+            through JDBC, or by another application or server, the objects in the shared cache will be stale." and
+            provides methods to avoid caching.</p>
         <h2>Create the Database</h2>
-        <p>We will begin by creating a new MySql database and putting in some majors and students.</p>
+        <p>We will begin by creating a new Postgres database and putting in some majors and students.</p>
         <p>First create a new DB with a new user:</p>
-<div class="code">
-CREATE DATABASE Majors;
-GRANT ALL PRIVILEGES on Majors.* TO 'majorAdmin'@'localhost'
-    IDENTIFIED BY 'majorPass';
-FLUSH PRIVILEGES;</div>
+        <div class="code">
+            CREATE DATABASE Majors;
+            GRANT ALL PRIVILEGES on Majors.* TO 'majorAdmin'@'localhost'
+            IDENTIFIED BY 'majorPass';
+            FLUSH PRIVILEGES;
+        </div>
 
         <p>Next create two tables:</p>
-<div class="code">
-USE Majors;
-CREATE TABLE major
-  (id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(100) NOT NULL);
-CREATE TABLE student
-  (id INT PRIMARY KEY AUTO_INCREMENT,
-  name VARCHAR(100) NOT NULL,
-  major_id INT NOT NULL,
-  FOREIGN KEY (major_id) REFERENCES major(id));
-</div>
+        <div class="code">
+            USE Majors;
+            CREATE TABLE major
+            (id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(100) NOT NULL);
+            CREATE TABLE student
+            (id INT PRIMARY KEY AUTO_INCREMENT,
+            name VARCHAR(100) NOT NULL,
+            major_id INT NOT NULL,
+            FOREIGN KEY (major_id) REFERENCES major(id));
+        </div>
         <p>Now add some majors and students:</p>
 
-<div class="code">
-INSERT INTO major (name) VALUES
-    ("Web Design and Development"),
-    ("Computer Science"),
-    ("Computer Information Technology");
+        <div class="code">
+            INSERT INTO major (name) VALUES
+            ("Web Design and Development"),
+            ("Computer Science"),
+            ("Computer Information Technology");
 
-INSERT INTO student (name, major_id) VALUES
-    ("Josh", 1),
-    ("Heather", 2),
-    ("Steven", 2),
-    ("Emily", 3);
-</div>
+            INSERT INTO student (name, major_id) VALUES
+            ("Josh", 1),
+            ("Heather", 2),
+            ("Steven", 2),
+            ("Emily", 3);
+        </div>
 
         <p>We can verify the data in our database with the following query:</p>
-<div class="code">
-SELECT * FROM major AS m INNER JOIN student AS s ON m.id = s.major_id;
+        <div class="code">
+            SELECT * FROM major AS m INNER JOIN student AS s ON m.id = s.major_id;
 
-+----+---------------------------------+----+---------+----------+
-| id | name                                           | major_id |
-+----+---------------------------------+----+---------+----------+
-|  1 | Web Design and Development      |  1 | Josh    |        1 |
-|  2 | Computer Science                |  2 | Heather |        2 |
-|  2 | Computer Science                |  3 | Steven  |        2 |
-|  3 | Computer Information Technology |  4 | Emily   |        3 |
-+----+---------------------------------+----+---------+----------+
-4 rows in set (0.09 sec)
-</div>
+            +----+---------------------------------+----+---------+----------+
+            | id | name | major_id |
+            +----+---------------------------------+----+---------+----------+
+            | 1 | Web Design and Development | 1 | Josh | 1 |
+            | 2 | Computer Science | 2 | Heather | 2 |
+            | 2 | Computer Science | 3 | Steven | 2 |
+            | 3 | Computer Information Technology | 4 | Emily | 3 |
+            +----+---------------------------------+----+---------+----------+
+            4 rows in set (0.09 sec)
+        </div>
 
         <h2>Setup the Java Project</h2>
 
-        <p>Now that we have a database in place, we can set up a Java project to map to it. In order to use JPA, we need a library that implements it. Download and install EclipseLink from: <a href="http://www.eclipse.org/eclipselink/downloads/" target="_blank">http://www.eclipse.org/eclipselink/downloads/</a></p>
-        <p>Alternatively, if you are using Maven, you can have it automatically download dependent library by adding the following to your pom.xml:</span>
+        <p>Now that we have a database in place, we can set up a Java project to map to it. In order to use JPA, we need
+            a library that implements it. Download and install EclipseLink from: <a
+                    href="http://www.eclipse.org/eclipselink/downloads/" target="_blank">http://www.eclipse.org/eclipselink/downloads/</a>
+        </p>
+        <p>Alternatively, if you are using Maven, you can have it automatically download dependent library by adding the
+            following to your pom.xml:</span>
 
-<div class="code">
-&lt;dependency&gt;
-  &lt;groupId&gt;org.eclipse.persistence&lt;/groupId&gt;
-  &lt;artifactId&gt;eclipselink&lt;/artifactId&gt;
-  &lt;version&gt;2.5.0&lt;/version&gt;
-&lt;/dependency&gt;
-</div>
+        <div class="code">
+            &lt;dependency&gt;
+            &lt;groupId&gt;org.eclipse.persistence&lt;/groupId&gt;
+            &lt;artifactId&gt;eclipselink&lt;/artifactId&gt;
+            &lt;version&gt;2.5.0&lt;/version&gt;
+            &lt;/dependency&gt;
+        </div>
 
-        <p>Next we can create a regular Java Project in NetBeans. If you are not using Maven, you will need to go add an external link to the .jar files you downloaded.</p>
+        <p>Next we can create a regular Java Project in NetBeans. If you are not using Maven, you will need to go add an
+            external link to the .jar files you downloaded.</p>
 
         <p>Next create a Java class for a Major, named "Major" in the "majors" package.</p>
 
-        <p>In order to tell Java that this class is going to map to a relational database table, we annotate it with the Java "@Entity" annotation. This requires importing javax.persistence.Entity as shown:</p>
+        <p>In order to tell Java that this class is going to map to a relational database table, we annotate it with the
+            Java "@Entity" annotation. This requires importing javax.persistence.Entity as shown:</p>
 
-<div class="code">
-package majors;
-import javax.persistence.Entity;
+        <div class="code">
+            package majors;
+            import javax.persistence.Entity;
 
-@Entity
-public class Major {
+            @Entity
+            public class Major {
 
-}
-</div>
-        <p>Now, we can add the fields that this class will have (int id and String name) along with their Getter and Setters. To specify that "id" is an identity field, that should be auto generated, we give in the annotations "@Id" and "@GeneratedValue(strategy = GenerationType.IDENTITY)" (which also require imports). The resulting class looks as follows:</p>
-<div class="code">
-package majors;
+            }
+        </div>
+        <p>Now, we can add the fields that this class will have (int id and String name) along with their Getter and
+            Setters. To specify that "id" is an identity field, that should be auto generated, we give in the
+            annotations "@Id" and "@GeneratedValue(strategy = GenerationType.IDENTITY)" (which also require imports).
+            The resulting class looks as follows:</p>
+        <div class="code">
+            package majors;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+            import javax.persistence.Entity;
+            import javax.persistence.GeneratedValue;
+            import javax.persistence.GenerationType;
+            import javax.persistence.Id;
 
-@Entity
-public class Major {
+            @Entity
+            public class Major {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+            @Id
+            @GeneratedValue(strategy = GenerationType.IDENTITY)
+            private int id;
 
-    private String name;
+            private String name;
 
-    public int getId() {
-        return id;
-    }
+            public int getId() {
+            return id;
+            }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+            public void setId(int id) {
+            this.id = id;
+            }
 
-    public String getName() { 
-        return name;
-    }
+            public String getName() {
+            return name;
+            }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-}
-</div>
-
-        <p>We will come back and implement the Student class shortly.</p>
-        
-        <h2>Add the Database Information</h2>
-        
-        <p>Now that we have a properly annotated class, we need to specify the database connection information for it. This is done in a persistence.xml file placed in the META-INF directory.</p>
-        
-        <p>In NetBeans, this is created by selecting File -&gt; New, choosing the Persistence type, and selecting a new Persistence Unit. You can then specify a name for the persistence Unit, and select a database connection. This will generate the XML file for you.</p>
-
-        <p>After creating the Persistence Unit, make sure you click the Add Class button and select your Entity class (in this example, "Major").</p>
-
-        <div class="tips"><p>Letting the IDE create this file for you is the easiest way to go about this. However, if necessary, the XML file can also be created manually, by adding a subfolder beneath the "src" folder named "META-INF". Make sure you select "New -&gt; Other" and then find "Folder" under the General category, as opposed to created a new "Source Folder".</p>
-
-        <p>Then right-click that folder and create a file named, "persistence.xml" with the following content:</p>
-
-        <p><span style="font-family: 'courier new', courier;">&lt;?xml version="1.0" encoding="UTF-8"?&gt;<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">&lt;persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"&gt;<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">       &lt;persistence-unit name="majorJpa" transaction-type="RESOURCE_LOCAL"&gt;<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">              &lt;class&gt;majors.Major&lt;/class&gt;</p>
-        <p dir="ltr"><span style="font-family: 'courier new', courier;"><span class="Apple-tab-span"></span><span class="Apple-tab-span"></span>              &lt;properties&gt;
-            <br />
-            </span><span style="font-family: 'courier new', courier; font-size: 12pt;">                     &lt;property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/&gt;<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">                     &lt;property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/Majors"/&gt;<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">                     &lt;property name="javax.persistence.jdbc.user" value="majorAdmin"/&gt;<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">                     &lt;property name="javax.persistence.jdbc.password" value="majorPass"/&gt;<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">              &lt;/properties&gt;</p>
-        <p dir="ltr"><span style="font-family: 'courier new', courier;"><span class="Apple-tab-span"></span>       &lt;/persistence-unit&gt;
-            <br />
-            </span><span style="font-family: 'courier new', courier; font-size: 12pt;">&lt;/persistence&gt;</p>
-
-            <p>This defines a persistence unit (named "majorJpa"), the classes that are included in the mapping (in this case, simply the "Major" class in the "majors" namespace), and then the properties of the connection string, including the DB location and credentials to use.</p>
+            public void setName(String name) {
+            this.name = name;
+            }
+            }
         </div>
 
-        
+        <p>We will come back and implement the Student class shortly.</p>
+
+        <h2>Add the Database Information</h2>
+
+        <p>Now that we have a properly annotated class, we need to specify the database connection information for it.
+            This is done in a persistence.xml file placed in the META-INF directory.</p>
+
+        <p>In NetBeans, this is created by selecting File -&gt; New, choosing the Persistence type, and selecting a new
+            Persistence Unit. You can then specify a name for the persistence Unit, and select a database connection.
+            This will generate the XML file for you.</p>
+
+        <p>After creating the Persistence Unit, make sure you click the Add Class button and select your Entity class
+            (in this example, "Major").</p>
+
+        <div class="tips"><p>Letting the IDE create this file for you is the easiest way to go about this. However, if
+            necessary, the XML file can also be created manually, by adding a subfolder beneath the "src" folder named
+            "META-INF". Make sure you select "New -&gt; Other" and then find "Folder" under the General category, as
+            opposed to created a new "Source Folder".</p>
+
+            <p>Then right-click that folder and create a file named, "persistence.xml" with the following content:</p>
+
+            <p><span
+                    style="font-family: 'courier new', courier;">&lt;?xml version="1.0" encoding="UTF-8"?&gt;<br/></span><span
+                    style="font-family: 'courier new', courier; font-size: 12pt;">&lt;persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"&gt;<br/></span><span
+                    style="font-family: 'courier new', courier; font-size: 12pt;">       &lt;persistence-unit name="majorJpa" transaction-type="RESOURCE_LOCAL"&gt;<br/></span><span
+                    style="font-family: 'courier new', courier; font-size: 12pt;">              &lt;class&gt;majors.Major&lt;/class&gt;
+            </p>
+            <p dir="ltr"><span style="font-family: 'courier new', courier;"><span class="Apple-tab-span"></span><span
+                    class="Apple-tab-span"></span>              &lt;properties&gt;
+            <br/>
+            </span><span style="font-family: 'courier new', courier; font-size: 12pt;">                     &lt;property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/&gt;<br/></span><span
+                    style="font-family: 'courier new', courier; font-size: 12pt;">                     &lt;property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/Majors"/&gt;<br/></span><span
+                    style="font-family: 'courier new', courier; font-size: 12pt;">                     &lt;property name="javax.persistence.jdbc.user" value="majorAdmin"/&gt;<br/></span><span
+                    style="font-family: 'courier new', courier; font-size: 12pt;">                     &lt;property name="javax.persistence.jdbc.password" value="majorPass"/&gt;<br/></span><span
+                    style="font-family: 'courier new', courier; font-size: 12pt;">              &lt;/properties&gt;</p>
+            <p dir="ltr"><span style="font-family: 'courier new', courier;"><span class="Apple-tab-span"></span>       &lt;/persistence-unit&gt;
+            <br/>
+            </span><span style="font-family: 'courier new', courier; font-size: 12pt;">&lt;/persistence&gt;</p>
+
+            <p>This defines a persistence unit (named "majorJpa"), the classes that are included in the mapping (in this
+                case, simply the "Major" class in the "majors" namespace), and then the properties of the connection
+                string, including the DB location and credentials to use.</p>
+        </div>
+
+
         <h2>Use JPA to Display the Database Data</h2>
-        <p>Now that we have all the configuration information in place, we can use JPA to retrieve and display our data from the database.</p>
+        <p>Now that we have all the configuration information in place, we can use JPA to retrieve and display our data
+            from the database.</p>
         <p>First, create a new class with a main method (e.g., MajorTester).</p>
-        <p>The main object we will be using to handling our transactions is an EntityManager. To get one, we first create an EntityManagerFactory:</p>
+        <p>The main object we will be using to handling our transactions is an EntityManager. To get one, we first
+            create an EntityManagerFactory:</p>
         <p><span style="font-family: 'courier new', courier;">EntityManagerFactory emf = Persistence.createEntityManagerFactory("majorJpa");</span>
-            <br /><span style="font-size: 12pt; font-family: 'courier new', courier;">EntityManager em = emf.createEntityManager();</p>
+            <br/><span style="font-size: 12pt; font-family: 'courier new', courier;">EntityManager em = emf.createEntityManager();
+        </p>
         <p>Then, using the EntityManager object, we do various things, such as loading a major by id:</p>
-        <p dir="ltr"><span style="font-family: 'courier new', courier;">Major major = em.find(Major.class, 1);<br /><span style="font-size: 12pt;">System.out.println("Major: " + major.getName());</span></span>
+        <p dir="ltr"><span style="font-family: 'courier new', courier;">Major major = em.find(Major.class, 1);<br/><span
+                style="font-size: 12pt;">System.out.println("Major: " + major.getName());</span></span>
         </p>
         <p>Finally, don't forget to close the EntityManager:</p>
         <p dir="ltr"><span style="font-family: 'courier new', courier;">em.close();</p>
-        <p>Now, we should be able to run this class, and see it output the name of our first major, "Web Design and Development".</p>
+        <p>Now, we should be able to run this class, and see it output the name of our first major, "Web Design and
+            Development".</p>
         <p>The complete class looks as follows:</p>
         <p dir="ltr"><span style="font-family: 'courier new', courier;">package majors;</p>
-        <p dir="ltr"><span style="font-family: 'courier new', courier;">import javax.persistence.EntityManager;<br /><span style="font-size: 12pt;">import javax.persistence.EntityManagerFactory;<br /></span><span style="font-size: 12pt;">import javax.persistence.Persistence;</span></span>
+        <p dir="ltr"><span
+                style="font-family: 'courier new', courier;">import javax.persistence.EntityManager;<br/><span
+                style="font-size: 12pt;">import javax.persistence.EntityManagerFactory;<br/></span><span
+                style="font-size: 12pt;">import javax.persistence.Persistence;</span></span>
         </p>
         <p dir="ltr"><span style="font-family: 'courier new', courier;">public class MajorTester {</p>
         <p dir="ltr"><span style="font-family: 'courier new', courier;"><span class="Apple-tab-span"></span>       public static void main(String[] args) {</span>
         </p>
-        <p dir="ltr"><span style="font-family: 'courier new', courier;"><span class="Apple-tab-span"></span><span class="Apple-tab-span"></span>              EntityManagerFactory emf = Persistence.createEntityManagerFactory("majorJpa");
-            <br />
-            </span><span style="font-family: 'courier new', courier; font-size: 12pt;">              EntityManager em = emf.createEntityManager();</p>
-        <p dir="ltr"><span style="font-family: 'courier new', courier;"><span class="Apple-tab-span"></span><span class="Apple-tab-span"></span>              Major major = em.find(Major.class, 1);
-            <br />
-            </span><span style="font-family: 'courier new', courier; font-size: 12pt;">              System.out.println("Major: " + major.getName());</p>
-        <p dir="ltr"><span style="font-family: 'courier new', courier;"><span class="Apple-tab-span"></span><span class="Apple-tab-span"></span>              em.close();
-            <br />
-            </span><span style="font-family: 'courier new', courier; font-size: 12pt;">       }<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">}</p>
-        <p>At this point, it is possible to have errors from missing JAR files, from a mistake in the Java files, the persistence.xml, or issues with the database connection. So there is a lot that could potentially go wrong. That is why it is good to test it here to make sure this much is working.</p>
-        <h3>Retrieving a List of Majors</h3>
-        <p>In addition to using the em.find() method, with an EntityManager object, we can iterate through all majors in the database:</p>
-        <p><span style="font-family: 'courier new', courier;">Query query = em.createQuery("SELECT m FROM Major m");</span>
-            <br /><span style="font-size: 12pt; font-family: 'courier new', courier;">List&lt;Major&gt; majors = query.getResultList();</p>
-        <p dir="ltr"><span style="font-family: 'courier new', courier;">for (Major major : majors) {<br /><span style="font-size: 12pt;">       System.out.println("Major: " + major.getName());<br /></span><span style="font-size: 12pt;">}</span></span><span style="font-size: 12pt;"> </p>
-        <p>Notice that the query looks a lot like SQL, but it is not. It is querying over the abstract entities, and will later be converted to an appropriate SQL statement in the database. There are many other things you can do with the EntityManager, and with entity classes such as the Major class. The beauty of the ORM is that you can work with these entities directly in Java and let JPA take care of all the mapping to the database.</p>
-        <h3>Creating a New Entity</h3>
-        <p>Similar to retrieving entities, we can also create one using the EntityManager. We do this inside a transaction, by creating a new object and then telling the EntityManager to persist it:</p>
-        <p><span style="font-family: 'courier new', courier;">em.getTransaction().begin();<span style="font-size: 12pt;"> </span></span>
+        <p dir="ltr"><span style="font-family: 'courier new', courier;"><span class="Apple-tab-span"></span><span
+                class="Apple-tab-span"></span>              EntityManagerFactory emf = Persistence.createEntityManagerFactory("majorJpa");
+            <br/>
+            </span><span style="font-family: 'courier new', courier; font-size: 12pt;">              EntityManager em = emf.createEntityManager();
         </p>
-        <p dir="ltr"><span style="font-family: 'courier new', courier;">Major newMajor = new Major();<br /><span style="font-size: 12pt;">newMajor.setName("Computer Engineering");</span></span>
+        <p dir="ltr"><span style="font-family: 'courier new', courier;"><span class="Apple-tab-span"></span><span
+                class="Apple-tab-span"></span>              Major major = em.find(Major.class, 1);
+            <br/>
+            </span><span style="font-family: 'courier new', courier; font-size: 12pt;">              System.out.println("Major: " + major.getName());
+        </p>
+        <p dir="ltr"><span style="font-family: 'courier new', courier;"><span class="Apple-tab-span"></span><span
+                class="Apple-tab-span"></span>              em.close();
+            <br/>
+            </span><span style="font-family: 'courier new', courier; font-size: 12pt;">       }<br/></span><span
+                style="font-family: 'courier new', courier; font-size: 12pt;">}</p>
+        <p>At this point, it is possible to have errors from missing JAR files, from a mistake in the Java files, the
+            persistence.xml, or issues with the database connection. So there is a lot that could potentially go wrong.
+            That is why it is good to test it here to make sure this much is working.</p>
+        <h3>Retrieving a List of Majors</h3>
+        <p>In addition to using the em.find() method, with an EntityManager object, we can iterate through all majors in
+            the database:</p>
+        <p><span
+                style="font-family: 'courier new', courier;">Query query = em.createQuery("SELECT m FROM Major m");</span>
+            <br/><span style="font-size: 12pt; font-family: 'courier new', courier;">List&lt;Major&gt; majors = query.getResultList();
+        </p>
+        <p dir="ltr"><span style="font-family: 'courier new', courier;">for (Major major : majors) {<br/><span
+                style="font-size: 12pt;">       System.out.println("Major: " + major.getName());<br/></span><span
+                style="font-size: 12pt;">}</span></span><span style="font-size: 12pt;"></p>
+        <p>Notice that the query looks a lot like SQL, but it is not. It is querying over the abstract entities, and
+            will later be converted to an appropriate SQL statement in the database. There are many other things you can
+            do with the EntityManager, and with entity classes such as the Major class. The beauty of the ORM is that
+            you can work with these entities directly in Java and let JPA take care of all the mapping to the
+            database.</p>
+        <h3>Creating a New Entity</h3>
+        <p>Similar to retrieving entities, we can also create one using the EntityManager. We do this inside a
+            transaction, by creating a new object and then telling the EntityManager to persist it:</p>
+        <p><span style="font-family: 'courier new', courier;">em.getTransaction().begin();<span
+                style="font-size: 12pt;"> </span></span>
+        </p>
+        <p dir="ltr"><span style="font-family: 'courier new', courier;">Major newMajor = new Major();<br/><span
+                style="font-size: 12pt;">newMajor.setName("Computer Engineering");</span></span>
         </p>
         <p dir="ltr"><span style="font-family: 'courier new', courier;">em.persist(newMajor);</p>
         <p dir="ltr"><span style="font-family: 'courier new', courier;">em.getTransaction().commit();</p>
         <h3>Handling Relationships</h3>
-        <p>Just like our Major class, we can create a Student class. Students have a name and an id, just like Majors, but students also have a major. This is shown by creating a member variable of type "Major" and annotating it with the "@ManyToOne" annotation. The complete class can be seen as follows:</p>
+        <p>Just like our Major class, we can create a Student class. Students have a name and an id, just like Majors,
+            but students also have a major. This is shown by creating a member variable of type "Major" and annotating
+            it with the "@ManyToOne" annotation. The complete class can be seen as follows:</p>
         <p dir="ltr"><span style="font-family: 'courier new', courier;">package majors;</p>
-        <p dir="ltr"><span style="font-family: 'courier new', courier;">import javax.persistence.Entity;<br /><span style="font-size: 12pt;">import javax.persistence.GeneratedValue;<br /></span><span style="font-size: 12pt;">import javax.persistence.GenerationType;<br /></span><span style="font-size: 12pt;">import javax.persistence.Id;<br /></span><span style="font-size: 12pt;">import javax.persistence.ManyToOne;</span><span style="font-size: 12pt;"> </span></span>
+        <p dir="ltr"><span style="font-family: 'courier new', courier;">import javax.persistence.Entity;<br/><span
+                style="font-size: 12pt;">import javax.persistence.GeneratedValue;<br/></span><span
+                style="font-size: 12pt;">import javax.persistence.GenerationType;<br/></span><span
+                style="font-size: 12pt;">import javax.persistence.Id;<br/></span><span style="font-size: 12pt;">import javax.persistence.ManyToOne;</span><span
+                style="font-size: 12pt;"> </span></span>
         </p>
-        <p dir="ltr"><span style="font-family: 'courier new', courier;">@Entity<br /><span style="font-size: 12pt;">public class Student {</span><span style="font-size: 12pt;"> </span></span>
+        <p dir="ltr"><span style="font-family: 'courier new', courier;">@Entity<br/><span style="font-size: 12pt;">public class Student {</span><span
+                style="font-size: 12pt;"> </span></span>
         </p>
         <p dir="ltr"><span style="font-family: 'courier new', courier;"><span class="Apple-tab-span"></span>       @Id
-            <br /><span style="font-size: 12pt;">       @GeneratedValue(strategy = GenerationType.IDENTITY)<br /></span><span style="font-size: 12pt;">       private int id;<br /></span><span style="font-size: 12pt;">       private String name;</span></span>
+            <br/><span
+                    style="font-size: 12pt;">       @GeneratedValue(strategy = GenerationType.IDENTITY)<br/></span><span
+                    style="font-size: 12pt;">       private int id;<br/></span><span style="font-size: 12pt;">       private String name;</span></span>
         </p>
         <p dir="ltr"><span style="font-family: 'courier new', courier;"><span class="Apple-tab-span"></span>       @ManyToOne
-            <br /><span style="font-size: 12pt;">       private Major major;</span><span style="font-size: 12pt;"> </span></span>
+            <br/><span style="font-size: 12pt;">       private Major major;</span><span
+                    style="font-size: 12pt;"> </span></span>
         </p>
         <p dir="ltr"><span style="font-family: 'courier new', courier;"><span class="Apple-tab-span"></span>       public int getId() {
-            <br /><span style="font-size: 12pt;">              return id;<br /></span><span style="font-size: 12pt;">       }</span><span style="font-size: 12pt;"> </span></span>
+            <br/><span style="font-size: 12pt;">              return id;<br/></span><span style="font-size: 12pt;">       }</span><span
+                    style="font-size: 12pt;"> </span></span>
         </p>
         <p dir="ltr"><span style="font-family: 'courier new', courier;"><span class="Apple-tab-span"></span>       public void setId(int id) {
-            <br /><span style="font-size: 12pt;">              this.id = id;<br /></span><span style="font-size: 12pt;">       }</span></span>
+            <br/><span style="font-size: 12pt;">              this.id = id;<br/></span><span style="font-size: 12pt;">       }</span></span>
         </p>
         <p dir="ltr"><span style="font-family: 'courier new', courier;"><span class="Apple-tab-span"></span>       public String getName() {
-            <br /><span style="font-size: 12pt;">              return name;<br /></span><span style="font-size: 12pt;">       }</span><span style="font-size: 12pt;"> </span></span>
+            <br/><span style="font-size: 12pt;">              return name;<br/></span><span style="font-size: 12pt;">       }</span><span
+                    style="font-size: 12pt;"> </span></span>
         </p>
         <p dir="ltr"><span style="font-family: 'courier new', courier;"><span class="Apple-tab-span"></span>       public void setName(String name) {
-            <br /><span style="font-size: 12pt;">              this.name = name;<br /></span><span style="font-size: 12pt;">       }</span></span>
+            <br/><span style="font-size: 12pt;">              this.name = name;<br/></span><span
+                    style="font-size: 12pt;">       }</span></span>
         </p>
         <p dir="ltr"><span style="font-family: 'courier new', courier;"><span class="Apple-tab-span"></span>       public Major getMajor() {
-            <br /><span style="font-size: 12pt;">              return major;<br /></span><span style="font-size: 12pt;">       }</span></span>
+            <br/><span style="font-size: 12pt;">              return major;<br/></span><span style="font-size: 12pt;">       }</span></span>
         </p>
         <p dir="ltr"><span style="font-family: 'courier new', courier;"><span class="Apple-tab-span"></span>       public void setMajor(Major major) {
-            <br /><span style="font-size: 12pt;">              this.major = major;<br /></span><span style="font-size: 12pt;">       }<br /></span><span style="font-size: 12pt;">}</span></span>
+            <br/><span style="font-size: 12pt;">              this.major = major;<br/></span><span
+                    style="font-size: 12pt;">       }<br/></span><span style="font-size: 12pt;">}</span></span>
         </p>
-        <p>After we have created this class and annotated it as an Entity, we also need to add it to our persistence.xml file, by adding the following:</p>
-        <p dir="ltr"><span style="font-family: 'courier new', courier;">&lt;class&gt;majors.Student&lt;/class&gt;<span style="font-size: 12pt;"> </span></span>
+        <p>After we have created this class and annotated it as an Entity, we also need to add it to our persistence.xml
+            file, by adding the following:</p>
+        <p dir="ltr"><span style="font-family: 'courier new', courier;">&lt;class&gt;majors.Student&lt;/class&gt;<span
+                style="font-size: 12pt;"> </span></span>
         </p>
-        <p>Finally, we can add code to our main class to list the students along with their majors:</span><span style="font-size: 12pt;"> </p>
-        <p dir="ltr"><span style="font-family: 'courier new', courier;">Query studentQuery = em.createQuery("SELECT s FROM Student s");<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">List&lt;Student&gt; students = studentQuery.getResultList();</span><span style="font-family: 'courier new', courier; font-size: 12pt;"> </p>
-        <p dir="ltr"><span style="font-family: 'courier new', courier;">for (Student student : students) {<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">       System.out.println("Student: " + student.getName() + " has major: " + student.getMajor().getName());<br /></span><span style="font-family: 'courier new', courier; font-size: 12pt;">}</span><span style="font-size: 12pt;"> </p>
-        <p>Notice that we did all of this without having to specify an SQL join! This was handled automatically by the @ManyToOne annotation.</p>
-        <p>It should be noted that because we had a standard naming convention for our foreign key table, this was implied, but the name of the column to do the join on can be explicitly specified in the annotation if needed.</p>
+        <p>Finally, we can add code to our main class to list the students along with their majors:</span><span
+                style="font-size: 12pt;"></p>
+        <p dir="ltr"><span style="font-family: 'courier new', courier;">Query studentQuery = em.createQuery("SELECT s FROM Student s");<br/></span><span
+                style="font-family: 'courier new', courier; font-size: 12pt;">List&lt;Student&gt; students = studentQuery.getResultList();</span><span
+                style="font-family: 'courier new', courier; font-size: 12pt;"></p>
+        <p dir="ltr"><span
+                style="font-family: 'courier new', courier;">for (Student student : students) {<br/></span><span
+                style="font-family: 'courier new', courier; font-size: 12pt;">       System.out.println("Student: " + student.getName() + " has major: " + student.getMajor().getName());<br/></span><span
+                style="font-family: 'courier new', courier; font-size: 12pt;">}</span><span style="font-size: 12pt;">
+        </p>
+        <p>Notice that we did all of this without having to specify an SQL join! This was handled automatically by the
+            @ManyToOne annotation.</p>
+        <p>It should be noted that because we had a standard naming convention for our foreign key table, this was
+            implied, but the name of the column to do the join on can be explicitly specified in the annotation if
+            needed.</p>
         <h3>Finding Students in a Major</h3>
-        <p>We can also add the ability to follow the relationship in the other direction. In the Major class we could add:</p>
-        <p dir="ltr"><span style="font-family: 'courier new', courier;">@OneToMany(mappedBy = "major")<br /><span style="font-size: 12pt;">private List&lt;Student&gt; students;</span></span>
+        <p>We can also add the ability to follow the relationship in the other direction. In the Major class we could
+            add:</p>
+        <p dir="ltr"><span style="font-family: 'courier new', courier;">@OneToMany(mappedBy = "major")<br/><span
+                style="font-size: 12pt;">private List&lt;Student&gt; students;</span></span>
         </p>
-        <p dir="ltr"><span style="font-family: 'courier new', courier;">public List&lt;Student&gt; getStudents() {<br /><span style="font-size: 12pt;">       return students;<br /></span><span style="font-size: 12pt;">}</span></span>
+        <p dir="ltr"><span
+                style="font-family: 'courier new', courier;">public List&lt;Student&gt; getStudents() {<br/><span
+                style="font-size: 12pt;">       return students;<br/></span><span
+                style="font-size: 12pt;">}</span></span>
         </p>
-        <p dir="ltr"><span style="font-family: 'courier new', courier;">public void setStudents(List&lt;Student&gt; students) {<br /><span style="font-size: 12pt;">       this.students = students;<br /></span><span style="font-size: 12pt;">}</span><span style="font-size: 12pt;"> </span></span>
+        <p dir="ltr"><span style="font-family: 'courier new', courier;">public void setStudents(List&lt;Student&gt; students) {<br/><span
+                style="font-size: 12pt;">       this.students = students;<br/></span><span
+                style="font-size: 12pt;">}</span><span style="font-size: 12pt;"> </span></span>
         </p>
-        <p>Notice that we need to specify the member field from the Student class that shows the mapping. Then, we can list the students in a major using the EntityManager in our main class:</p>
-        <p dir="ltr"><span style="font-family: 'courier new', courier;">Query query = em.createQuery("SELECT m FROM Major m");<br /><span style="font-size: 12pt;">List&lt;Major&gt; majors = query.getResultList();</span><span style="font-size: 12pt;"> </span></span>
+        <p>Notice that we need to specify the member field from the Student class that shows the mapping. Then, we can
+            list the students in a major using the EntityManager in our main class:</p>
+        <p dir="ltr"><span style="font-family: 'courier new', courier;">Query query = em.createQuery("SELECT m FROM Major m");<br/><span
+                style="font-size: 12pt;">List&lt;Major&gt; majors = query.getResultList();</span><span
+                style="font-size: 12pt;"> </span></span>
         </p>
-        <p dir="ltr"><span style="font-family: 'courier new', courier;">for (Major major : majors) {<br /><span style="font-size: 12pt;">       System.out.println("Major: " + major.getName());</span></span>
+        <p dir="ltr"><span style="font-family: 'courier new', courier;">for (Major major : majors) {<br/><span
+                style="font-size: 12pt;">       System.out.println("Major: " + major.getName());</span></span>
         </p>
         <p dir="ltr"><span style="font-family: 'courier new', courier;"><span class="Apple-tab-span"></span>       for (Student student : major.getStudents()) {
-            <br /><span style="font-size: 12pt;">              System.out.println("\tStudent: " + student.getName());<br /></span><span style="font-size: 12pt;">       }<br /></span><span style="font-size: 12pt;">}</span></span>
+            <br/><span
+                    style="font-size: 12pt;">              System.out.println("\tStudent: " + student.getName());<br/></span><span
+                    style="font-size: 12pt;">       }<br/></span><span style="font-size: 12pt;">}</span></span>
         </p>
         <h3>Adding New Students</h3>
         <p>As a final example, we add a new student to the database and connect them to a major using Java:</p>
         <p><span style="font-family: 'courier new', courier;">em.getTransaction().begin();</p>
-        <p dir="ltr"><span style="font-family: 'courier new', courier;">Student newStudent = new Student();<br /><span style="font-size: 12pt;">newStudent.setName("Lance");</span><span style="font-size: 12pt;"> </span></span>
+        <p dir="ltr"><span style="font-family: 'courier new', courier;">Student newStudent = new Student();<br/><span
+                style="font-size: 12pt;">newStudent.setName("Lance");</span><span
+                style="font-size: 12pt;"> </span></span>
         </p>
-        <p dir="ltr"><span style="font-family: 'courier new', courier;">Major firstMajor = em.find(Major.class, 1);<br /><span style="font-size: 12pt;">newStudent.setMajor(firstMajor);</span><span style="font-size: 12pt;"> </span></span>
+        <p dir="ltr"><span style="font-family: 'courier new', courier;">Major firstMajor = em.find(Major.class, 1);<br/><span
+                style="font-size: 12pt;">newStudent.setMajor(firstMajor);</span><span style="font-size: 12pt;"> </span></span>
         </p>
         <p dir="ltr"><span style="font-family: 'courier new', courier;">em.persist(newStudent);</p>
         <p dir="ltr"><span style="font-family: 'courier new', courier;">em.getTransaction().commit();</p>
-        <p>Just as before, we use the persist method on the EntityManger. The only difference here is that we also use the "setMajor" method to set a major, and then the entity manager takes care of connecting the foreign key.</p>
+        <p>Just as before, we use the persist method on the EntityManger. The only difference here is that we also use
+            the "setMajor" method to set a major, and then the entity manager takes care of connecting the foreign
+            key.</p>
         <h2>Auto-generating Tables</h2>
-        <p>In closing, we will briefly mention one other feature. Using our entity relationships defined in Java, the JPA process can actually have it generate new database tables for us. In other words, we could have created the Major and Student classes without having created the corresponding tables in the DB, and the ORM solution could automatically generate them for us. This is done by adding the following to the persistence-unit section of the persistence.xml file:</span><span style="font-size: 12pt;"> </p>
-        <p dir="ltr"><span style="font-family: 'courier new', courier;">&lt;property name="eclipselink.ddl-generation" value="create-tables" /&gt;<br /><span style="font-size: 12pt;">&lt;property name="eclipselink.ddl-generation.output-mode" value="database" /&gt;</span></span>
+        <p>In closing, we will briefly mention one other feature. Using our entity relationships defined in Java, the
+            JPA process can actually have it generate new database tables for us. In other words, we could have created
+            the Major and Student classes without having created the corresponding tables in the DB, and the ORM
+            solution could automatically generate them for us. This is done by adding the following to the
+            persistence-unit section of the persistence.xml file:</span><span style="font-size: 12pt;"></p>
+        <p dir="ltr"><span style="font-family: 'courier new', courier;">&lt;property name="eclipselink.ddl-generation" value="create-tables" /&gt;<br/><span
+                style="font-size: 12pt;">&lt;property name="eclipselink.ddl-generation.output-mode" value="database" /&gt;</span></span>
         </p>
-        <p>Note that this may not always create the most optimal tables the way you would like them. Also, there are a number of other options here including the ability to drop and create tables, or to create scripts to create the tables.</span><span style="font-size: 12pt;"> </p>
-        <p>There are many other options and capabilities of JPA that were not mentioned in this example. Our purpose here was just to scratch the surface and give an example of how to connect the pieces.</p>
+        <p>Note that this may not always create the most optimal tables the way you would like them. Also, there are a
+            number of other options here including the ability to drop and create tables, or to create scripts to create
+            the tables.</span><span style="font-size: 12pt;"></p>
+        <p>There are many other options and capabilities of JPA that were not mentioned in this example. Our purpose
+            here was just to scratch the surface and give an example of how to connect the pieces.</p>
 
 
-        </div>
     </div>
+</div>
 
 
 </body>
