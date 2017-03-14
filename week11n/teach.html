@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>CS 313 - Team Activity</title>
+    <link rel="stylesheet" type="text/css" href="../course/css/style.css" />
+</head>
+
+<body>
+    <header id="courseTitle">
+        <span class="icon-byui-logo"></span>
+        <h1>CS 313 | Web Engineering II</h1>
+    </header>
+    <article>
+        <h2>11 Teach : Team Activity</h2>
+
+        <div class="online-notes">
+
+            <h4>Special Instructions for Online Students</h4>
+
+            <p>You need to coordinate a one hour synchronous meeting with your group for this activity.</p>
+
+        </div>
+
+        <h3>Objective</h3>
+        <p>Understand how to use client-side Javascript to retrieve data from a web service and render it on the page.</p>
+
+        <p>To focus on the process of retrieving this data on the client, for this activity we will <em>not</em> be retrieving data from our own Node.js servers, but rather an existing service. But please recognize that the process is the same, and we could retrieve data from a service such as the one we built in last week's team activity. That is what you will be doing for your projects.</p>
+
+        <h3>Overview</h3>
+        <p>For today's team activity, we will create a simple web application to search for movies, using the API provided by <a href="http://www.omdbapi.com/" target="_blank">Open Movie Database API</a>. You should have an HTML page with a search box, and, when the user clicks the search button, use AJAX to process the search, call the API, and display a list of movies on the page, without causing the page to refresh. As a stretch challenge, when displaying the list of movies, put a "view details" option next to each one that will use AJAX to again query the API, this time for information about that specific movie, and then render the details on the page, again without causing a page refresh.</p>
+
+        <p>You are welcome to use JavaScript libraries such as jQuery to help with the AJAX call and the DOM manipulation, if you would like.</p>
+
+        <h3>Instructions</h3>
+        <ol>
+            <li>
+                <p>Create an HTML page with a search box and a button. When the button is clicked, use client side JavaScript to get the value from the search box, and log it to the console.</p>
+            </li>
+            
+            <li>
+                <p>Use AJAX to access the OMDB API for the provided search value. When the result comes back, log it to the console to verify that the API call is working.</p>
+            </li>
+            
+            <li>
+                <p>Use client side JavaScript to update the HTML page to show the list of movies, without causing the page to refresh.</p>
+            </li>
+            
+        </ol>
+
+        <h4>Stretch Challenges</h4>
+        <p>After finishing the core requirements, ensure that everyone is at that point and understands the material. When everyone has completed the core requirements, you can move on to these stretch challenges.</p>
+
+        <ol>
+            <li>
+                <p>Add a "View Details" link or button next to each movie result in the list. If this button is clicked, log the movie ID to the console.</p>
+            </li>
+            
+            <li>
+                <p>Add an AJAX call for your View Details functionality to call into the OMDB API for that particular movie. When the result is retrieved, log it to the console.</p>
+            </li>
+            
+            <li>
+                <p>Use client side JavaScript to update the page and display more information about the movie including an image and more detailed information as provided by the API.</p>
+            </li>
+            
+        </ol>
+
+        <h3>Instructor's Solution</h3>
+        <p>As a part of this team activity, you are expected to look over a solution from the instructor, to compare your approach to that one. One of the questions on the I-Learn submission will ask you to provide insights from this comparison.</p>
+
+        <p>Please DO NOT open the solution until you have worked through this activity as a team for the one hour period. At the end of the hour, if you are still struggling with some of the core requirements, you are welcome to view the instructor's solution and use it to help you complete your own code. Even if you use the instructor's code to help you, you are welcome to report that you finished the core requirements, if you code them up yourself.</p>
+
+        <p>After working with your team for the one hour activity, <a href="https://github.com/byui-burton/cs313-course-dev/tree/master/week11n/ta-solution/" target="_blank">click here for the instructor's solution</a>.</p>
+
+        <h3>Submission</h3>
+        <p>When you have finished this activity, please fill out the assessment in I-Learn. You are welcome to complete any additional parts of this activity by yourself or with others after your meeting before submitting the assessment.</p>
+
+
+
+    </article>
+
+   <script src="../course/js/highlight/highlight.pack.js"></script>
+   <script>hljs.initHighlightingOnLoad();</script>
+</body>
+
+</html>
