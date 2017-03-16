@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>CS 313 - Team Activity</title>
+    <link rel="stylesheet" type="text/css" href="../course/css/style.css" />
+</head>
+
+<body>
+    <header id="courseTitle">
+        <span class="icon-byui-logo"></span>
+        <h1>CS 313 | Web Engineering II</h1>
+    </header>
+    <article>
+        <h2>11 Teach : Team Activity - Bonus!</h2>
+
+        <h3>Objective</h3>
+        <p>This week you have a bonus team activity! The objective of this activity is to bring together to points of the previous two activities (creating a web service in Node.js, and consuming it via client-side AJAX to update an HTML page.</p>
+
+        <h3>Overview</h3>
+        <p>For this activity we will work with a database of scriptures as we did earlier in the semester.</p>
+
+        <p>The assignment is to create an HTML that displays the scriptures in the database and can filter them by the book name. If you have time, add another page that allows the addition of a new scripture to the database using a post method.</p>
+
+        <h3>Instructions</h3>
+        <ol>
+            <li>
+                <p>Create a scripture table in the database and insert some scriptures. You are welcome to use one from before, or to use the scripture from the <a href="https://github.com/byui-burton/cs313-course-dev/blob/master/week06/ta-solution/" target="_blank">instructor's solution</a> to Team Activity 06.</p>
+                <p>Then, create a new Node.js application using Express. Create an endpoint to retrieve all the scriptures in your database, and another way to get all the scriptures for a particular book. (For example, you could have a route <code>/scriptures</code> that returns all the scriptures if no additional parameters are passed, but also accepts an optional parameter for book, that returns the scriptures matching that book name.)</p>
+                <p>Verify that your Web service can be called an that it returns the correct JSON.</p>
+            </li>
+            
+            <li>
+                <p>Create an HTML web page in your static pages section of your Node.js application that initially gets all the scriptures.</p>
+                <p>Then, include a search box and a button that allows the user to enter a book and then uses AJAX to get the new filtered list of books and update the list on the page.</p>
+            </li>
+            
+            <li>
+                <p>Create a second page for scripture entry. Provide inputs for the user to add a book, chapter, verse, and content, and then a submit button. When the user submits this data, use post method to send it to your Node.js server.</p>
+                <p>Please note that this will require you to get the data a different way, and will require a little bit of digging to learn how to do this using Express.</p>
+            </li>
+            
+        </ol>
+
+<!--         <h3>Instructor's Solution</h3>
+        <p>As a part of this team activity, you are expected to look over a solution from the instructor, to compare your approach to that one. One of the questions on the I-Learn submission will ask you to provide insights from this comparison.</p>
+
+        <p>Please DO NOT open the solution until you have worked through this activity as a team for the one hour period. At the end of the hour, if you are still struggling with some of the core requirements, you are welcome to view the instructor's solution and use it to help you complete your own code. Even if you use the instructor's code to help you, you are welcome to report that you finished the core requirements, if you code them up yourself.</p>
+
+        <p>After working with your team for the one hour activity, <a href="https://github.com/byui-burton/cs313-course-dev/tree/master/week11n/ta-solution/" target="_blank">click here for the instructor's solution</a>.</p>
+ -->
+        <h3>Submission</h3>
+        <p>This is an ungraded activity to help you on your projects.</p>
+
+<!--         <p>When you have finished this activity, please fill out the assessment in I-Learn. You are welcome to complete any additional parts of this activity by yourself or with others after your meeting before submitting the assessment.</p>
+ -->
+
+
+    </article>
+
+   <script src="../course/js/highlight/highlight.pack.js"></script>
+   <script>hljs.initHighlightingOnLoad();</script>
+</body>
+
+</html>
