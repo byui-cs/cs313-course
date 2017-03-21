@@ -1,0 +1,18 @@
+{
+  "name": "burton-node-passport-demo",
+  "version": "0.2.5",
+  "description": "A sample Node.js app using Express 4",
+  "engines": {
+    "node": "5.9.1"
+  },
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "4.13.3",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0"
+  }
+}

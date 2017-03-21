@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>CS 313 - Team Activity</title>
+    <link rel="stylesheet" type="text/css" href="../course/css/style.css" />
+</head>
+
+<body>
+    <header id="courseTitle">
+        <span class="icon-byui-logo"></span>
+        <h1>CS 313 | Web Engineering II</h1>
+    </header>
+    <article>
+        <h2>12 Teach : Team Activity</h2>
+
+        <div class="online-notes">
+
+            <h4>Special Instructions for Online Students</h4>
+
+            <p>You need to coordinate a one hour synchronous meeting with your group for this activity.</p>
+
+        </div>
+
+        <h3>Objective</h3>
+        <p>Practice using middleware and learn how to integrate Passport.js for basic local authentication.</p>
+
+        <h3>Overview</h3>
+        <p>For this team activity, you will create a login page and use Passport.js to authenticate a user via their username and password.</p>
+
+        <h3>Instructions</h3>
+        <h4>Core Requirements</h4>
+        <ol>
+            <li>
+                <p>Create a new Node.js application and a simple html page with a username and password box, and a submit button. This form should submit a POST request to "/login". This html page should be put in your static folder (e.g., public). Also, create a welcome page in this static folder, that says, "Welcome to the application" or something similar.</p>
+                <p>Verify that you can load each page in a browser via "localhost".</p>
+            </li>
+            
+            <li>
+                <p>Create a middleware function to log a message to the console with the request url for every request (not just a certain route/url/endpoint) made to the server. Don't forget to call <code>next()</code> to allow the rest of the handlers to perform their function as well. Verify that you see this log message on the console when you request each of the pages you created above.</p>
+            </li>
+            
+            <li>
+                <p>Install Passport.js and use it in your application. Use a new "LocalStrategy" to authenticate a username and password yourself.</p>
+                <p>At this point, check to see if the username is "admin" and the password is "pass" for a successful login. If anything else is submitted, the login should be unsuccessful.</p>
+                <p>In your LocalStrategy, if the login is successful, create a new User object with a name member variable, and pass it do the "done" callback. Recall that you can create a new class dynamically as follows:</p>
+
+<pre><code class="JavaScript">
+var user = Object();
+user.name = "admin";
+</code></pre>
+
+                <p>Once your LocalStrategy is set up and in place, then use the passport authenticate method to handle post requests to "/login". If the login is successful, redirect them to your welcome page. If not, redirect them back to your login form.</p>
+
+            </li>
+            
+        </ol>
+
+        <div class="tips">
+            <p>Instructor Tips:</p>
+            <p>There are lots of little things that have to be in place for passport to work. For example, you need to "npm install" the passport and passport-local packages.</p>
+            <p>Also, you need to include express components to handle getting the POST values from the body. You can do this by installing the body-parser package. And then including and using it via:</p>
+
+<pre><code class="JavaScript">
+var bodyParser = require('body-parser');
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+</code></pre>
+
+            <p>You also need to initialize passport, and if you are using sessions (which by default it will), you need to initialize that:</p>
+
+<pre><code class="JavaScript">
+var passport = require('passport')
+  , LocalStrategy = require('passport-local').Strategy;
+
+app.use(passport.initialize());
+app.use(passport.session());
+</code></pre>
+
+            <p>Finally, when your user is successfully authenticated it will try to serialize your user object to put it on the session and then deserialize it later. Passport requires you to tell it how to do this for your custom object, with serializeUser and deserializeUser functions:</p>
+
+<pre><code class="JavaScript">
+// We need to tell passport how to turn our user object into a string to save it.
+// This may consist of just saving an id to use later.
+passport.serializeUser(function(user, done) {
+    done(null, user.name);
+});
+
+// We need to tell passport how to get a user object back from our string.
+// This may consist of using the id to get the user information from the database. 
+passport.deserializeUser(function(name, done) {
+    var user = new Object();
+    user.name = name;
+    done(null, user);
+});</code></pre>
+
+
+        </div>
+
+
+        <h4>Stretch Challenges</h4>
+        <p>After finishing the core requirements, ensure that everyone is at that point and understands the material. When everyone has completed the core requirements, you can move on to these stretch challenges.</p>
+
+        <ol>
+            <li>
+                <p>Create a user table in the database, add some users along with their passwords to this table. Then, create a DB user for node to connect to this database, and ensure that it has the necessary permissions.</p>
+            </li>
+            
+            <li>
+                <p>Use your database to verify a correct username and password rather than the hardcoded values above.</p>
+            </li>
+            
+            <li>
+                <p>Use middleware to prevent a user from visiting the welcome page without first logging in.</p>
+            </li>
+            
+        </ol>
+
+        <h3>Instructor's Solution</h3>
+        <p>As a part of this team activity, you are expected to look over a solution from the instructor, to compare your approach to that one. One of the questions on the I-Learn submission will ask you to provide insights from this comparison.</p>
+
+        <p>Please DO NOT open the solution until you have worked through this activity as a team for the one hour period. At the end of the hour, if you are still struggling with some of the core requirements, you are welcome to view the instructor's solution and use it to help you complete your own code. Even if you use the instructor's code to help you, you are welcome to report that you finished the core requirements, if you code them up yourself.</p>
+
+        <p>After working with your team for the one hour activity, <a href="https://github.com/byui-burton/cs313-course-dev/tree/master/week12n/ta-solution/" target="_blank">click here for the instructor's solution</a>.</p>
+
+        <h3>Submission</h3>
+        <p>When you have finished this activity, please fill out the assessment in I-Learn. You are welcome to complete any additional parts of this activity by yourself or with others after your meeting before submitting the assessment.</p>
+
+
+
+    </article>
+
+   <script src="../course/js/highlight/highlight.pack.js"></script>
+   <script>hljs.initHighlightingOnLoad();</script>
+</body>
+
+</html>
