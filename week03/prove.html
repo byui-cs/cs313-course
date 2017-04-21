@@ -13,28 +13,66 @@
         <h1>CS 313 | Web Engineering II</h1>
     </header>
     <article>
-        <h2>03 Prove : Assignment - PHP Survey</h2>
+        <h2>03 Prove : Assignment - PHP Shopping Cart</h2>
 
         <h3>Overview</h3>
 
-        <p>Create a simple PHP form that allows users to cast votes for certain questions and see the results.</p>
+        <p>Create a simple PHP application to simulate a shopping cart.</p>
 
         <h3>Guidelines</h3>
         <p>The following guidelines are the minimum standard for this assignment (to earn 93%). To earn 100%, you should find a way to go beyond this standard to show your creativity and personality. Have fun and make it your own!</p>
 
-        <ul>
-            <li><p>Your survey/results should look professional.</p></li>
-            <li><p>There should be at least four questions.</p></li>
-            <li><p>Provide a link on the question page to go directly to the results (without voting).</p></li>
-            <li><p>When the user casts their vote, they should then see the results.</p></li>
-            <li><p>Store the results to a file on the filesystem so they can be retrieved/added to later.</p></li>
-            <li><p>If the user returns to the question page after they have voted, they should be automatically directed to the results. (Think sessions)</p></li>
-            <li><p>Create a link to your survey from your assignments page.</p></li>
+        <p>Your assignment is to create a series of pages that simulate a shopping cart for an online store. The <em>kinds</em> of items you can put in your cart and purchase are totally up to you. But you should have at least the following components:</p>
 
-        </ul>
+        <ol class="title-first-list">
+<!--             <li>
+                <p>Login / Logout Functionality</p>
+                <p>Your site should begin with a login page. This page should ask for a username (no password), and accept any value given, and store it on the session.</p>
+                <p>All pages after this one should check for this value, and if it is not present, redirect the user back to the login page. If the value is present on the session, it should be displayed along with a link to logout. Logging out should clear the session and redirect back to the login page.</p>
+            </li>
+ -->
+            <li>
+                <p>Browse Items</p>
+                <p>On the browse items page, the user sees a list of items they can add to their cart and purchase. Again, the kind of items and the formatting of this page is up to you.</p>
+
+                <p>You should provide a button or link to add an item to the cart. Doing so should store that item in some way to the session, and then keep the user on the browse page.</p>
+            </li>
+            <li>
+                <p>View Cart</p>
+                <p>Your browse page should contain a link to view the cart. On the view cart page, the user can see all the items that are in their cart. Provide a way to remove individual items from the cart.</p>
+
+                <p>The view cart page should have a link to return to the browse page for more shopping and a link to continue to the checkout page.</p>
+            </li>
+            <li>
+                <p>Checkout</p>
+                <p>The checkout page should ask the user for the different components of their address. (No credit card or other purchase information is collected, only an address.)</p>
+                <p>It should have the option to complete the purchase or return to the cart.</p>
+            </li>
+            <li>
+                <p>Confirmation page</p>
+                <p>After completing the purchase from the checkout page, the user is shown a confirmation page. It should display all the items they have just purchased as well as the address it will be shipped too.</p>
+                <p>Make sure to check for malicious injection, especially from free-entry fields like the address.</p>
+            </li>
+        </ol>
+
+        <p>No login functionality or databases are required for this assignment.</p>
+
+        <h4>Ideas to go above an beyond</h4>
+        <ul>
+            <li><p>Store quantities of items, and be able to adjust them on the view cart page.</p></li>
+            <li><p>Add a process to search, filter, and/or browse.</p></li>
+            <li><p>On the browse page, make each item a link that goes to an "item details" page where the item is actually added to the cart.</p></li>
+            <li><p>Add excellent styling and design to make it look really professional.</p></li>
+            <li><p>Anything else you can think of.</p></li>
+
+        </ul>        
 
         <h3>Submission</h3>
-        <p>Finally, download this assignment's <a href="./prove03.txt" target="_blank">submission form</a>, fill it out, and submit it to I-Learn.</p>
+        <ol>
+            <li><p>Ensure that your code is deployed to your server.</p></li>
+            <li><p>Create a link to this assignment from the assignments page on your homepage.</p></li>
+            <li><p>Ensure that your latest code is pushed to GitHub.</p></li>
+            <li><p>Download this assignment's <a href="./prove03.txt" target="_blank">submission form</a>, fill it out, and submit it to I-Learn.</p></li>
 
     </article>
 
