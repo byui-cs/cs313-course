@@ -1,0 +1,18 @@
+body, html {
+	height: 100%;
+}
+
+.mountain-bg {
+	background-image: url("tetons.jpg");
+	height:100%;
+
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover
+}
+
+.jumbotron {
+   background: rgb(22, 22, 22); /* This is for ie8 and below */
+   background: rgba(22, 22, 22, 0.75);
+   color: #ddd;
+}
