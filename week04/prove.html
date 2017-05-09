@@ -33,18 +33,23 @@
     <li><p>Eliminate data redundancy wherever possible.</p></li>
   </ul>
 
-  <p>Provide evidence of your database design by dumping the SQL that describes your Heroku database to the file
-    "output.sql" using the following command.</p>
+  <p>Provide evidence of your database design by submitting the SQL needed to create your database. This can be done by either:
 
-  <pre><code class="bash">
-$ heroku run 'pg_dump $DATABASE_URL' > output.sql
+  <ol>
+    <li><p>Saving the commands you used to create the database to a text file, such as <code>myDb.sql</code>.</p></li>
+    <li><p>Dumping the SQL that describes your Heroku database to a file, such as <code>myDb.sql</code> using the following command:</p>
+<pre><code class="bash">
+$ heroku run 'pg_dump $DATABASE_URL' > myDb.sql
 Running pg_dump $DATABASE_URL on afternoon-mesa-40442... up, run.1803 (Free)
 </code></pre>
+    </li>
+  </ol>
 
 
   <h3>Submission</h3>
   <p>Finally, download this assignment's <a href="./prove04.txt" target="_blank">submission form</a>, fill it out, and
-    submit it along with the "output.sql" text file to I-Learn.</p>
+    submit it along with the <code>myDb.sql</code> text file to I-Learn.</p>
+    <p><strong>Don't forget to submit both files to I-Learn.</strong></p>
 
 </article>
 
