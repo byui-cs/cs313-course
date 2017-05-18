@@ -13,58 +13,27 @@
     <h1>CS 313 | Web Engineering II</h1>
 </header>
 <article>
-    <h2>Project 2 Proposal</h2>
+    <h2>09 Prove: Project 2 Design</h2>
 
     <h3>Overview</h3>
-    <p>For the second half of the semester we will be building web applications using Node.js. As with Project 1, this will be an extended project that will drive the assignments and much of our learning for the rest of the semester.</p>
+    <p>Please see the <a href="../week08/project-overview.html" target="_blank">overview of Project 2</a> from last week's material for more information about this project.</p>
 
-    <h3>Project Guidelines</h3>
-    <p>The goal of this project is for you to gain experience in asynchronous callback functions, deepen your understanding of JavaScript programming, and understand the fundamentals of full-stack Web development.</p>
-
-    <p>With those goals in mind, the actual requirements of the project are fairly open-ended. The guidelines for the project are:</p>
-
-    <ol>
-        <li><p>Build something cool.</p></li>
-        <li><p>Use Node.js.</p></li>
-        <li><p>Demonstrate understanding of asynchronous callback functions.</p></li>
-        <li><p>Handle authentication and persistence of state.</p></li>
-        <li><p>Incorporate a data layer composed of either a DB (e.g., PostgreSQL) and/or third-party web services (e.g., Walmart, Twitter, FamilySearch, etc.).</p></li>
-    </ol>
-
-    <p>You are welcome to implement this as a single page application (SPA) or using multiple pages generated with a template view engine, such as EJS.</p>
-
-    <p>As an example, consider an educational Web application that teaches Math or computer science principles via a game or interactive programming site. It could allow different users to log in, and track their progress through the learning modules.</p>
-
-    <h3>Proposal Guidelines</h3>
-    <p>Your proposal document need not be long, but it should outline the general idea of your project and how it will meet the necessary requirements. Please include the following sections:</p>
-
-    <ol>
-        <li><p><heading>Overall project description</heading>. Describe the overall application.</p></li>
-
-        <li><p><heading>Pages</heading>. Describe the layout of your application. Will it be a single page application? If so, describe the key elements of the page and how the user will interact with them. Will it include multiple pages? If so, list the pages you anticipate and the interaction among them. Simple mockups may be helpful in illustrating your idea.</p></li>
-
-
-        <li><p><heading>Data layer</heading>. Describe the necessary entities that you will store in the database, or the 3rd party API that you plan to use.</p></li>
-<!--         <li><p>Third party APIs. Please list any APIs that will be used for this project including what data will be
-            gathered from these APIs and what will be posted to them. <strong>Make sure to investigate these
-                APIs</strong> as part of planning process to verify that you will be able to do the things that you want
-            to do.</p></li>
- -->
-        <li><p><heading>Milestones</heading>. Your weekly assignments for the next four weeks will be portions of your project, as
-            follows:</p>
-            <ul>
-                <li><p>Week 10: Milestone 1</p></li>
-                <li><p>Week 11: Milestone 2</p></li>
-                <li><p>Week 12: Milestone 3</p></li>
-                <li><p>Week 13: Milestone 4 / Project Demo</p></li>
-            </ul>
-
-            <p>For each of these milestones, indicate the portions of the project you will have done at that point. In order to prepare for deployment issues that inevitably arise, for your Milestone 3 (Week 12), please include "Have a version of the application working on our server" along with any other plans you have.</p>
-        </li>
-    </ol>
+    <p>Your assignment this week is to plan out the components of your project.</p>
 
     <h3>Submission</h3>
-    <p>Submit a PDF version of your proposal to I-Learn.</p>
+    <p>Please submit to I-Learn a document containing the following sections:</p>
+
+    <ol>
+        <li><p><heading>Project Description.</heading> In 1-2 paragraphs, describe the overall application.</p></li>
+        <li><p><heading>Data Layer.</heading> Describe the data layer of your application. If it consists of a DB, please list the tables you will use along with their columns and relationships.</p></li>
+
+        <li><p><heading>Web service endpoints.</heading> List the web service endpoints your Node.js application will expose. For each one, specify the information it will need from the client and the data it will return. Depending on your application, this may be very similar to your data layer, with your services essentially providing CRUD (Create, Retrieve, Update, Delete) operations for your DB entities.</p></li>
+
+        <li><p><heading>User Interface.</heading> Describe the UI of your application. Describe the way the AJAX calls will manipulate the HTML page. Mockups may be very here.</p></li>
+        
+        <li><p><heading>User Accounts / Sessions.</heading> If applicable, briefly describe the role that user accounts and/or sessions will play in your application.</p></li>
+
+    </ol>
 
 </article>
 
