@@ -3,22 +3,28 @@ After completing the assignment, please answer the questions in this text file a
 1. Project Title / One sentence description:
 
 
-2. Copy and paste the URL for your web application (if applicable):
+2. Copy and paste the URL for one of your Web service endpoints at Heroku:
 
 
 3. Copy and paste the URL for your source code repository (e.g., GitHub):
 
 
-4. List what your planned Milestone accomplishments were (e.g. from your proposal).
+4. List the name of each of the Web service endpoints that are working:
 
 
-5. Describe what you have done this week, and how it meets, falls short of, or is different than your milestone, and why.
+5. List any Web service endpoints that are not yet functioning:
 
 
-6. If possible, describe what I can do to see evidence of your milestone (e.g., pages that show certain pieces working, etc.).
+6. Please select the category you feel best describes your assignment:
+A - Some attempt was made
+B - Developing, but significantly deficient
+C - Slightly deficient, but still mostly adequate
+D - Meets requirements
+E - Shows creativity and excels above and beyond requirements
 
 
-7. List plans for next week (and note if they are different than your original milestone plans for next week).
+7. Provide a brief justification (1-2 sentences) for selecting that category.
 
 
-8. When is HTTP Get the right verb for a web service call? When should Post be used instead?
+8. Please list any questions you have for the instructor regarding this assignment or this week's topic.
+

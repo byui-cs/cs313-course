@@ -9,14 +9,22 @@ After completing the assignment, please answer the questions in this text file a
 3. Copy and paste the URL for your source code repository (e.g., GitHub):
 
 
-4. List what your planned Milestone accomplishments were (e.g. from your proposal).
+4. Describe the functionality that is currently working, along with any special instructions of how to use your web application:
 
 
-5. Describe what you have done this week, and how it meets, falls short of, or is different than your milestone, and why.
+5. Describe the features that are not yet working correctly.
 
 
-6. If possible, describe what I can do to see evidence of your milestone (e.g., pages that show certain pieces working, etc.).
+6. Please select the category you feel best describes your assignment:
+A - Some attempt was made
+B - Developing, but significantly deficient
+C - Slightly deficient, but still mostly adequate
+D - Meets requirements
+E - Shows creativity and excels above and beyond requirements
 
 
-7. List plans for next week (and note if they are different than your original milestone plans for next week).
+7. Provide a brief justification (1-2 sentences) for selecting that category.
+
+
+8. Please list any questions you have for the instructor regarding this assignment or this week's topic.
 
