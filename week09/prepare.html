@@ -16,9 +16,17 @@
         <h2>09 Prepare : Reading</h2>
 
         <h3>Overview</h3>
-        <p>This week you will learn about Express.js, a Node.js Framework that will simplify our efforts.</p>
+        <p>This week you will learn about two things:</p>
+
+        <ol>
+            <li><p>Express.js, a Node.js Framework that will simplify our efforts.</p></li>
+            <li><p>EJS, a templating engine that works nicely with Express.js and Node.js.</p></li>
+        </ol>
+
+        <p>Please note that Express is used much more broadly than just with EJS pages. This week, we will see how to use EJS templates, but in future weeks, we will also see how to use Express to send back responses in other ways (e.g., JSON).</p>
 
         <h3>Preparation Material</h3>
+        <h4>Express.js</h4>
         <p>Visit the <a href="http://expressjs.com" target="_blank">official Express.js site</a></p>
         <p>Work through each section in the "Getting Stated" module:</p>
         <ol>
@@ -31,7 +39,13 @@
         </ol>
 
         <p>When you are learning a new technology, to "work through" examples on a site like this means that you both read the material, and try out the commands they provide. Create a temporary directory that you can delete later, play around with stuff. Look at the files that are there, try changing something here or there to see what happens, etc.</p>
-        
+
+        <h4>EJS</h4>
+        <p>You can think of EJS templates in many ways like the PHP pages that we have used before. We create HTML and then can embed JavaScript commands in the HTML to render our variables, or loop through a list of results, etc.</p>
+
+        <p>A major potential difference with using a templating engine like EJS and the way that many of us used PHP, is that we really want to have our EJS templates be restricted to "Views" from the Model-View-Controller design pattern. Briefly stated, the purpose of the template is to render the data, not to perform computation, tasks, or run logic. The idea is that we do all of the logic first in our Node.js functions, and then pass the results on to the template to render them.</p>
+
+        <p>To see how this works, review the tutorial: <a href="https://coligo.io/templating-node-and-express-apps-with-ejs/" target="_blank">Templating Node and Express Apps with EJS</a>. In this tutorial they demonstrate how to use EJS templates to render data. In their case, they hard-code an array of "fake posts" in their Node script before passing it to their EJS. In reality, you could think of this data as likely coming from a DataBase or other service of some kind.</p>
 
     </article>
 
