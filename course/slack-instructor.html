@@ -21,7 +21,7 @@
         <p>In addition, you will have some responsibility for getting the Slack organization up and running initially.</p>
 
         <h3>Installing Slack</h3>
-        <p>While Slack can be used in a browser, the experience is much easier in their client application, so it is strongly recommended that you download and install this free app, found here: <a href="https://slack.com/get" target="_blank">https://slack.com/get</a> .</p>
+        <p>While Slack can be used in a browser, the experience is much easier in their client application, so it is strongly recommended that you <a target="_blank" href="https://slack.com/downloads/">download and install this free app</a>.</p>
 
         <h3>Creating a Slack Organization</h3>
         <p>Once you have installed Slack, you need to create a new organization for your section. There should be one organization per section of the course. And the free version is sufficient for the things we will do. The following are the general steps to set up your organization:</p>
@@ -36,17 +36,52 @@
             <li><p>After the organization has been created, your students can sign up themselves at a url like the following: https://byui-cs313-17s-02.slack.com</p></li>
         </ol>
 
+        <h3>Team Settings</h3>
+        <p>In the team settings screen, you should modify the Invitations, Channel Management, Stats, Custom Emoji &amp; Loading Messages, Slackbot Responses, Gateways, and Apps &amp; Integration settings so that only Team Admins and Owners may use those features.</p>
+
         <h3>Creating Initial Channels</h3>
-        <p>Slack organizes it's discussions into channels. For this course, the course-wide discussions will happen in the general channel that is available by default. In addition, you should create a channel for each team to use for coordinating their team activities and projects. This team channel is a great place for you to keep an eye on the team's activity, and to offer suggestions when needed.</p>
+        <img class="pull-left" src="./img/slack-channels.png"/>
+
+        <p>Slack organizes it's discussions into channels. Each channel is prefixed with a <code>#</code> (hashtag) symbol.</p>
+        <p>Most class-wide discussion should take place in the <code>#general</code> channel. However, many students prefer to have an additional channel for asking for help, such as <code>#help</code>.</p>
+
+        <p>Having too many channels makes it difficult for people to know where conversations are occurring, so it is suggested you restrict general discussions to those two channels and only add extra channels for special purposes, such as project pitches or other discussion-based assignments.</p>
+        
+        <h4>Private Team Channels</h4>
+        <p>Once teams have formed, you should create private team channels for each team, in the format <code>#team-01</code>, <code>#team-02</code>, etc... Once you create the channel and mark it as private, you can give access to the individuals that belong to that team by inviting them to the channel.</p>
+        <img src="./img/slack-create-channel.png"/>
+
 
         <h3>Announcing Slack in the Course</h3>
-        <p>Once the Slack organization has been created, you need to tell the students about it and give them instructions for how to sign up.</p>
+        <p>Once the Slack organization has been created, you need to tell the students about it and give them instructions for how to sign up. The most important things to tell them are that:
+        </p>
+        <ul>
+            <li>
+                <p>Participation in the Slack discussions is not optional and will be the primary communication method used in the course.
+            </p>
+            </li>
+            <li>
+                <p>How to <a href="https://slack.com/downloads/">download a Slack client</a> for their computer or mobile device.</p>
+            </li>
+            <li>
+                <p>How to employ <a href="http://blog.invoca.com/7-rules-every-professional-needs-to-know-about-slack-etiquette/?utm_source=social&utm_medium=linkedin">proper Slack etiquette.</a></p>
+            </li>
+        </ul>
 
         <h3>Using Slack vs. Announcements and Email</h3>
         <p>While Slack will be the primary vehicle for course discussion and coordination, I-Learn announcements and email have important roles as well.</p>
 
         <h4>Slack</h4>
-        <p>Slack should be used for Q&ampA about the course and it's topics. This is ideal for discussion about the weekly topics and assignments. In addition, students should be encouraged to use Slack for all of their team discussions.</p>
+        <p>Slack should be used for Q&amp;A about the course and it's topics. This is ideal for discussion about the weekly topics and assignments. In addition, students should be encouraged to use Slack for all of their team discussions and as the primary way to contact the instructor.</p>
+        <p>You can respond to a specific student by prefixing their Slack user name with the <code>@</code> symbol. This will send a notification to whatever device they've used to sign up for slack. It is customary to reply to direct questions from students in this fashion.</p>
+
+        <img src="./img/slack-question.png">
+
+        <p>In addition, you can send a notification to the entire class by posting in the <code>#general</code> channel and addressing the message to <code>@channel</code>.</p>
+
+         <img src="./img/slack-channel-announce.png">
+
+        <p>Finally, anytime you post to a private channel, every member of that channel is notified by default.</p>
 
         <h4>Announcements</h4>
         <p>I-Learn Announcements should be used for any official course business or announcements, such as changing the due dates or the scope of announcements. You should consider Slack and supplementary discussion, but Announcements as core, official business channel.</p>

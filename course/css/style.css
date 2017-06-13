@@ -81,6 +81,15 @@ code .user-input {
 	text-decoration: underline;
 }
 
+img {
+	max-width: 90%;
+}
+
+.pull-left {
+	float: left;
+	margin-right: 10px;
+}
+
 img.screenshot {
 	display: block;
     max-height: 60px;
