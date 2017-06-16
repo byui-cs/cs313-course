@@ -16,19 +16,61 @@
         <h2>10 Prepare : Reading</h2>
 
         <h3>Overview</h3>
-        <p>This week, you will learn about how to query a PostgreSQL database in Node, return the data back to a client, and how to configure the client to access this data via AJAX and update the corresponding page.</p>
-
-        <h3>Preparation Material</h3>
-        <p>The preparation material for this week has you look a little bit at what web services are, and then at some elements of getting data from PostgreSQL in Node.js.</p>
+        <p>This week has two main focuses:</p>
 
         <ol>
-            <li>
-                <p><a href="https://www.ibm.com/developerworks/webservices/library/ws-restful/" target="_blank">An overview of what a REST API</a> is and some best practices to keep in mind.</p>
-            </li>
-            <li>
-                <p><a href="https://www.npmjs.com/package/pg" target="_blank">Node pg module</a> - The module we will use to connect to PostgreSQL and run our queries.</p>
-            </li>
+            <li><p><heading>The fundamentals of Web services</heading>. At this point, we'll focus mostly on what these are and how to return data this way. Then, next week, we will focus much more on how to use / call Web services.</p></li>
+            <li><p><heading>Querying PostgreSQL from Node</heading>. This is more or less about how to make the connection, because once you do, all of the database design and queries are exactly the same as we learned earlier in the semester, when we used PHP.</p></li>
         </ol>
+
+        <p>Then your assignment for the week will have you build out the services you need for your individual project.</p>
+
+        <h3>Preparation Material</h3>
+        <h4>Optional Background Material</h4>
+        <p>First, it's important to be comfortable with routing in Express.js. We covered this last week, but if you are still a little uneasy, you might want to refer back to:</p>
+        <ol>
+            <li><p><a href="https://expressjs.com/en/guide/routing.html" target="_blank">Express Routing</a></p></li>
+<!--             <li><p><a href="https://expressjs.com/en/api.html#router" target="_blank">Express 4x - API Reference (router object)</a></p></li>
+ -->
+        </ol>
+
+        <h4>Web Services</h4>
+        <p>This week, we will be talk about APIs and in particular, Web services. In short, Application Programming Interfaces (APIs) define an interface for one program to talk to another. In our case, we are particularly interested in Web services, where this communication happens over the Web (see also, Stack Overflow: <a href="https://stackoverflow.com/questions/808421/api-vs-webservice/808467#808467" taret="_blank">What's the difference between a Web service and an API</a>).</p>
+
+        <p>Please read the following:</p>
+
+        <ol>
+            <li><p><a href="https://en.wikipedia.org/wiki/Representational_state_transfer" target="_blank">The introduction to the Wikipedia article on Rest</a>. While there are other types of Web services, the most popular is REST, which takes advantage of the HTTP standard for stateless communication, and this introduction gives a good overview of the concept</p></li>
+            <li><p><a href="https://www.ibm.com/developerworks/webservices/library/ws-restful/" target="_blank">RESTful Web Services: The Basics</a>. This article gives an overview of how this approach is used and some best practices around creating Web services. The correct use of the HTTP verbs is summarized in <a href="https://en.wikipedia.org/wiki/Representational_state_transfer#Relationship_between_URL_and_HTTP_methods" target="_blank">this table</a> from the above mentioned Wikipedia article.</p></li>
+        </ol>
+
+        <p>In addition, here are a few helpful references:</p>
+
+        <ul>
+            <li><p>A list of the <a href="https://httpstatuses.com/" target="_blank">HTTP status codes</a> you can use</p></li>
+            <li><p><a href="https://jsonformatter.curiousconcept.com/" target="_blank">JSON Formatter/Validator</a></p></li>
+        </ul>
+
+        <h4>Accessing PostgreSQL from Node.js</h4>
+        <p>The pg module for Node.js contains the functions to interact with PostgreSQL from Node.js. Once you get the hang of making the connection and getting results back, the actual queries are the sames as we used in the PHP section of the course.</p>
+
+        <p>Please read the following:</p>
+
+        <ol>
+            <li><p><a href="https://node-postgres.com/features/pooling" target="_blank">node-postgres</a>. Please read over the Welcome, Connecting, Queries, and Pooling sections of this tutorial to see examples of code to make connections. At this point, we will focus on using the Callback notation.</p>
+            <p><a href="https://www.npmjs.com/package/pg" target="_blank">The npm documentation</a> for node-postgres gives some additional connection examples.</p></li>
+        </ol>
+
+        <h4>Using node-postgres to Create Endpoints</h4>
+        <p>Putting it all together, we can now use node-postgres in combination with Express.js to create a Web service to return data from our database.</p>
+        <ol>
+            <li><p><a href="https://kevgary.github.io/tutorials/2015/12/26/node.js-postgreSQL.html#database-endpoints-in-nodejs" target="_blank">Database Endpoints in Node.js</a> gives an example of creating Web service endpoints for getting and inserting some users.</p></li>
+
+        </ol>
+
+        <h3>Try it out</h3>
+        <p>The links from above are pretty dense with lots of code! We wanted you to have some examples of these connections, but the only way you will learn these ideas is to practice and write code yourself. The team activity this week, and your weekly assignment will help you practice writing these services.</p>
+        <p>Keep in mind that getting the first connection working is the hardest and takes the most time, but once it is in place, repeating it for other queries comes much quicker.</p>
 
     </article>
 
