@@ -16,10 +16,50 @@
         <h2>11 Prepare : Reading</h2>
 
         <h3>Overview</h3>
-        <p>This week, you will learn about how to use client-side Javascript to asynchronously call retreive data from a Node.js server and render it on the client.</p>
+        <p>In our previous lesson, we learned about Web services from the server perspective. In this lesson, we now shift our attention to how these services are consumed. While these services can be used in many different ways, one of the most common is to be called from client-side AJAX functions that then manipulate the DOM on the HTML page.</p>
+ 
+        <p>The following reading will introduce these concepts to you, but it is anticipated, that you will also need to dig deeper into certain aspects of this as you complete your assignment for the week, which is to write AJAX functions to call into the Web services you created last week.</p>
+
+        <p>This week, we will consider this task for APIs that do not require authentication, which as you might imagine, is a much simpler case. Next week, we will look more deeply at how to do this when authentication is needed.</p>
 
         <h3>Preparation Material</h3>
+        <p>There are two components to consuming these APIs to update the web page: first, making the AJAX calls, and second, updating the web page by manipulating the HTML DOM.</p>
         
+        <h4>AJAX</h4>
+        <p>You should have been introduced to using AJAX in your previous client-side programming course. As a review, please read over the following resources concerning AJAX:</p>
+        <ol>
+            <li><p><a href="https://developer.mozilla.org/en-US/docs/AJAX" target="_blank">AJAX - Mozilla Developer Network</a></p></li>
+            <li><p><a href="https://api.jquery.com/jQuery.ajax/" target="_blank">The jQuery .ajax function</a></p></li>
+            <li><p>From StackOverflow: <a href="https://stackoverflow.com/questions/4657287/what-is-the-difference-between-xmlhttprequest-jquery-ajax-jquery-post-jquery" target="_blank">What is the difference between XMLHttpRequest, jQuery.ajax, jQuery.post, jQuery.get</a></p></li>
+            <li><p>Then, please review this heavily commented <a href="https://github.com/ConnorWiseman/cs313-node-ajax" target="_blank">A simple Node.js application</a> that demonstrates the use of AJAX to consume Node.js services.</p></li>
+        </ol>
+
+        <h4>DOM Manipulation</h4>
+        <p>Just as you can perform AJAX calls using different libraries, you can also manipulate the HTML DOM in different ways. Here are some resources that demonstrate how to do this using both Vanilla JavaScript (in other words, no outside libraries) and also using the popular jQuery library. You are welcome to use either approach for your projects.</p>
+
+        <p>First, using Vanilla JavaScript:</p>
+        <ul>
+            <li><p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector" target="_blank">document.querySelector()</a></p></li>
+            <li><p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementById" target="_blank">document.getElementById()</a></p></li>
+            <li><p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementsByClassName" target="_blank">document.getElementsByClassName()</a></p></li>
+            <li><p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementsByTagName" target="_blank">document.getElementsByTagName()</a></p></li>
+            <li><p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Node/appendChild" target="_blank">Node.appendChild()</a></p></li>
+            <li><p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Node/removeChild" target="_blank">Node.removeChild()</a></p></li>
+            <li><p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Node/innerText" target="_blank">Node.innerText</a></p></li>
+            <li><p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/innerHTML" target="_blank">Element.innerHTML</a></p></li>
+        </ul>
+
+        <p>And here using jQuery:</p>
+        <ul>
+            <li><p><a href="https://api.jquery.com/id-selector/" target="_blank">ID Selector (“#id”)</a></p></li>
+            <li><p><a href="https://api.jquery.com/class-selector/" target="_blank">Class Selector (“.class”)</a></p></li>
+            <li><p><a href=https://api.jquery.com/element-selector/"" target="_blank">Element Selector (“element”)</a></p></li>
+            <li><p><a href="https://api.jquery.com/append/" target="_blank">.append()</a></p></li>
+            <li><p><a href="https://api.jquery.com/remove/" target="_blank">.remove()</a></p></li>
+            <li><p><a href="https://api.jquery.com/text/" target="_blank">.text()</a></p></li>
+            <li><p><a href="https://api.jquery.com/html/" target="_blank">.html()</a></p></li>
+
+        </ul>
 
     </article>
 
