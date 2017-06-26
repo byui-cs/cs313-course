@@ -4,7 +4,7 @@ function search() {
 	console.log("Searching for: " + searchString);
 
 	// Set up the parameters to send to the API
-	var params = {s: searchString};
+	var params = {s: searchString, apikey:"fill_this_in_with_the_correct_key"};
 
 	// Use jQuery to make the get request
 	$.get("http://www.omdbapi.com/", params, function(data, status){
