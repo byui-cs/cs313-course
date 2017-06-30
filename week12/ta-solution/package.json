@@ -1,0 +1,16 @@
+{
+  "name": "ta-12-example",
+  "version": "1.0.0",
+  "engines": {
+    "node": "6.10.2"
+  },
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "express-session": "^1.15.3"
+  }
+}
