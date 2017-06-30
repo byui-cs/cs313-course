@@ -24,98 +24,62 @@
         </div>
 
         <h3>Objective</h3>
-        <p>Practice using middleware and learn how to integrate Passport.js for basic local authentication.</p>
+        <p>Practice using middleware and sessions and learn how to restrict access to certain pages to only authorized users.</p>
 
         <h3>Overview</h3>
-        <p>For this team activity, you will create a login page and use Passport.js to authenticate a user via their username and password.</p>
+        <p>For this team activity you will create three web service endpoints:</p>
+        <ol>
+            <li><p><code>POST /login</code> - Expects a username and password as post variables.</p></li>
+            <li><p><code>POST /logout</code> - If a user is logged in, this will clear the session (logging them out)</p></li>
+            <li><p><code>GET /getServerTime</code> - If a user is logged in, this will return the current server time, if they are not logged in, it will return a 401 status code (unauthorized).</p></li>
+        </ol>
+
+        <p>To help you get started and to help you test your web services, please use the following files that you can include in your static files directory:</p>
+        <ul>
+            <li><p><a href="https://github.com/byui-burton/cs313-course-dev/tree/master/week12/ta-solution/public/test.html">test.html</a> - Includes a simple HTML form with a username, password, and three buttons corresponding to the web services listed above.</p></li>
+            <li><p><a href="https://github.com/byui-burton/cs313-course-dev/tree/master/week12/ta-solution/public/test.js">test.js</a> - Contains the event handler methods that will call your Web services, it will update a "status" div on the html page with the results.</p></li>
+        </ul>
+
 
         <h3>Instructions</h3>
         <h4>Core Requirements</h4>
         <ol>
             <li>
-                <p>Create a new Node.js application and a simple html page with a username and password box, and a submit button. This form should submit a POST request to "/login". This html page should be put in your static folder (e.g., public). Also, create a welcome page in this static folder, that says, "Welcome to the application" or something similar.</p>
-                <p>Verify that you can load each page in a browser via "localhost".</p>
+                <p>Create a new node.js application. Setup express and include the test.html and test.js files from above. Make sure you can view these pages in a browser.</p>
+
+                <p>Create a Post route for <code>/login</code>. This should receive a username and password as post parameters (in the body of the request). First make sure you can get these values, and log them to the console for debugging purposes.</p>
+
+                <p>Check to see if the username is "admin" and the password is "password" if it is, return a JSON object with a <code>success</code> value set to <code>true</code>. If you do not receive these values, return a JSON object with <code>success</code> set to <code>false</code>.</p>
+
+                <p>Verify that you get the expected results on the HTML page. Please note that nothing is being stored on the session yet.</p>
             </li>
-            
+
             <li>
-                <p>Create a middleware function to log a message to the console with the request url for every request (not just a certain route/url/endpoint) made to the server. Don't forget to call <code>next()</code> to allow the rest of the handlers to perform their function as well. Verify that you see this log message on the console when you request each of the pages you created above.</p>
+                <p>Change your <code>/login</code> so that if the correct username and password are received it stores the username on the session.</p>
+
+                <p>Implement the <code>/logout</code> method. It should first check if the username is on the session. If it is, it should destroy the session and return a JSON object with a <code>success</code> value set to <code>true</code>. If the username is not present on the session, return a JSON object with <code>success</code> set to <code>false</code>.</p>
+
+                <p>Verify that your functions work as expected (e.g., try logging out before loggin in and verify that you cannot, etc.).</p>
             </li>
-            
+
             <li>
-                <p>Install Passport.js and use it in your application. Use a new "LocalStrategy" to authenticate a username and password yourself.</p>
-                <p>At this point, check to see if the username is "admin" and the password is "pass" for a successful login. If anything else is submitted, the login should be unsuccessful.</p>
-                <p>In your LocalStrategy, if the login is successful, create a new User object with a name member variable, and pass it do the "done" callback. Recall that you can create a new class dynamically as follows:</p>
+                <p>Create a Get route for <code>/getServerTime</code> that returns a JSON object with a <code>success</code> value set to <code>true</code> and a <code>time</code> attribute set to the server time. You get get the server time with code like: <code>var time = new Date();</code>. Ensure that your Web service works and displays the correct time on the HTML page.</p>
 
-<pre><code class="JavaScript">
-var user = Object();
-user.name = "admin";
-</code></pre>
+                <p>Now, create two middleware functions. First, create a function called <code>logRequest</code>. Set up this function to log the requested URL with code like: <code>console.log("Received a request for: " + request.url);</code>. Now "use" this middleware function so that it is invoked for all requests. Don't forget to call "next" at the end of the function. Verify that it is invoked and logs data on the server when you request your different endpoints.</p>
 
-                <p>Once your LocalStrategy is set up and in place, then use the passport authenticate method to handle post requests to "/login". If the login is successful, redirect them to your welcome page. If not, redirect them back to your login form.</p>
+                <p>Finally, create a middleware function called <code>verifyLogin</code>. It should check to see if a username is on the session. If it is, simply call "next()" to let the request pipeline carry on. If it is not on the session, send back a JSON message with an error message, and a status code of 401 to indicate that it is unauthorized.</p>
 
+                <p>Add this middleware function to the route for <code>/getServerTime</code> so that it only returns the server time if the user is logged in. If the user is not logged in, they should get the 401 message. Verify that this works from your html page.</p>
             </li>
-            
         </ol>
-
-        <div class="tips">
-            <p>Instructor Tips:</p>
-            <p>There are lots of little things that have to be in place for passport to work. For example, you need to "npm install" the passport and passport-local packages.</p>
-            <p>Also, you need to include express components to handle getting the POST values from the body. You can do this by installing the body-parser package. And then including and using it via:</p>
-
-<pre><code class="JavaScript">
-var bodyParser = require('body-parser');
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
-</code></pre>
-
-            <p>You also need to initialize passport, and if you are using sessions (which by default it will), you need to initialize that:</p>
-
-<pre><code class="JavaScript">
-var passport = require('passport')
-  , LocalStrategy = require('passport-local').Strategy;
-
-app.use(passport.initialize());
-app.use(passport.session());
-</code></pre>
-
-            <p>Finally, when your user is successfully authenticated it will try to serialize your user object to put it on the session and then deserialize it later. Passport requires you to tell it how to do this for your custom object, with serializeUser and deserializeUser functions:</p>
-
-<pre><code class="JavaScript">
-// We need to tell passport how to turn our user object into a string to save it.
-// This may consist of just saving an id to use later.
-passport.serializeUser(function(user, done) {
-    done(null, user.name);
-});
-
-// We need to tell passport how to get a user object back from our string.
-// This may consist of using the id to get the user information from the database. 
-passport.deserializeUser(function(name, done) {
-    var user = new Object();
-    user.name = name;
-    done(null, user);
-});</code></pre>
-
-
-        </div>
-
 
         <h4>Stretch Challenges</h4>
         <p>After finishing the core requirements, ensure that everyone is at that point and understands the material. When everyone has completed the core requirements, you can move on to these stretch challenges.</p>
 
         <ol>
-            <li>
-                <p>Create a user table in the database, add some users along with their passwords to this table. Then, create a DB user for node to connect to this database, and ensure that it has the necessary permissions.</p>
-            </li>
-            
-            <li>
-                <p>Use your database to verify a correct username and password rather than the hardcoded values above.</p>
-            </li>
-            
-            <li>
-                <p>Use middleware to prevent a user from visiting the welcome page without first logging in.</p>
-            </li>
-            
+            <li><p>Create a database with a table containing a username and password. Have your login function check the username and password against this table.</p></li>
+            <li><p>Use the bcrypt library to store hashed passwords in the table instead of plain text passwords.</p></li>
+            <li><p>If you get this far, congratulate yourself on working through a really tough team activity!</p></li>
         </ol>
 
         <h3>Instructor's Solution</h3>
