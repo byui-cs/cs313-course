@@ -16,19 +16,73 @@
         <h2>12 Prepare : Reading</h2>
 
         <h3>Overview</h3>
-        <p>This week, you will learn about middleware in ExpressJS and how to use the Passport library for authentication.</p>
+        <p>This week has three different topics that can blend together, especially around the idea of authentication for your projects. These topics are: middleware in Express, using Sessions in Node.js, and then the different approaches to authentication you might consider.</p>
+
+        <p>This preparation material is intended to help you understand the landscape and opportunities in these various areas. To really learn each of these concepts you would need to dive much deeper than what we have time for this semester. Along those lines, for your projects, you may wish to choose some of the simpler more straightforward approaches, but you should be conversant in the other approaches, and understand their advantages and disadvantages.</p>
 
         <h3>Preparation Material</h3>
+        <p>Please read through the following material before meeting with your teams.</p>
+
+        <h4>Middleware</h4>
+        <p>When a request is received by Node.js with Express, you can think of it as passing through a pipeline of things that happen, each of which may use or modify the request and response objects, and then this pipeline concludes with sending the response back to the client.</p>
+        <p>Middleware gives you the ability to intercept this pipeline and do something interesting before resuming the regular flow again. For example, in a previous week, we used the body-parser module which contained a middleware function that looked through the body of the request to identify POST parameters, decoded them from JSON or URL encoding, and then added them to the request object. Then, any functions that followed in the pipeline could access these parameters directly on the request object, and not worry about parsing them from the body.</p>
+
+        <p>To learn more about Express middleware, <strong>please read</strong> the following:</p>
         <ol>
-            <li>
-                <p>First from the official Express documentation, please read the following sections:</p>
-                <ul>
-                    <li><p><a href="http://expressjs.com/en/guide/routing.html" target="_blank">Routing</a></p></li>
-                    <li><p><a href="http://expressjs.com/en/guide/writing-middleware.html" target="_blank">Writing Middleware</a></p></li>
-                    <li><p><a href="http://expressjs.com/en/guide/using-middleware.html" target="_blank">Using Middleware</a></p></li>
-                </ul>
-            </li>
-            
+            <li><p><a href="https://expressjs.com/en/guide/writing-middleware.html" target="_blank">Writing Middleware</a> from the Express Documentation</p></li>
+            <li><p><a href="https://expressjs.com/en/guide/using-middleware.html" target="_blank">Using Middleware</a> from the Express Documentation</p></li>
+
+
+            <li><p><a href="https://www.safaribooksonline.com/blog/2014/03/10/express-js-middleware-demystified/" target="_blank">Express.js Middleware Demystified</a></p></li>
+        </ol>
+
+        <h4>Sessions</h4>
+        <p>Sessions in Node.js work very similarly to those from PHP.</p>
+
+        <p>The express-session module is used for sessions. <a href="https://github.com/expressjs/session" target="_blank">It's documentation</a> (scroll down to the README.md) is a little dense because it lists all the possible options, but it does contain some sample code throughout and <strong>please refer to</strong> <a href="https://github.com/expressjs/session#example" target="_blank">an example</a> at the end that should be helpful with the syntax.</p>
+
+        <p>Optional reading that may be interesting:</p>
+        <ul>
+            <li><p><a href="https://glebbahmutov.com/blog/express-sessions/" target="_blank">Express Sessions</a> is a step-by-step tutorial that walks through the process of using sessions.</p></li>
+
+            <li><p><a href="https://devcenter.heroku.com/articles/node-sessions#sessions-and-scaling" target="_blank">Node.js Session Handling at Heroku</a> talks about how to set up an handle sessions in a cloud environment like Heroku, where you expect to have your app running on several different virtual instances, so you cannot store the session in memory.</p></li>
+        </ul>
+
+        <h4>Authentication</h4>
+        <p>When it comes to authentication, we can approach this much the same way we did in PHP, where the user provides a username and password, which are compared against a hashed version of the password in the database and if successful, a value (e.g., user id) is stored on the session. Then, subsequent requests can look for this value on the session, and redirect to other pages if it is not present.</p>
+
+        <p>Bringing it all together, rather than having each page check for the user on the session, a middleware function can be written to handle this. This middleware function could then be associated with particular routes (e.g., /homePage) or a set of pages (e.g., all those under the /home/* directory).</p>
+
+        <p>Just as with PHP, we want to make sure to hash our passwords before storing them in the database. The <a href="https://github.com/kelektiv/node.bcrypt.js" target="_blank">node-bcrypt</a> module implements the same algorithm that we used for hashing passwords in PHP. <strong>Please refer to</strong> the <a href="https://github.com/kelektiv/node.bcrypt.js#usage" target="_blank">sample code</a> for examples of how to generate the hash, and how to check it.</p>
+
+        <h4>Authentication with REST APIs</h4>
+        <p>The session-based authentication approach is a natural fit if we are using a page generation type of model for our application, such as using EJS templates. However, if our Node.js application consists mostly of exposing REST APIs (like most of your projects do) we have a different set of conditions to consider.</p>
+
+        <p>Authentication for API requests generally consists in passing an authorization token of some sort to the API along with any other request parameters. Then, the server can determine how to respond based on the token that was received. With this in mind, there are a few main approaches:</p>
+
+        <ol>
+            <li><p><heading>Session style token</heading> - The user first authenticates with a user name and password which creates a session on the server, and then they are given back a session id that is passed to subsequent requests. This happens naturally with sessions by using cookies for the session id, or token.</p></li>
+            <li><p><heading>Developer Token Submission</heading> - A variation on the session-style token idea is that the developer has a token from beforehand which is used for the API request. This is what we used in last week's team activity when we requested data from the OMDB api.</p></li>
+            <li><p><heading>OAuth 2</heading> - This is an ideal candidate when you are writing an app that interacts with a third party API (e.g., Facebook) on behalf of a certain user. In this case, in addition your application having a secret key, the user is redirected to Facebook's page to log in and allow specific permissions for the app. Facebook then redirects them back to your application and provides a token that allows your application to make requests to their data for a certain period of time.</p></li>
+            <li><p><heading>JSON Web Tokens (JWT)</heading> - These tokens are a sort of self-contained information packet that verifies that the user has been authenticated, because it has been encrypted with your applications key.</p></li>
+        </ol>
+
+        <p><strong>Please read</strong> the following articles that discuss the difference among these methods:</p>
+
+        <ol>
+            <li><p>StackOverflow: <a href="https://softwareengineering.stackexchange.com/a/308443" target="_blank">REST API security Stored token vs JWT vs OAuth</a></p></li>
+            <li><p><a href="https://zapier.com/engineering/apikey-oauth-jwt/" target="_blank">API Keys vs OAuth Tokens vs JSON Web Tokens</a></p></li>
+        </ol>
+
+        <div class="tips">
+            <p>Instructor Tips</p>
+            <p>So what should you use for your project?</p>
+            <p>You are welcome to use any of these approaches for your projects, but I would recommend beginning with the session-based approach. Even though it may not be as common for large APIs, it follows the same general approach of passing a token, it will be simpler and more familiar for you, and should give you what you need at this point.</p>
+        </div>
+
+
+
+<!--             
             <li>
                 <p>Then, read over the following sections of the <a href="http://passportjs.org/docs" target="_blank">documentation for Passport.js</a>:</p>
                 <ul>
@@ -45,7 +99,7 @@
             <p>Putting this all together, <a href="http://stackoverflow.com/a/18739922/1932766" target="_blank">this StackOverflow answer</a> shows how to use middleware to check if a user has logged in.</p>
 
             </li>
-        </ol>
+        </ol> -->
     </article>
 
 </body>
