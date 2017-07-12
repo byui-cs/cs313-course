@@ -1,0 +1,68 @@
+After completing the final project, please answer the questions in this text file and submit it to I-Learn.
+
+1. Name (or names of all team members, if applicable)
+
+
+2. Project Title / One sentence description:
+
+
+3. Copy and paste the URL for your web application:
+
+
+4. Copy and paste the URL for your source code repository (e.g., GitHub):
+
+
+------------------------------------------------------------------------
+Please evaluate each of the following criteria according to this scale:
+
+A - Some attempt was made
+B - Developing, but significantly deficient
+C - Slightly deficient, but still mostly adequate
+D - Meets requirements
+E - Shows creativity and excels above and beyond requirements
+------------------------------------------------------------------------
+
+****************************
+* The Project
+****************************
+
+1. Professional look and feel
+
+2. Accomplishes a meaningful task / does something interesting
+
+3. Demonstrates understanding of Node.js and Express principles
+
+4. Demonstrates mastery of Client-side and Server-side communication
+
+5. Overall Project
+
+6. Please write a short explanation / justification for selecting that category for your overall project.
+
+7. (Optional) Any other comments about the project?
+
+*****************************************************************
+* If you completed this project as a team, please rate yourself
+* and then each member of the team using the scale above. If you
+* did this project individually, you may stop here.
+*****************************************************************
+
+**********************
+* First for yourself:
+**********************
+
+1. Name:
+
+2. Fulfilled assigned tasks and took initiative
+
+3. Helped others learn and succeed
+
+4. Attendance and team communication
+
+5. Overall contribution
+
+6. Please write a short description of this person's contribution and justify the categories chosen.
+
+**********************************************
+* After evaluating your own contribution, 
+* repeat this evaluation for each team member
+**********************************************
