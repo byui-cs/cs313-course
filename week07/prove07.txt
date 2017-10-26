@@ -3,13 +3,13 @@ After completing the assignment, please answer the questions in this text file a
 1. Project Title / One sentence description:
 
 
-2. Copy and paste the URL for your web application:
+2. The Heroku URL for your web application:
 
 
-3. Copy and paste the URL for your source code repository (e.g., GitHub):
+3. The GitHub URL for your source code repository:
 
 
-4. Please provide a brief description of what your project does and how to use the application. Make sure to include any required information such as a username/password if necessary.
+4. Please provide a brief description of what your project does and how to use the application. Make sure to include any required information like a username and password.
 
 
 5. Briefly describe any pieces of the assignment that are not yet working correctly.
@@ -23,24 +23,44 @@ After completing the assignment, please answer the questions in this text file a
 Project Self-assessment
 --------------------------------
 
-For the each of the following criteria, please stat which category you feel best describes your work and give a 1-2 sentence justification for each. The categories are:
+For each of the following requirements, please replace the "(YES/NO)" with either "YES" or "NO" as to whether or not your work met this requirement.
 
-A - Some attempt was made
-B - Developing, but significantly deficient
-C - Slightly deficient, but still mostly adequate
-D - Meets requirements
-E - Shows creativity and excels above and beyond requirements
+Requirements
+------------
+(YES/NO) 1. Your web application is running in Heroku.
+(YES/NO) 2. Your latest source code is in GitHub.
+(YES/NO) 3. Your web application uses data stored in the session.
+(YES/NO) 4. Your web application uses a PostgreSQL database in Heroku.
+(YES/NO) 5. Your database schema includes foreign key references.
+(YES/NO) 6. Your web application includes an SQL SELECT query that joins multiple tables.
+(YES/NO) 7. Your web application includes an SQL UPDATE statement.
 
-1. Professional look and feel
+For each of the following criteria, please replace the "(A-E)" with either the "A", "B", "C", "D", or "E" category you feel best describes your work. Include a 1-2 sentence justification.
 
-2. Accomplishes a meaningful/interesting task
+Categories
+----------
+A - Some attempt was made.
+B - Developing, but significantly deficient.
+C - Slightly deficient, but still mostly adequate.
+D - Meets requirements.
+E - Shows creativity and excels above and beyond requirements.
 
-3. Demonstrates good database design principles
+Criteria
+----------
+(A-E) 1. Professional look and feel.
 
-4. Demonstrates skill in database retrieval
+(A-E) 2. Accomplishes a meaningful/interesting task.
 
-5. Demonstrates skill in database modification
+(A-E) 3. Demonstrates skill with HTML, CSS, and JavaScript.
 
-6. Demonstrates mastery of client-side/server-side coordination and communication.
+(A-E) 4. Demonstrates skill with PHP.
 
-7. Overall Project
+(A-E) 5. Demonstrates good database design principles.
+
+(A-E) 6. Demonstrates skill in database retrieval.
+
+(A-E) 7. Demonstrates skill in database modification.
+
+(A-E) 8. Demonstrates mastery of client-side/server-side coordination and communication.
+
+(A-E) 9. Overall project evaluation.
