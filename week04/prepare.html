@@ -96,6 +96,13 @@ Type "help" for help.
 afternoon-mesa-40442::DATABASE=>
   </code></pre>
 
+<div class="tips">
+        <p>Instructor Tips:</p>
+        <p>Update 2018-01-30: It looks like the PSQL version that is installed on the Mac using the MAPP installer does not work to connect to Heroku as outlined here. I received a "Connection Refused" when I tried to do this. Looking into the error and possible things on the Internet led down lots of different paths that were not helpful.</p>
+        <p>It turned out that the solution for me was that I needed to download Postgres directly (not as part of the MAPP package). I used the installer found here: <a href="https://www.postgresql.org/download/" target="_blank">https://www.postgresql.org/download/</a> . Then, I needed to add its directory to my path, instead of the mapp-stack one. In my case this was: "/Library/PostgreSQL/10/bin" . I could verify that I had the right psql running when I typed, "which psql"</code>" in the terminal and saw it pointing to my newly installed path. Then, when I ran the above heroku command ("heroku pg:psql") everything worked fine.</p>
+        <p>I believe this is only an issue for the MAPP install on Mac (Windows users didn't seem to have a problem.</p>
+      </div>  
+
   <h3>Helps and Screencasts</h3>
   <ul>
     <li><p><a href="https://video.byui.edu/media/Installing+PostgreSQL+Locally/0_ucpblaxt" target="_blank">Installing PostgreSQL Locally</a></p></li>
