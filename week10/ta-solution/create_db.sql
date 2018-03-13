@@ -16,3 +16,4 @@ INSERT INTO person(first, last, birthdate) VALUES
 
 CREATE USER ta_user WITH PASSWORD 'ta_pass';
 GRANT SELECT, INSERT, UPDATE ON person TO ta_user;
+GRANT USAGE, SELECT ON SEQUENCE person_id_seq TO ta_user;
