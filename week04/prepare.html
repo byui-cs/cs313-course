@@ -102,15 +102,15 @@ afternoon-mesa-40442::DATABASE=>
 
       <div class="tips">
         <p>Instructor Tips:</p>
-        <p>If you have the psql utility installed, but your command to create the DB fails, it may be that the psql applications is not in your system path (i.e. the place your computer looks for programs to run). To fix this, you'll need to add that folder to your path environment variable.</p>
+        <p>If you have the psql utility installed, but your command to connect to the DB fails, it may be that the psql applications is not in your system path (i.e. the place your computer looks for programs to run). To fix this, you'll need to add that folder to your path environment variable.</p>
         <p>To verify if psql is in your path, you could try typing "psql" at the terminal and see if you get a command not found error message. That error would suggest it is either not installed or not found in the path.</p>
       </div>
 
     <div class="tips">
         <p>Instructor Tips:</p>
-        <p>Update 2018-01-30: As a word of warning, the PSQL version that is installed on the Mac using the MAPP installer does not work to connect to Heroku as outlined here. I received a "Connection Refused" when I tried to do this. Looking into the error and possible things on the Internet led down lots of different paths that were not helpful. The problem is that it creates a configuration file that directs it to use localhost as the server, even if you have specified something else.</p>
+        <p>If you used a MAPP stack install, as a word of warning, the PSQL version that is installed on the Mac using the MAPP installer does not work to connect to Heroku as outlined here. I received a "Connection Refused" when I tried to do this. Looking into the error and possible things on the Internet led down lots of different paths that were not helpful. The problem is that it creates a configuration file that directs it to use localhost as the server, even if you have specified something else.</p>
 
-        <p>It turned out that the solution for me was that I needed to download Postgres directly (not as part of the MAPP package). I used the installer above. Then, I needed to add its directory to my path, instead of the mapp-stack one. In my case this was: "/Library/PostgreSQL/10/bin" . I could verify that I had the right psql running when I typed, "which psql"</code>" in the terminal and saw it pointing to my newly installed path. Then, when I ran the above heroku command ("heroku pg:psql") everything worked fine.</p>
+        <p>It turned out that the solution for me was that I needed to download Postgres directly (not as part of the MAPP package). I used the installer above. Then, I needed to add its directory to my path, instead of the mapp-stack one. In my case this was: "/Library/PostgreSQL/10/bin" . I could verify that I had the right psql running when I typed, "which psql" in the terminal and saw it pointing to my newly installed path. Then, when I ran the above heroku command ("heroku pg:psql") everything worked fine.</p>
         <p>I believe this is only an issue for the MAPP install on Mac (Windows users didn't seem to have a problem.</p>
       </div>  
 
@@ -131,9 +131,10 @@ afternoon-mesa-40442::DATABASE=>
 
       <div class="tips">
         <p>Instructor Tips:</p>
-        <p>Remember that if you have installed WAPP/MAPP/etc, then you have already installed Postgres and you don't need to repeat it as part of this
+        <p>When you use a database at heroku, please keep in mind that they have created a database and user for you, so you will not need to (or able able to) issue commands to create a DB or to create a new user.</p>
+<!--         <p>Remember that if you have installed WAPP/MAPP/etc, then you have already installed Postgres and you don't need to repeat it as part of this
         tutorial. If your command to create the DB fails, it may be that the postgres applications (createdb and psql) are not in your system path, i.e. the place your computer looks for programs to run. To fix this, you'll need to either type the full path of the program (e.g., C:/Users/Wappstack/.../postgres/bin/createdb or something similar), or you will need to add that folder to your path environment variable.</p>
-        <p>Similarly, if you have problems logging into your database, it may be that you have not supplied the postgres user name. This is done by passing it on the command line, like so: "createdb -U postgres" replacing postgres with whatever username your installer created, but in my case, it was simply "postgres". Then, you'll need to know the password you set up when you installed the database.</p>
+        <p>Similarly, if you have problems logging into your database, it may be that you have not supplied the postgres user name. This is done by passing it on the command line, like so: "createdb -U postgres" replacing postgres with whatever username your installer created, but in my case, it was simply "postgres". Then, you'll need to know the password you set up when you installed the database.</p> -->
       </div>
     </li>
 
