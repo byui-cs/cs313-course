@@ -14,10 +14,109 @@
 </header>
 <article>
   <h2>04 Prepare : Reading</h2>
+  <h3>Overview</h3>
+  <p>This week, your preparation material involves two main components:</p>
+  <ol>
+    <li><p>Getting connected to a database so that you can run queries and commands.</p></li>
+    <li><p>Understanding the fundamentals of relational databases.</p></li>
+  </ol>
 
-  <h3>Preparation Material</h3>
+    <p>To prepare for the weekly team activity, before meeting with your group, please make sure your database connection is working and then read over the tutorials listed afterward:</p>
 
-  <p>To prepare for the weekly team activity, before meeting with your group, please read the following tutorials:</p>
+  <h3>Getting connected to a database</h3>
+  <h4>An Understanding of our General Approach</h4>
+  
+  <p>In previous semesters, students used both a local database for their local debugging environment as well as a remote database at Heroku. This required them to install and configure a database management system on their own device, and also to duplicate the structure of their database in the cloud. Keeping the two of these in sync was a source of frustration for many students.</p>
+
+  <p>To that end, we are now focusing solely on connecting to and using a Heroku database, rather than a local installation. You are certainly welcome to install and play around with one locally if you would like, but you should keep in mind that the expectation is that you will need to get everything to work at Heroku.</p>
+
+  <h4>Connecting to a Database at Heroku</h4>
+  <p>Connecting to a Heroku database requires a few things. First, you need to install a client utility on your device that you will use to connect to the database. Second, you need to create a database on their system. And finally, you use the client utility to connect to the database at Heroku.</p>
+
+  <p>While Heroku supports many different databases, the relational database that is part of their completely free tier is PostgreSQL. It is an open source database used by many real-world companies. For these reasons, this is the database system we will use this semester. The SQL commands it uses (especially for the kinds of things we will do this semester) will be very similar to those in other systems, such as MySQL, Oracle, MS SQL Server, but there will be some slight differences.</p>
+
+  <h4>1. Installing the Client Utility</h4>
+  <p>The first step is to install the client utility <code>psql</code>. Technically, you only need this client utility, which is a small program, but the easiest way to obtain it is to download and install a complete version of PostgreSQL. You can find installers for various operating systems from the <a href="https://www.postgresql.org/download/" target="_blank">PostgreSQL download page</a>.</p>
+
+  <div class="tips">
+    <p>Instructor Tips:</p>
+    <p>When you run this installer, it will create a new PostgreSQL user that will be the administrator for your database. As part of the install process it will ask for a password for this user. This is a password that you are creating at that point, it's not asking for something that you should already know.</p>
+  </div>
+
+
+  <p>If you decide to try to track down the client utility and its dependencies themselves for a smaller download, you might want to check out the <a href="https://www.enterprisedb.com/download-postgresql-binaries" target="_blank">Download Postgres Binaries</a> page. This approach is potentially more tricky than just downloading the complete installer from above.</p>
+
+  <h4>2. Creating a Database at Heroku</h4>
+
+  <p>The Heroku CLI provides some easy shortcuts for creating and interacting with a Postgres database in your Cloud application.</p>
+
+  <p>Make sure to run these commands from the main directory of your application (i.e. the parent folder of your Web folder) to get the full Heroku context.</p>
+
+  <p>The following commands will create a free instance of Postgres on Heroku and retrieve details.</p>
+
+  <pre><code class="bash">
+$ heroku addons:create heroku-postgresql:hobby-dev
+Creating heroku-postgresql:hobby-dev on ⬢ afternoon-mesa-40442... free
+Database has been created and is available
+ ! This database is empty. If upgrading, you can transfer
+ ! data from another database with pg:copy
+Created postgresql-colorful-90657 as DATABASE_URL
+Use heroku addons:docs heroku-postgresql to view documentation
+</code></pre>
+
+  <pre><code class="bash">
+$ heroku config -s
+DATABASE_URL='postgres://cgojnkckkncmxf:e510ef76e9ff31ffd3069afa499c4d2bd748c1f2ea77e9da50f906dbe8f8c3e1@ec2-23-21-184-181.compute-1.amazonaws.com:5432/dfnorfi59oivff'
+</code></pre>
+
+  <pre><code class="bash">
+$ heroku pg:info
+=== DATABASE_URL
+Plan:        Hobby-dev
+Status:      Available
+Connections: 0/20
+PG Version:  9.6.1
+Created:     2016-12-28 20:18 UTC
+Data Size:   7.2 MB
+Tables:      0
+Rows:        0/10000 (In compliance)
+Fork/Follow: Unsupported
+Rollback:    Unsupported
+Add-on:      postgresql-colorful-90657
+</code></pre>
+
+
+  <h4>3. Connecting to a Database at Heroku</h4>
+
+  <p>The following Heroku CLI command provides all of the required parameters (e.g., the username, password, URL, etc.) to use your client psql utility to automatically connect to your PostgreSQL database at Heroku.</p>
+
+  <pre><code class="bash">
+$ heroku pg:psql
+--> Connecting to postgresql-colorful-90657
+psql (9.6.0, server 9.6.1)
+SSL connection (protocol: TLSv1.2, cipher: ECDHE-RSA-AES256-GCM-SHA384, bits: 256, compression: off)
+Type "help" for help.
+
+afternoon-mesa-40442::DATABASE=>
+  </code></pre>
+
+      <div class="tips">
+        <p>Instructor Tips:</p>
+        <p>If you have the psql utility installed, but your command to create the DB fails, it may be that the psql applications is not in your system path (i.e. the place your computer looks for programs to run). To fix this, you'll need to add that folder to your path environment variable.</p>
+        <p>To verify if psql is in your path, you could try typing "psql" at the terminal and see if you get a command not found error message. That error would suggest it is either not installed or not found in the path.</p>
+      </div>
+
+    <div class="tips">
+        <p>Instructor Tips:</p>
+        <p>Update 2018-01-30: As a word of warning, the PSQL version that is installed on the Mac using the MAPP installer does not work to connect to Heroku as outlined here. I received a "Connection Refused" when I tried to do this. Looking into the error and possible things on the Internet led down lots of different paths that were not helpful. The problem is that it creates a configuration file that directs it to use localhost as the server, even if you have specified something else.</p>
+
+        <p>It turned out that the solution for me was that I needed to download Postgres directly (not as part of the MAPP package). I used the installer above. Then, I needed to add its directory to my path, instead of the mapp-stack one. In my case this was: "/Library/PostgreSQL/10/bin" . I could verify that I had the right psql running when I typed, "which psql"</code>" in the terminal and saw it pointing to my newly installed path. Then, when I ran the above heroku command ("heroku pg:psql") everything worked fine.</p>
+        <p>I believe this is only an issue for the MAPP install on Mac (Windows users didn't seem to have a problem.</p>
+      </div>  
+
+
+
+  <h3>Understanding the Fundamentals of Relational Databases</h3>
 
   <p>If this is your first dose of databases, you should also work through the sections marked optional here.</p>
 
@@ -44,70 +143,11 @@
       relationships.</p></li>
   </ol>
 
-  <h3>Creating a Postgres database on Heroku</h3>
-
-  <p>Instead of using the standard Postgres createdb and psql commands, the Heroku CLI provides some easy shortcuts for
-    creating and interacting with a Postgres database in your Cloud application.</p>
-
-  <p>Make sure to run these commands from the parent directory of application code to get the full Heroku context.</p>
-
-  <p>The following commands will create a free instance of Postgres on Heroku and retrieve details.</p>
-
-  <pre><code class="bash">
-$ heroku addons:create heroku-postgresql:hobby-dev
-Creating heroku-postgresql:hobby-dev on ⬢ afternoon-mesa-40442... free
-Database has been created and is available
- ! This database is empty. If upgrading, you can transfer
- ! data from another database with pg:copy
-Created postgresql-colorful-90657 as DATABASE_URL
-Use heroku addons:docs heroku-postgresql to view documentation
-</code></pre>
-
-  <pre><code class="bash">
-$ heroku config -s
-DATABASE_URL='postgres://cgojnkcoqncmxf:e510ef76e9f981ffd3069afa499c4d2bd748c1f2ea77e9da50f906dbe8f8c3e1@ec2-23-21-184-181.compute-1.amazonaws.com:5432/dfnorfi59oivff'
-</code></pre>
-
-  <pre><code class="bash">
-$ heroku pg:info
-=== DATABASE_URL
-Plan:        Hobby-dev
-Status:      Available
-Connections: 0/20
-PG Version:  9.6.1
-Created:     2016-12-28 20:18 UTC
-Data Size:   7.2 MB
-Tables:      0
-Rows:        0/10000 (In compliance)
-Fork/Follow: Unsupported
-Rollback:    Unsupported
-Add-on:      postgresql-colorful-90657
-</code></pre>
-
-  <p>The following Heroku CLI command provides all of the required parameters to automatically connect to your Postgres database in Heroku.</p>
-
-  <pre><code class="bash">
-$ heroku pg:psql
---> Connecting to postgresql-colorful-90657
-psql (9.6.0, server 9.6.1)
-SSL connection (protocol: TLSv1.2, cipher: ECDHE-RSA-AES256-GCM-SHA384, bits: 256, compression: off)
-Type "help" for help.
-
-afternoon-mesa-40442::DATABASE=>
-  </code></pre>
-
-<div class="tips">
-        <p>Instructor Tips:</p>
-        <p>Update 2018-01-30: It looks like the PSQL version that is installed on the Mac using the MAPP installer does not work to connect to Heroku as outlined here. I received a "Connection Refused" when I tried to do this. Looking into the error and possible things on the Internet led down lots of different paths that were not helpful.</p>
-        <p>It turned out that the solution for me was that I needed to download Postgres directly (not as part of the MAPP package). I used the installer found here: <a href="https://www.postgresql.org/download/" target="_blank">https://www.postgresql.org/download/</a> . Then, I needed to add its directory to my path, instead of the mapp-stack one. In my case this was: "/Library/PostgreSQL/10/bin" . I could verify that I had the right psql running when I typed, "which psql"</code>" in the terminal and saw it pointing to my newly installed path. Then, when I ran the above heroku command ("heroku pg:psql") everything worked fine.</p>
-        <p>I believe this is only an issue for the MAPP install on Mac (Windows users didn't seem to have a problem.</p>
-      </div>  
-
-  <h3>Helps and Screencasts</h3>
+<!--   <h3>Helps and Screencasts</h3>
   <ul>
     <li><p><a href="https://video.byui.edu/media/Installing+PostgreSQL+Locally/0_ucpblaxt" target="_blank">Installing PostgreSQL Locally</a></p></li>
   </ul>
-
+ -->
 
 </article>
 
