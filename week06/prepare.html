@@ -48,7 +48,7 @@ GRANT USAGE, SELECT ON SEQUENCE product_id_seq TO my_user;
         <p>Alternatively, you can grant access to all tables and sequences in a schema in one statement, as follows:</p>
 
 <pre><code class="sql">
-GRANT SELECT, INSERT, UPDATE ON ON TABLES IN SCHEMA public TO my_user;
+GRANT SELECT, INSERT, UPDATE ON ALL TABLES IN SCHEMA public TO my_user;
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO my_user;
 </code></pre>
 
