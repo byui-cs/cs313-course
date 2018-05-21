@@ -7,6 +7,11 @@
 *   PostgreSQL database from PHP.
 ***********************************************************/
 
+// This example connects to a database on the local server,
+// if you are trying to connect to a database at heroku,
+// you would want to change these lines to get the info
+// from the heroku environment variable.
+
 // It would be better to store these in a different file
 $dbUser = 'ta_user';
 $dbPassword = 'ta_pass';
