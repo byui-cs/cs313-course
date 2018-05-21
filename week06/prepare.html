@@ -26,10 +26,41 @@
             <li><p><a href="http://www.w3schools.com/sql/sql_delete.asp" target="_blank">Delete</a></p></li>
             <li><p>In addition, depending on your projects, you may have need for other advanced queries, or functions (e.g., average, max, min). <a href="http://www.w3schools.com/sql/default.asp" target="_blank">The W3Schools page</a> is a decent resource to list these options and give you the basics to get you started, but you may need to seek out further information for whichever topic you need.</p></li>
         </ul>
+
+        <h3>Other Topics</h3>
+        <p>In addition, make sure you are comfortable with the following topics that we have encountered to some degree over the past weeks. A basic link from W3Schools is provided, but further research may be required.</p>
+        <ul>
+            <li><p>Constraints</p></li>
+            <ul>
+                <li><p><a href="http://www.w3schools.com/sql/sql_foreignkey.asp" target="_blank">Foreign Keys</a></p></li>
+                <li><p><a href="http://www.w3schools.com/sql/sql_notnull.asp" target="_blank">NOT NULL</a></p></li>
+                <li><p><a href="http://www.w3schools.com/sql/sql_unique.asp" target="_blank">Uniqueness</a></p></li>
+            </ul>
+            <li><p><a href="http://code.tutsplus.com/tutorials/sql-for-beginners-part-3-database-relationships--net-8561" target="_blank">Relationships (including Many to Many)</a>&nbsp;(From TutsPlus)</p></li>
+            <li><p><a href="http://stackoverflow.com/questions/60174/how-can-i-prevent-sql-injection-in-php" target="_blank">Avoiding SQL Injection</a>&nbsp;(From StackOverflow)</p></li>
+        </ul>
+        
+
+
         <h3>Connecting from PHP</h3>
         <p>For the most part, running these queries from PHP is no different than connecting and running a Select query as we have done previously.</p>
 
-        <h4>PostgreSQL Permissions to Insert</h4>
+        <h4>Getting the id of a newly inserted row</h4>
+        <p>After inserting a row into a table where an auto-generated ID is the primary key, it is often useful to get that new id, for future updates or inserts into other tables. The last inserted id is can be obtained using:</p>
+<pre><code class="php">
+$newId = $pdo-&gt;lastInsertId(sequence_name);
+</code></pre>
+
+        <p>Some DB providers (e.g., MySQL) don't require a sequence name, but PostgreSQL requires it. If you created an "id" column on a "product" table, then by default the sequence name would be: "product_id_seq", and after inserting into the product table, you could obtain the newly created id as follows:</p>
+
+<pre><code class="php">
+$newId = $pdo-&gt;lastInsertId('product_id_seq');
+</code></pre>
+
+
+        <h3>PostgreSQL Permissions to Insert</h3>
+        <p><strong>If you are using Heroku and the database user it creates for you, you do not have to worry about this.</strong> But if you are working with your own database and creating the users yourself, you will want to ensure that the user for the application has appropriate permissions.</p>
+
         <p>In order to insert into a table, a user must have insert permissions on that table. For example, these permissions could be added as follows:</p>
 
 <pre><code class="sql">
@@ -53,32 +84,6 @@ GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO my_user;
 </code></pre>
 
 
-        <h4>Getting the id of a newly inserted row</h4>
-        <p>After inserting a row into a table where an auto-generated ID is the primary key, it is often useful to get that new id, for future updates or inserts into other tables. The last inserted id is can be obtained using:</p>
-<pre><code class="php">
-$newId = $pdo-&gt;lastInsertId(sequence_name);
-</code></pre>
-
-        <p>Some DB providers (e.g., MySQL) don't require a sequence name, but PostgreSQL requires it. If you created an "id" column on a "product" table, then by default the sequence name would be: "product_id_seq", and after inserting into the product table, you could obtain the newly created id as follows:</p>
-
-<pre><code class="php">
-$newId = $pdo-&gt;lastInsertId('product_id_seq');
-</code></pre>
-
-
-        <h3>Other Topics</h3>
-        <p>In addition, make sure you are comfortable with the following topics that we have encountered to some degree over the past weeks. A basic link from W3Schools is provided, but further research may be required.</p>
-        <ul>
-            <li><p>Constraints</p></li>
-            <ul>
-                <li><p><a href="http://www.w3schools.com/sql/sql_foreignkey.asp" target="_blank">Foreign Keys</a></p></li>
-                <li><p><a href="http://www.w3schools.com/sql/sql_notnull.asp" target="_blank">NOT NULL</a></p></li>
-                <li><p><a href="http://www.w3schools.com/sql/sql_unique.asp" target="_blank">Uniqueness</a></p></li>
-            </ul>
-            <li><p><a href="http://code.tutsplus.com/tutorials/sql-for-beginners-part-3-database-relationships--net-8561" target="_blank">Relationships (including Many to Many)</a>&nbsp;(From TutsPlus)</p></li>
-            <li><p><a href="http://stackoverflow.com/questions/60174/how-can-i-prevent-sql-injection-in-php" target="_blank">Avoiding SQL Injection</a>&nbsp;(From StackOverflow)</p></li>
-        </ul>
-        
 
 <script src="../course/js/highlight/highlight.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
