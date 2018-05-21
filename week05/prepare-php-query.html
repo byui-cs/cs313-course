@@ -19,24 +19,24 @@
   <h2>05 Prepare : Querying from PHP</h2>
 
   <h3>Connecting to Postgres from PHP</h3>
-  <p>This document covers the very basics of querying data contained in our Postgres database from PHP. It is not
-    intended to be exhaustive, but rather to help you get started so you can then turn to tutorials and examples on the
-    Internet with more context.</p>
+  <p>This document covers the very basics of querying data contained in our Postgres database from PHP. It is not intended to be exhaustive, but rather to help you get started so you can then turn to tutorials and examples on the Internet with more context.</p>
 
   <p>Using PDO, the syntax for connecting to a database is</p>
 
   <p>
-  <pre>$db = new PDO("pgsql:host=[host_name];port=[database_port];dbname=$dbName[database_name]", [user_name], [password]);</pre>
+  <pre>$db = new PDO("pgsql:host=your_host_name;port=your_database_port;dbname=your_database_name", your_user_name, your_password);</pre>
   </p>
 
   <p>And if the connection attempt fails, it will throw an exception.</p>
+
+  <p>If you were connecting to a database hosted on your own computer, you could use something like:</p>
 
   <pre><code class="php">
 try
 {
   $user = 'postgres';
   $password = 'password';
-  $db = new PDO('pgsql:host=127.0.0.1;dbname=myTestDB', $user, $password);
+  $db = new PDO('pgsql:host=localhost;dbname=myTestDB', $user, $password);
 }
 catch (PDOException $ex)
 {
@@ -45,9 +45,33 @@ catch (PDOException $ex)
 }
 </code></pre>
 
-  <p>(Note that for my local machine setup, Postgres wouldn't connect with the hostname of “localhost,” but seemed to
-    work
-    just fine with the ip: 127.0.0.1.)</p>
+  <h4>Connecting to Databases at Heroku</h4>
+
+  <p>Heroku automatically creates an environment variable <code>DATABASE_URL</code> for the admin Postgres user and its password, along with the hostname and port of the database instance.</p>
+
+  <p>You can access this environment variable in PHP and parse it.</p>
+
+  <pre><code class="php">
+$dbUrl = getenv('DATABASE_URL');
+
+$dbopts = parse_url($dbUrl);
+
+$dbHost = $dbopts["host"];
+$dbPort = $dbopts["port"];
+$dbUser = $dbopts["user"];
+$dbPassword = $dbopts["pass"];
+$dbName = ltrim($dbopts["path"],'/');
+
+$db = new PDO("pgsql:host=$dbHost;port=$dbPort;dbname=$dbName", $dbUser, $dbPassword);
+</code></pre>
+
+  <div class="tips">
+    <p>Instructor Tip</p>
+    <p>If you are trying to work with your PHP pages using a local server environment, and then push them to Heroku, you will have two different databases that you need to keep in sync. Then, you'll also have to change your code to connect to them at the appropriate time (i.e., connect to the localhost database when your page is running at localhost, but connect to the Heroku database when it is running at Heroku). This can be a little bit tricky, but one appraoch is described <a href="./prepare-heroku-connect.html" target="_blank">here</a>.</p>
+
+  </div>
+
+<h3>Issuing Queries</h3>
 
   <p>Once you have a connection, you can then issue queries.</p>
 
@@ -97,6 +121,11 @@ $stmt = $db->prepare('SELECT * FROM table WHERE id=:id AND name=:name');
 $stmt->execute(array(':name' => $name, ':id' => $id));
 $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </code></pre>
+
+  <h3>Using an Admin User</h3>
+
+  <p>As a final note, using the Heroku variable will have you using the Admin user for your database, which is not the best thing to do from a security standpoint. It is the simplest thing to get working, and I would recommend starting there. At this point, you likely have enough other things to worry about with your projects.</p>
+  <p>But if you want to do it "the right way", you would need to create your own DB user and create the environment variables you need for it. This can be a little bit complicated, but can be done either by using the Heroku CLI, or by adding a hook to your commit process. If any decide to dive into this, please post your findings to the course discussion.</p>
 
 </article>
 
