@@ -73,6 +73,24 @@ $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 </code></pre>
 
+  <p>Please note that the above code gets these values from the Heroku environment variable. You can essentially copy and paste it and use it as is. You do not need to replace the values in that code with your actual values. For example:</p>
+
+  <pre><code class="php">
+# You SHOULD do this:
+$dbUrl = getenv('DATABASE_URL');
+
+# You SHOULD NOT do this:
+$dbUrl = getenv('postgres://fqhkwvxsdfhjejha:0809144c3cc00ba237ac0ceed358da673e39c7c3a291e5403f954bf04adc9cf@ec2-23-23-130-158.compute-1.amazonaws.com:5432/d387pkr4ml56re9');
+</code></pre>
+<pre><code class="php">
+# You SHOULD do this:
+$dbUser = $dbopts["user"];
+
+# You SHOULD NOT do this:
+$dbUser = $dbopts["fqhkwvxsdfhjejha"];
+</code></pre>
+
+
   <div class="tips">
     <p>Instructor Tip</p>
     <p>If you are trying to work with your PHP pages using a local server environment, and then push them to Heroku, you will have two different databases that you need to keep in sync. Then, you'll also have to change your code to connect to them at the appropriate time (i.e., connect to the localhost database when your page is running at localhost, but connect to the Heroku database when it is running at Heroku). This can be a little bit tricky, but one appraoch is described <a href="./prepare-heroku-connect.html" target="_blank">here</a>.</p>
