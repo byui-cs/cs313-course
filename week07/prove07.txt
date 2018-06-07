@@ -15,9 +15,10 @@ After completing the assignment, please answer the questions in this text file a
 5. Briefly describe any pieces of the assignment that are not yet working correctly.
 
 
-6. Provide evidence of your database design by dumping the SQL that describes your Heroku database to the file "output.sql" using the following command. Submit this SQL file in addition to the submission file for this assignment.
+6. Provide evidence of your database design by including the SQL file with the commands used to create your tables, etc. (This is ideally the exact file you used to create them. But if you don't have that, you could dump the SQL that describes your database from Heroku to a file "output.sql" using the following command: heroku run 'pg_dump $DATABASE_URL' > output.sql
 
-  $ heroku run 'pg_dump $DATABASE_URL' > output.sql
+Submit this SQL file in addition to the submission file for this assignment.
+
 
 --------------------------------
 Project Self-assessment
