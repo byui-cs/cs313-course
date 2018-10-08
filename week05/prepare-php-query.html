@@ -61,13 +61,13 @@ try
 {
   $dbUrl = getenv('DATABASE_URL');
 
-  $dbopts = parse_url($dbUrl);
+  $dbOpts = parse_url($dbUrl);
 
-  $dbHost = $dbopts["host"];
-  $dbPort = $dbopts["port"];
-  $dbUser = $dbopts["user"];
-  $dbPassword = $dbopts["pass"];
-  $dbName = ltrim($dbopts["path"],'/');
+  $dbHost = $dbOpts["host"];
+  $dbPort = $dbOpts["port"];
+  $dbUser = $dbOpts["user"];
+  $dbPassword = $dbOpts["pass"];
+  $dbName = ltrim($dbOpts["path"],'/');
 
   $db = new PDO("pgsql:host=$dbHost;port=$dbPort;dbname=$dbName", $dbUser, $dbPassword);
 
@@ -92,10 +92,10 @@ $dbUrl = getenv('postgres://fqhkwvxsdfhjejha:0809144c3cc00ba237ac0ceed358da673e3
 </code></pre>
 <pre><code class="php">
 # You SHOULD do this:
-$dbUser = $dbopts["user"];
+$dbUser = $dbOpts["user"];
 
 # You SHOULD NOT do this:
-$dbUser = $dbopts["fqhkwvxsdfhjejha"];
+$dbUser = $dbOpts["fqhkwvxsdfhjejha"];
 </code></pre>
 
 

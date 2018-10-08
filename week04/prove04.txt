@@ -1,18 +1,21 @@
 After completing the assignment, please answer the questions in this text file and submit it to I-Learn.
 
-1. Describe something from your database that you think came together very nicely.
+1. Provide a link to your myDb.sql file at GitHub (the file that contains all the SQL commands needed to create your database).
 
 
-2. Describe something from your database that you think could be improved or extended in the future.
+2. Describe something from your database that you think came together very nicely.
 
 
-3. Briefly describe the "coolest" thing you learned while completing this assignment.
+3. Describe something from your database that you think could be improved or extended in the future.
 
 
-4. Briefly describe two principles of good database design.
+4. Briefly describe the "coolest" thing you learned while completing this assignment.
 
 
-5. Please select the category you feel best describes your assignment:
+5. Briefly describe two principles of good database design.
+
+
+6. Please select the category you feel best describes your assignment:
 A - Some attempt was made
 B - Developing, but significantly deficient
 C - Slightly deficient, but still mostly adequate
@@ -20,6 +23,6 @@ D - Meets requirements
 E - Shows creativity and excels above and beyond requirements
 
 
-6. Provide a brief justification (1-2 sentences) for selecting that category.
+7. Provide a brief justification (1-2 sentences) for selecting that category.
 
 
