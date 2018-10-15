@@ -248,9 +248,26 @@ SELECT * FROM note_user AS u
 (2 rows)
 </code></pre>
 
+<p>And, if we only want to see the content of John's notes, we could change the * to n.content, like so:</p>
+
+
+<pre><code class="sql">
+SELECT n.content FROM note_user AS u
+> JOIN note AS n
+> ON u.id = n.userId
+> WHERE u.username = 'john';
+
+       content
+----------------------
+A note for John
+Another note for John
+(2 rows)
+</code></pre>
+
+
   <p>Notice that in this example, we have specified that we only want to see the content column from the note table
     (n.content), and that we want to restrict the data to only those rows where the username column from the user table
-    (u.username) is equal to 'john.'</p>
+    (u.username) is equal to 'john'.</p>
 
 </article>
 
