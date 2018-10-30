@@ -9,15 +9,14 @@ After completing the assignment, please answer the questions in this text file a
 3. The GitHub URL for your source code repository:
 
 
-4. Please provide a brief description of what your project does and how to use the application. Make sure to include any required information like a username and password.
+4. A link to the SQL file that contains the commands used to create your tables (e.g. a link to the myDb.sql file at GitHub, or something similar).
 
 
-5. Briefly describe any pieces of the assignment that are not yet working correctly.
+5. Please provide a brief description of what your project does and how to use the application. Make sure to include any required information like a username and password.
 
 
-6. Provide evidence of your database design by including the SQL file with the commands used to create your tables, etc. (This is ideally the exact file you used to create them. But if you don't have that, you could dump the SQL that describes your database from Heroku to a file "output.sql" using the following command: heroku run 'pg_dump $DATABASE_URL' > output.sql
+6. Briefly describe any pieces of the assignment that are not yet working correctly.
 
-Submit this SQL file in addition to the submission file for this assignment.
 
 
 --------------------------------
@@ -31,12 +30,12 @@ Requirements
 (YES/NO) 1. Your web application is running in Heroku.
 (YES/NO) 2. Your latest source code is in GitHub.
 (YES/NO) 3. Your web application uses data stored in the session.
-(YES/NO) 4. Your web application uses a PostgreSQL database in Heroku.
+(YES/NO) 4. Your web application uses a PostgreSQL database at Heroku.
 (YES/NO) 5. Your database schema includes foreign key references.
 (YES/NO) 6. Your web application includes an SQL SELECT query that joins multiple tables.
-(YES/NO) 7. Your web application includes an SQL UPDATE statement.
+(YES/NO) 7. Your web application includes an SQL UPDATE or INSERT statement.
 
-For each of the following criteria, please replace the "(A-E)" with either the "A", "B", "C", "D", or "E" category you feel best describes your work. Include a 1-2 sentence justification.
+For each of the following criteria, please replace the "(A-E)" with either the "A", "B", "C", "D", or "E" category you feel best describes your work.
 
 Categories
 ----------
@@ -49,19 +48,15 @@ E - Shows creativity and excels above and beyond requirements.
 Criteria
 ----------
 (A-E) 1. Professional look and feel.
-
 (A-E) 2. Accomplishes a meaningful/interesting task.
-
 (A-E) 3. Demonstrates skill with HTML, CSS, and JavaScript.
-
 (A-E) 4. Demonstrates skill with PHP.
-
 (A-E) 5. Demonstrates good database design principles.
-
 (A-E) 6. Demonstrates skill in database retrieval.
-
 (A-E) 7. Demonstrates skill in database modification.
-
 (A-E) 8. Demonstrates mastery of client-side/server-side coordination and communication.
-
 (A-E) 9. Overall project evaluation.
+
+10. Finally, please provide an overall description/justification of the categories you selected.
+
+
