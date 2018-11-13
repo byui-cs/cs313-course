@@ -1,6 +1,5 @@
 var express = require('express');
 var app = express();
-var url = require('url');
 
 app.set('port', (process.env.PORT || 5000));
 
@@ -10,24 +9,18 @@ app.use(express.static(__dirname + '/public'));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
-app.get('/math', function(request, response) {
-	handleMath(request, response);
-});
+app.get('/math', handleMath);
 
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
 
 function handleMath(request, response) {
-	var requestUrl = url.parse(request.url, true);
-
-	console.log("Query parameters: " + JSON.stringify(requestUrl.query));
+	var operation = request.query.operation;
+	var operand1 = Number(request.query.operand1);
+	var operand2 = Number(request.query.operand2);
 
 	// TODO: Here we should check to make sure we have all the correct parameters
-
-	var operation = requestUrl.query.operation;
-	var operand1 = Number(requestUrl.query.operand1);
-	var operand2 = Number(requestUrl.query.operand2);
 
 	computeOperation(response, operation, operand1, operand2);
 }
