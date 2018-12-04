@@ -3,7 +3,6 @@ var express = require('express');
 var app = express();
 
 // We are going to use sessions
-//var parseurl = require('parseurl')
 var session = require('express-session')
 
 // set up sessions
@@ -13,12 +12,9 @@ app.use(session({
   saveUninitialized: true
 }))
 
-// Because we will be using post values, we need to include the body parser module
-var bodyParser = require('body-parser')
-app.use( bodyParser.json() );       // to support JSON-encoded bodies
-app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
-  extended: true
-}));
+// Because we will be using post values, we need to use the body parser middleware
+app.use(express.json() );       // to support JSON-encoded bodies
+app.use(express.urlencoded({ extended: true })); // to support URL-encoded bodies
 
 app.set('port', (process.env.PORT || 5000));
 
@@ -46,7 +42,7 @@ app.listen(app.get('port'), function() {
 
 /****************************************************************
  * These methods should likely be moved into a different module
- * But they are hear for ease in looking at the code
+ * But they are here for ease in looking at the code
  ****************************************************************/
 
 // Checks if the username and password match a hardcoded set
