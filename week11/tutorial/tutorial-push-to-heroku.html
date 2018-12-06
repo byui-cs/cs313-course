@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>CS 313 - Tutorial</title>
+    <link rel="stylesheet" type="text/css" href="../../course/css/style.css" />
+</head>
+
+<body>
+    <header id="courseTitle">
+        <span class="icon-byui-logo"></span>
+        <h1>CS 313 | Web Engineering II</h1>
+    </header>
+    <article>
+        <h2>Tutorial : Deploying to Heroku</h2>
+
+        <h3>Overview</h3>
+        <p>This tutorial shows how to deploy a local Node.js app to Heroku.</p>
+
+        <h3>Create the Heroku App</h3>
+        <p>Before creating the Heroku app, it is very helpful to ensure that your application directory is set up as a Git repository. This is because Heroku determines information about which app you are in based on looking at the Git repositories.</p>
+
+        <p>To verify whether you have already created a repository, you can change to your application directory and then type <code>git status</code>.</p>
+
+<pre><code class="bash">
+$ git status
+fatal: Not a git repository (or any of the parent directories): .git
+</code></pre>
+
+        <p>This means that I have not yet set up git, otherwise I would have seen something more like:</p>
+
+<pre><code class="bash">
+$git status
+On branch master
+Your branch is up to date with 'heroku/master'.
+</code></pre>
+
+        <p>If you began your app by cloning a getting starting repository, then it will already be in one, but if you did not, then you'll need to create one now. This can be done as follows:</p>
+
+<pre><code class="bash">
+$ git init
+Initialized empty Git repository in /Users/sburton/git/heroku/cs313-node-18f-demo-scriptures/.git/
+</code></pre>
+
+        <p>Once you have a Git repository enabled, you can create the Heroku app, using the Heroku CLI utility:</p>
+
+<pre><code class="bash">
+$ heroku create
+Creating app... done, ⬢ tranquil-wildwood-40666
+https://tranquil-wildwood-40666.herokuapp.com/ | https://git.heroku.com/tranquil-wildwood-40666.git
+</code></pre>
+
+        <h3>Telling Heroku how to start your app</h3>
+        <p>When we have run our apps from the command line, we specified the file we wanted to run by typing <code>node index.js</code> (where index.js is the name of our main application script). When we deploy our app to Heroku, we need to tell it how to start it. This is done by adding two things.</p>
+        <p>First, we need to create a new file named: <code>Procfile</code> (please note there is no extension on this file, it is not <code>Procfile.txt</code> or anything of that nature. This file should contain the following:</p>
+
+<pre><code class="bash">
+web: node index.js
+</code></pre>
+
+        <p>Of course, if you called your main file something besides index.js, you should use that name here.</p>
+
+        <p>Next, we need to update our <code>package.json</code> file to contain a similar instruction. We should change the section on scripts from:</p>
+
+<pre><code class="bash">
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+</code></pre>
+
+        <p>to include a start script for our app:</p>
+
+<pre><code class="bash">
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+</code></pre>
+
+        <p>Once we have done this, we are ready to push our app to Heroku. We do this by using the standard process of:</p>
+
+<pre><code class="bash">
+git add .
+git commit -m "initial commit"
+git push heroku master -u
+</code></pre>
+
+        <p>(the <code>-u</code> indicates that we want to set this as our "upstream" or default repository, so that in the future, we can just type <code>git push</code> and it will push it there.</p>
+
+        <p>Finally, we open our browser:</p>
+
+<pre><code class="bash">
+$ heroku open
+</code></pre>
+
+        <p>Please note that the page that loads will likely be to a page like: https://tranquil-wildwood-40666.herokuapp.com/ , but if we haven't set up a rule for our default "/" get request, then we'll need to specify the html page like: https://tranquil-wildwood-40666.herokuapp.com/scriptures.html</p>
+
+    </article>
+
+   <script src="../../course/js/highlight/highlight.pack.js"></script>
+   <script>hljs.initHighlightingOnLoad();</script>
+</body>
+
+</html>
