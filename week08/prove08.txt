@@ -9,11 +9,11 @@ After completing the assignment, please answer the questions in this text file a
 3. Describe anything you did to go above and beyond with this assignment.
 
 4. Please select the category you feel best describes your assignment:
-A - Some attempt was made
-B - Developing, but significantly deficient
-C - Slightly deficient, but still mostly adequate
-D - Meets requirements
-E - Shows creativity and excels above and beyond requirements
+1 - Some attempt was made
+2 - Developing, but significantly deficient
+3 - Slightly deficient, but still mostly adequate
+4 - Meets requirements
+5 - Shows creativity and excels above and beyond requirements
 
 
 5. Provide a brief justification (1-2 sentences) for selecting that category.

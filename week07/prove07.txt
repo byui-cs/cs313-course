@@ -35,27 +35,27 @@ Requirements
 (YES/NO) 6. Your web application includes an SQL SELECT query that joins multiple tables.
 (YES/NO) 7. Your web application includes an SQL UPDATE or INSERT statement.
 
-For each of the following criteria, please replace the "(A-E)" with either the "A", "B", "C", "D", or "E" category you feel best describes your work.
+For each of the following criteria, please replace the "(1-5)" with either the "1", "2", "3", "4", or "5" category you feel best describes your work.
 
 Categories
 ----------
-A - Some attempt was made.
-B - Developing, but significantly deficient.
-C - Slightly deficient, but still mostly adequate.
-D - Meets requirements.
-E - Shows creativity and excels above and beyond requirements.
+1 - Some attempt was made
+2 - Developing, but significantly deficient
+3 - Slightly deficient, but still mostly adequate
+4 - Meets requirements
+5 - Shows creativity and excels above and beyond requirements
 
 Criteria
 ----------
-(A-E) 1. Professional look and feel.
-(A-E) 2. Accomplishes a meaningful/interesting task.
-(A-E) 3. Demonstrates skill with HTML, CSS, and JavaScript.
-(A-E) 4. Demonstrates skill with PHP.
-(A-E) 5. Demonstrates good database design principles.
-(A-E) 6. Demonstrates skill in database retrieval.
-(A-E) 7. Demonstrates skill in database modification.
-(A-E) 8. Demonstrates mastery of client-side/server-side coordination and communication.
-(A-E) 9. Overall project evaluation.
+(1-5) 1. Professional look and feel.
+(1-5) 2. Accomplishes a meaningful/interesting task.
+(1-5) 3. Demonstrates skill with HTML, CSS, and JavaScript.
+(1-5) 4. Demonstrates skill with PHP.
+(1-5) 5. Demonstrates good database design principles.
+(1-5) 6. Demonstrates skill in database retrieval.
+(1-5) 7. Demonstrates skill in database modification.
+(1-5) 8. Demonstrates mastery of client-side/server-side coordination and communication.
+(1-5) 9. Overall project evaluation.
 
 10. Finally, please provide an overall description/justification of the categories you selected.
 

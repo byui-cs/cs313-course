@@ -15,11 +15,11 @@ After completing the final project, please answer the questions in this text fil
 ------------------------------------------------------------------------
 Please evaluate each of the following criteria according to this scale:
 
-A - Some attempt was made
-B - Developing, but significantly deficient
-C - Slightly deficient, but still mostly adequate
-D - Meets requirements
-E - Shows creativity and excels above and beyond requirements
+1 - Some attempt was made
+2 - Developing, but significantly deficient
+3 - Slightly deficient, but still mostly adequate
+4 - Meets requirements
+5 - Shows creativity and excels above and beyond requirements
 ------------------------------------------------------------------------
 
 ****************************

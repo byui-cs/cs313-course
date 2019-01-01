@@ -15,12 +15,12 @@ After completing the assignment, please answer the questions in this text file a
 5. Briefly describe the "coolest" thing you learned while completing this assignment.
 
 
-6. Please select the category you feel best describes your assignment: [A-E]
-A - Some attempt was made
-B - Developing, but significantly deficient
-C - Slightly deficient, but still mostly adequate
-D - Meets requirements
-E - Shows creativity and excels above and beyond requirements
+6. Please select the category you feel best describes your assignment: [1-5]
+1 - Some attempt was made
+2 - Developing, but significantly deficient
+3 - Slightly deficient, but still mostly adequate
+4 - Meets requirements
+5 - Shows creativity and excels above and beyond requirements
 
 
 7. Provide a brief justification (1-2 sentences) for selecting that category.
