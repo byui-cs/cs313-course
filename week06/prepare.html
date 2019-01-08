@@ -57,32 +57,46 @@ $newId = $pdo-&gt;lastInsertId(sequence_name);
 $newId = $pdo-&gt;lastInsertId('product_id_seq');
 </code></pre>
 
+<h3>Classroom Examples (Optional)</h3>
 
-        <h3>PostgreSQL Permissions to Insert</h3>
-        <p><strong>If you are using Heroku and the database user it creates for you, you do not have to worry about this.</strong> But if you are working with your own database and creating the users yourself, you will want to ensure that the user for the application has appropriate permissions.</p>
+<p>Here are several videos that go together in a series. They are designed to walk through the complete process of creating a database, inserting data, querying in PHP, and inserting from PHP back into the DB. They are broken up so that you could focus just on the areas that are most interesting to you.</p>
 
-        <p>In order to insert into a table, a user must have insert permissions on that table. For example, these permissions could be added as follows:</p>
+<ul>
+
+    <li><p><a href="https://video.byui.edu/media/313-06-notes-example-part1-db-creation.mov/0_bxukfb54" target="_blank">Part 1, DB Creation</a> (14 mins)</p></li>
+    <li><p><a href="https://video.byui.edu/media/313-06-notes-example-part2-db-insert-and-select.mov/0_hxzlnsbv" target="_blank">Part 2, DB Inserting, Querying, and Joins</a> (9 mins)</p></li>
+    <li><p><a href="https://video.byui.edu/media/cs313-06-notes-example-part3-php-connect-and-query/0_cejgctis" target="_blank">Part 3, PHP Connecting and Querying</a> (14 mins)</p></li>
+    <li><p><a href="https://video.byui.edu/media/cs313-06-notes-example-part4-passing-data-and-where/0_51h8aw6a" target="_blank">Part 4, PHP Passing data from one page to another and using a where clause</a> (14&nbsp;mins)</p></li>
+    <li><p><a href="https://video.byui.edu/media/cs313-06-notes-example-part5-inserting-and-redirecting/0_6iwr06wn" target="_blank">Part 5, Inserting from PHP and page redirecting</a> (17 mins)</p></li>
+        
+</ul>
+
+<p>And here is a <a href="https://github.com/sburton42/cs313-php-18f-inclass/tree/master/web/06_demo_notes" target="_blank">link to the GitHub repo</a> for the source code from these videos wrote: </p>
+
+<h3>(Supplemental) PostgreSQL Permissions to Insert</h3>
+<p><strong>If you are using Heroku and the database user it creates for you, you do not have to worry about this.</strong> But if you are working with your own database and creating the users yourself, you will want to ensure that the user for the application has appropriate permissions.</p>
+
+<p>In order to insert into a table, a user must have insert permissions on that table. For example, these permissions could be added as follows:</p>
 
 <pre><code class="sql">
 GRANT SELECT, INSERT, UPDATE ON product TO my_user;
 </code></pre>
 
-        <p>That will give the user my_user access to the select, insert, and update the data in product.</p>
+<p>That will give the user my_user access to the select, insert, and update the data in product.</p>
 
-        <p>If this table has an auto-incrementing id, PostgreSQL also requires that you give permission to use and update the sequence associated with that id. The sequence is essentially a table that keeps track of the next id for that table. If you had an "id" column on "product", then by default the sequence would be named "product_id_seq". Permission could then be granted as follows:</p>
+<p>If this table has an auto-incrementing id, PostgreSQL also requires that you give permission to use and update the sequence associated with that id. The sequence is essentially a table that keeps track of the next id for that table. If you had an "id" column on "product", then by default the sequence would be named "product_id_seq". Permission could then be granted as follows:</p>
 
 
 <pre><code class="sql">
 GRANT USAGE, SELECT ON SEQUENCE product_id_seq TO my_user;
 </code></pre>
 
-        <p>Alternatively, you can grant access to all tables and sequences in a schema in one statement, as follows:</p>
+<p>Alternatively, you can grant access to all tables and sequences in a schema in one statement, as follows:</p>
 
 <pre><code class="sql">
 GRANT SELECT, INSERT, UPDATE ON ALL TABLES IN SCHEMA public TO my_user;
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO my_user;
 </code></pre>
-
 
 
 <script src="../course/js/highlight/highlight.pack.js"></script>
