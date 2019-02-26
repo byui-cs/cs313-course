@@ -1,68 +1,55 @@
-After completing the final project, please answer the questions in this text file and submit it to I-Learn.
+After completing your final project, please answer the questions in this text file and submit it to I-Learn.
 
-1. Name (or names of all team members, if applicable)
-
-
-2. Project Title / One sentence description:
+1. Project title / one sentence description:
 
 
-3. Copy and paste the URL for your web application:
+2. The Heroku URL for your web application:
 
 
-4. Copy and paste the URL for your source code repository (e.g., GitHub):
+3. The GitHub URL for your source code repository:
 
 
-------------------------------------------------------------------------
-Please evaluate each of the following criteria according to this scale:
+4. Please provide a brief description of what your project does and how to use the application. Make sure to include any required information like a username and password.
 
+
+5. Briefly describe any pieces of the assignment that are not yet working correctly.
+
+
+
+--------------------------------
+Project Self-assessment
+--------------------------------
+
+For each of the following requirements, please replace the "(YES/NO)" with either "YES" or "NO" as to whether or not your work met this requirement.
+
+Requirements
+------------
+(YES/NO) 1. Your web application is running in Heroku.
+(YES/NO) 2. Your latest source code is in GitHub.
+(YES/NO) 3. Your web application is hosted on Node.js.
+(YES/NO) 4. Your web application exposes one or more web services in Node.js.
+(YES/NO) 5. Your web application consumes one or more of your web services from the browser.
+(YES/NO) 6. Your web application has a data layer of either a database or third-party web service.
+
+For each of the following criteria, please replace the "(1-5)" with either the "1", "2", "3", "4", or "5" category you feel best describes your work.
+
+Categories
+----------
 1 - Some attempt was made
 2 - Developing, but significantly deficient
 3 - Slightly deficient, but still mostly adequate
 4 - Meets requirements
 5 - Shows creativity and excels above and beyond requirements
-------------------------------------------------------------------------
 
-****************************
-* The Project
-****************************
+Criteria
+----------
+(1-5) 1. Professional look and feel.
+(1-5) 2. Accomplishes a meaningful/interesting task.
+(1-5) 3. Demonstrates skill with HTML, CSS, and JavaScript.
+(1-5) 4. Demonstrates skill with Node.js.
+(1-5) 5. Demonstrates skill with Express.
+(1-5) 6. Demonstrates skill with web services.
+(1-5) 7. Demonstrates skill with client/server communication.
+(1-5) 8. Overall project evaluation.
 
-1. Professional look and feel
-
-2. Accomplishes a meaningful task / does something interesting
-
-3. Demonstrates understanding of Node.js and Express principles
-
-4. Demonstrates mastery of Client-side and Server-side communication
-
-5. Overall Project
-
-6. Please write a short explanation / justification for selecting that category for your overall project.
-
-7. (Optional) Any other comments about the project?
-
-*****************************************************************
-* If you completed this project as a team, please rate yourself
-* and then each member of the team using the scale above. If you
-* did this project individually, you may stop here.
-*****************************************************************
-
-**********************
-* First for yourself:
-**********************
-
-1. Name:
-
-2. Fulfilled assigned tasks and took initiative
-
-3. Helped others learn and succeed
-
-4. Attendance and team communication
-
-5. Overall contribution
-
-6. Please write a short description of this person's contribution and justify the categories chosen.
-
-**********************************************
-* After evaluating your own contribution, 
-* repeat this evaluation for each team member
-**********************************************
+9. Finally, please provide an overall description/justification of the categories you selected.
