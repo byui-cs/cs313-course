@@ -1,4 +1,5 @@
 # Create a database and connect to it
+# NOTE: You don't need to do this if you are using a DB at heroku
 CREATE DATABASE scripture_ta;
 \c scripture_ta
 
@@ -26,6 +27,7 @@ INSERT INTO scripture (book, chapter, verse, content)
 
 
 # Create a user that can access this table
+# NOTE: You don't need to do this if you are using a DB at heroku
 CREATE USER ta_user WITH PASSWORD 'ta_pass';
 GRANT SELECT, INSERT, UPDATE ON scripture TO ta_user;
 
