@@ -1,6 +1,6 @@
-After completing the assignment, please answer the questions in this text file and submit it to I-Learn.
+After completing your project, please answer the questions in this text file and submit it to I-Learn.
 
-1. Project Title / One sentence description:
+1. Project title / one sentence description:
 
 
 2. The Heroku URL for your web application:
