@@ -1,5 +1,5 @@
-var express = require('express');
-var app = express();
+const express = require('express');
+const app = express();
 
 app.set('port', (process.env.PORT || 5000));
 
@@ -16,9 +16,9 @@ app.listen(app.get('port'), function() {
 });
 
 function handleMath(request, response) {
-	var operation = request.query.operation;
-	var operand1 = Number(request.query.operand1);
-	var operand2 = Number(request.query.operand2);
+	const operation = request.query.operation;
+	const operand1 = Number(request.query.operand1);
+	const operand2 = Number(request.query.operand2);
 
 	// TODO: Here we should check to make sure we have all the correct parameters
 
@@ -28,7 +28,7 @@ function handleMath(request, response) {
 function computeOperation(response, op, left, right) {
 	op = op.toLowerCase();
 
-	var result = 0;
+	let result = 0;
 
 	if (op == "add") {
 		result = left + right;
@@ -44,7 +44,7 @@ function computeOperation(response, op, left, right) {
 	}
 
 	// Set up a JSON object of the values we want to pass along to the EJS result page
-	var params = {operation: op, left: left, right: right, result: result};
+	const params = {operation: op, left: left, right: right, result: result};
 
 	// Render the response, using the EJS page "result.ejs" in the pages directory
 	// Makes sure to pass it the parameters we need.
