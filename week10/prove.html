@@ -13,18 +13,30 @@
         <h1>CS 313 | Web Engineering II</h1>
     </header>
     <article>
-        <h2>10 Prove : Assignment - Milestone 1</h2>
+        <h2>10 Prove : Assignment - Milestone 1 - End to end</h2>
 
         <h3>Overview</h3>
-        <p>Build out your data layer and expose the web services your application requires.</p>
+        <p>Successfully get a request go from the UI to the data layer and back, for one of the components of your project.</p>
 
         <h3>Instructions</h3>
-        <p>For this week's assignment, you will be working on your individual project. Your task is to build out the data layer of your project and complete the web service endpoints that you specified in your design.</p>
+        <p>For this week's assignment, you will be working on your individual project. Your task is to complete one piece of your project "from end to end." In other words, starting from the user interface, the user does something that causes a request to be made to the server, which queries the database, returns that information back in a response, which is handled by client-side code in the the browser to render a result to the user.</p>
+
+        <p>For example, consider an application that makes use of restaurants in a certain area. For this week's assignment, you might complete the following scenario:</p>
+
+        <ol>
+            <li><p>The user clicks a button to retrieve a list of restaurants.</p></li>
+            <li><p>In client-side JavaScript, this triggers a background, AJAX request to a <code>/getRestaurants</code> URL on the server.</p></li>
+            <li><p>The server handles this request and queries the database to select all the records from the <code>restaurant</code> table.</p></li>
+            <li><p>These results are sent in JSON format in a response back to the client.</p></li>
+            <li><p>Client-side JavaScript receives the result and updates the DOM (i.e., the web page the user is viewing) to show the results in a bulleted list.</p></li>
+        </ol>
+
+        <p>Getting this single, "thin thread" complete from end to end can be challenging, because it requires so many individual pieces to work together. However, once you have this in place, the rest of the components of your project should follow along similar lines.</p>
 
         <div class="tips">
         <p>Instructor Tips</p>
-        <p>Don't get discouraged if getting your first endpoint takes a little while. When completing a task like this, I find that 80% of the work goes into completing the first one. Once that is done, the others usually follow the same process and come together nicely.</p>
-        <p>Also, when you are going end-to-end like this from the web service to the database and back, there are a ton of things that can go wrong! I always try to get the simplest possible case to go from end to end first, and then work on expanding it to the actual data I need.</p>
+<!--         <p>Don't get discouraged if getting your first endpoint takes a little while. When completing a task like this, I find that 80% of the work goes into completing the first one. Once that is done, the others usually follow the same process and come together nicely.</p> -->
+        <p>When you are going end-to-end like this from the web service to the database and back, there are a ton of things that can go wrong! I always try to get the simplest possible components working in isolation first, then expand to the actual data I need. For example, while working on the AJAX request, I would have the server return a hard-coded result of "dummy data" first, and make sure that is working. Then, I would expand to use the actual database.</p>
         </div>
 
         <p>As you get deeper into your project, it is likely that you will need to make changes to what you originally planned. This is natural and expected. For this and future milestone submissions, you should do what is best for your project, even if that is different than what you originally designed.</p>

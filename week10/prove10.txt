@@ -1,21 +1,18 @@
 After completing the assignment, please answer the questions in this text file and submit it to I-Learn.
 
-1. Project Title / One sentence description:
+1. Project title / one sentence description:
 
 
-2. Copy and paste the URL for one of your Web service endpoints at Heroku:
+2. Copy and paste the URL for your site at Heroku:
 
 
 3. Copy and paste the URL for your source code repository (e.g., GitHub):
 
 
-4. List the name of each of the Web service endpoints that are working:
+4. Describe the component that you completed from end-to-end:
 
 
-5. List any Web service endpoints that are not yet functioning:
-
-
-6. Please select the category you feel best describes your assignment:
+5. Please select the category you feel best describes your assignment:
 1 - Some attempt was made
 2 - Developing, but significantly deficient
 3 - Slightly deficient, but still mostly adequate
@@ -23,8 +20,8 @@ After completing the assignment, please answer the questions in this text file a
 5 - Shows creativity and excels above and beyond requirements
 
 
-7. Provide a brief justification (1-2 sentences) for selecting that category.
+6. Provide a brief justification (1-2 sentences) for selecting that category.
 
 
-8. Please list any questions you have for the instructor regarding this assignment or this week's topic.
+7. Please list any questions you have for the instructor regarding this assignment or this week's topic.
 
