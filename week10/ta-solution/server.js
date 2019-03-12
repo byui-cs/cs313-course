@@ -1,5 +1,5 @@
-var express = require('express');
-var app = express();
+const express = require('express');
+const app = express();
 
 
 // Following the "Single query" approach from: https://node-postgres.com/features/pooling#single-query
@@ -19,9 +19,7 @@ app.use(express.static(__dirname + '/public'));
 
 // This says that we want the function "getPerson" below to handle
 // any requests that come to the /getPerson endpoint
-app.get('/getPerson', function(request, response) {
-	getPerson(request, response);
-});
+app.get('/getPerson', getPerson);
 
 // Start the server running
 app.listen(app.get('port'), function() {
@@ -33,7 +31,7 @@ app.listen(app.get('port'), function() {
 // it expects to have an id on the query string, such as: http://localhost:5000/getPerson?id=1
 function getPerson(request, response) {
 	// First get the person's id
-	var id = request.query.id;
+	const id = request.query.id;
 
 	// TODO: We should really check here for a valid id before continuing on...
 
@@ -46,8 +44,8 @@ function getPerson(request, response) {
 		if (error || result == null || result.length != 1) {
 			response.status(500).json({success: false, data: error});
 		} else {
-			var person = result[0];
-			response.status(200).json(result[0]);
+			const person = result[0];
+			response.status(200).json(person);
 		}
 	});
 }
@@ -60,11 +58,11 @@ function getPersonFromDb(id, callback) {
 
 	// Set up the SQL that we will use for our query. Note that we can make
 	// use of parameter placeholders just like with PHP's PDO.
-	var sql = "SELECT id, first, last, birthdate FROM person WHERE id = $1::int";
+	const sql = "SELECT id, first, last, birthdate FROM person WHERE id = $1::int";
 
 	// We now set up an array of all the parameters we will pass to fill the
 	// placeholder spots we left in the query.
-	var params = [id];
+	const params = [id];
 
 	// This runs the query, and then calls the provided anonymous callback function
 	// with the results.
