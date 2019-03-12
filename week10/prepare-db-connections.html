@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>CS 313 - Preparation Material</title>
+    <link rel="stylesheet" type="text/css" href="../course/css/style.css" />
+</head>
+
+<body>
+    <header id="courseTitle">
+        <span class="icon-byui-logo"></span>
+        <h1>CS 313 | Web Engineering II</h1>
+    </header>
+    <article>
+        <h2>10 Prepare : Using Heroku Databases</h2>
+
+        <h3>Overview</h3>
+        <p>This document explains how to connect to a remote Heroku database from a local Node.js server.</p>
+
+        <p>Ultimately, you will want your database to be running out at Heroku, and you will want our Node.js application also running at Heroku. During development, however, it may be convenient to run your Node.js application on your local computer for quick turnaround in your development process. If you are happy pushing your code to Heroku after each change, you do not need to use these steps.</p>
+
+        <p>One approach to local development would be to use a local database server for your local development. This is commonly done by professional developers, and is what some of the instructions reference. Then, when pushing your code to Heroku, you also need to update your Heroku database to make sure the code their matches. This has caused problems for several students in the past, so an alternative approach is described here, where you will only have one database (at Heroku), and connect to it from both Heroku, and from your local environment.</p>
+
+        <h3>Creating the Application</h3>
+
+        <ol>
+            <li>
+                <p>First, create the node application itself:</p>
+                <p>In a new, empty directory run npm init, create a new server.js file, etc.</p>
+            </li>
+            <li><p>Set up this directory as a Git repository:</p>
+            <p><code>git init</code></p>
+            </li>
+            <li><p>Create a file: ".gitignore" with "node_modules/" in it, so we don't get prompted to add that directory to git.</p></li>
+            <li><p>Create a new Heroku application:</p>
+                <p><code>heroku create</code></p>
+            </li>
+            <li><p>Help Heroku know how to start your application:</p>
+                <p>Create a file: "Procfile" with the following in it: <code>web: node server.js</code></p>
+                <p>Then, update your package.json file to include a start script:</p>
+
+<pre><code class="bash">
+...
+"scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+...
+</code></pre>
+
+
+            </li>
+        </ol>
+
+        <h3>Adding a Database to your Heroku application</h3>
+
+        <ol>
+            <li><p>First, create the database at Heroku:</p>
+                <p><code>heroku addons:create heroku-postgresql:hobby-dev</code></p>
+            </li>
+            <li><p>Learn the database connection string URL for your new database:</p>
+                <p><code>heroku config -s</code></p>
+                <p>This gives you back something like:</p>
+<pre><code class="bash">
+DATABASE_URL='postgres://cgojnkckkncmxf:e510ef76e9ff323231afa499c4d2bd748c1f2ea77e9da50f906dbe8f8c3e1@ec2-23-21-184-181.compute-1.amazonaws.com:5432/dfnorfi59oivff'
+</code></pre>
+            </li>
+            <li><p>Create the necessary tables in your database. First connect with:</p>
+                <p><code>heroku pg:psql</code></p>
+                <p>Then, issue the SQL statements to create the necessary tables.</p>
+            </li>
+        </ol>
+
+
+        <h3>Accessing a Heroku database from your local Node.js server:</h3>
+
+        <ol>
+            <li><p>Create a connection string variable to hold this information (of course using your connection string, not this exact one):</p>
+<pre><code class="bash">
+const connectionString = process.env.DATABASE_URL || "postgres://cgojnkckkncmxf:e510ef76e9ff323231afa499c4d2bd748c1f2ea77e9da50f906dbe8f8c3e1@ec2-23-21-184-181.compute-1.amazonaws.com:5432/dfnorfi59oivff";
+</code></pre>
+
+                <p>This says to use a connection string from the environment variable <code>DATABASE_URL</code> if it is present, otherwise to use the one we just found that is defined directly in this file.</p>
+            </li>
+            <li><p>IMPORTANT: Make sure to add <code>?ssl=true</code> at the end of this, otherwise Heroku will reject the connection:</p>
+
+<pre><code class="bash">
+const connectionString = process.env.DATABASE_URL || "postgres://cgojnkckkncmxf:e510ef76e9ff323231afa499c4d2bd748c1f2ea77e9da50f906dbe8f8c3e1@ec2-23-21-184-181.compute-1.amazonaws.com:5432/dfnorfi59oivff?ssl=true";
+</code></pre>
+            </li>
+            <li><p>When you create the Pool object, tell it to use this connection string:</p>
+                <p><code>const pool = new Pool({connectionString: connectionString});</code></p>
+            </li>
+            <li><p>Verify that your connection to the database is working, by running a very basic query&mdash;perhaps not even part of a Web request at this point, just by running a simple script at the console containing a query like this:</p>
+<pre><code class="bash">
+var sql = "SELECT * FROM some_table_here";
+
+pool.query(sql, function(err, result) {
+    // If an error occurred...
+    if (err) {
+        console.log("Error in query: ")
+        console.log(err);
+    }
+
+    // Log this to the console for debugging purposes.
+    console.log("Back from DB with result:");
+    console.log(result.rows);
+
+
+});     
+</code></pre>              
+            </li>
+        </ol>
+
+
+        <h3>Excluding the sensitive information from Git</h3>
+        <p>While the above code would work just fine, it does have a problem. It includes the sensitive connection string information in your source code which will be included in your Git repository.</p>
+        <p>A possible solution to this is to put your database connection string in an environment variable on your local computer, just like Heroku does out at their server. This way, your code will always just get the information from the environment, regardless of where it is running.</p>
+        <p>To include this in an environment variable, you could put it into a system environment variable just like you would with the "PATH" or any other environment variable. This section uses a different approach, where we add an environment variable to a file, and then load this file into the environment as part of running our node application, by use of the "dotenv" Node.js package. This is nice because now this variable will only be present for this application.</p>
+
+        <ol>
+            <li><p>Create a new file: <code>.env</code>, and put the following in it (of course using your connection string, not this exact one):</p>
+<pre><code class="bash">
+DATABASE_URL='postgres://cgojnkckkncmxf:e510ef76e9ff323231afa499c4d2bd748c1f2ea77e9da50f906dbe8f8c3e1@ec2-23-21-184-181.compute-1.amazonaws.com:5432/dfnorfi59oivff?ssl=true'
+</code></pre>
+            </li>
+            <li><p>Add this file to your <code>.gitignore</code> file, by adding <code>.env</code> to the list of file and directory names in the <code>.gitignore</code> file.</p></li>
+            <li><p>Use the <code>dotenv</code> package to load everything from your <code>.env</code> file into the environment variables in your system.</p>
+                <p>First, install the new package:</p>
+                <p><code>npm install dotenv --save</code></p>
+                <p>Then, include a call to it at the top of your server.js file with:</p>
+                <p><code>require('dotenv').config();</code></p>
+            </li>
+            <li><p>Change your connection string variable above to only pull from the environment variable now:</p>
+                <p><code>const connectionString = process.env.DATABASE_URL;</code></p>
+            </li>
+            <li><p>Test your application and celebrate!</p></li>
+        </ol>
+
+
+
+    </article>
+
+
+<script src="../course/js/highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+</body>
+
+</html>
