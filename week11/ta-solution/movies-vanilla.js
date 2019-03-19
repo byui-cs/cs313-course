@@ -7,7 +7,7 @@ function search() {
 
 	// set up the function to be called when this is complete
 	xhr.onload = function () {
-		if (xmlhttp.readyState == XMLHttpRequest.DONE && xmlhttp.status == 200) {
+		if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
 			// We are back from the server now...
 			
 			console.log("Back from server with the following results:")
@@ -22,7 +22,7 @@ function search() {
 	};
 
 	// Set up the parameters to send to the API
-	var params = "?apikey=byuidaho&s=" + searchString;
+	var params = "?apikey=your-key-here&s=" + searchString;
 	var url = "http://www.omdbapi.com/" + params;
 
 	xhr.open("GET", url);
