@@ -91,7 +91,7 @@ function verifyLogin(request, response, next) {
 	} else {
 		// They are not logged in
 		// Send back an unauthorized status
-		var result = {succes:false, message: "Access Denied"};
+		var result = {success:false, message: "Access Denied"};
 		response.status(401).json(result);
 	}
 }
